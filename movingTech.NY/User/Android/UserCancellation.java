@@ -4,6 +4,7 @@ import base.BaseClass;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.ImmutableMap;
@@ -30,6 +31,11 @@ public class UserCancellation extends BaseClass{
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc = 'Cancel Ride : Button']")).click();
 		Thread.sleep(8000);		
   
+		WebElement checkHomeScreen = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']"));
+        Assert.assertTrue(checkHomeScreen.isDisplayed(), "User cancelled the Ride and Navigated tp the Home screen Sucessfully");
+        
+     
+;
 	}
 	
 	public static void scroll(WebElement quotesElement) {

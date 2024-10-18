@@ -14,7 +14,7 @@ public class EstimateScreen extends BaseClass {
     @Test
     public void autoAssignDriver() throws InterruptedException {
         Thread.sleep(7000);
-        System.out.println("Getting in for estimate");
+        System.out.println("Getting in for estimate and select variant");
         // Check for "Book Any" presence
         if (!isBookAnyPresent()) {
             System.out.println("'Book Any' option not found. Skipping to the final element.");
@@ -61,9 +61,23 @@ public class EstimateScreen extends BaseClass {
         }
         implicitWaitMethod(driver1,60);
     }
-  @Test
-    public void chooseBetweenMultipleDrivers() throws InterruptedException {
+    
+    @Test
+    public void TollTextOnRideSearchScreen() {
+    	//Validated if User search Screen Have text "Toll Included in your fare"
+        
+        WebElement TollTextAtDriverSearchScreen = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Toll Charges are included in your fare']"));
+        
+        if (TollTextAtDriverSearchScreen.isDisplayed()) {
+            System.out.println("'Toll Charges are included in your fare' text is validated in RideSearchScreen ");
+        } else {
+            System.out.println("'Toll Charges are included in your fare' text is validated in RideSearchScreen");
+        }
     	
+    }
+  
+    @Test
+    public void chooseBetweenMultipleDrivers() throws InterruptedException {
         //Choose between multiple drivers
     	driver1.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.LinearLayout[2]/android.widget.LinearLayout/android.widget.LinearLayout")).click();        
     	Thread.sleep(3000);
@@ -73,7 +87,9 @@ public class EstimateScreen extends BaseClass {
     	
         //if chosen this option automatically it will assign hence give sleep of 12-15 sec
     }
+    
     public void confirmRideByChoosingBetweenMultipleDriverOffers() {
+
     }
     public void autoConfirmFirstDriverOffer() {
     }

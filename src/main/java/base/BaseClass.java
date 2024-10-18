@@ -1,4 +1,4 @@
-package base;
+ package base;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -53,7 +53,7 @@ public class BaseClass {
 			 driverUdid = System.getProperty("driverUdid");
 			 userUdid = System.getProperty("userUdid");
 
-			URL url = new URL("http://0.0.0.0:4723/wd/hub/");
+			URL url = new URL("http://0.0.0.0:4725/wd/hub/");
 
 			if (flowOption == 2 || flowOption == 3) {
 				// Driver
@@ -66,6 +66,10 @@ public class BaseClass {
 				cap.setCapability("newCommandTimeout", 300);
 				//cap.setCapability("app", "/Users/sumedh.kp/eclipse-workspace/NammaYatriAutomation/movingTech.NY/Resources/app-nyDriver-prod-debug.apk");
 				cap.setCapability("app", "/Users/sumedh.kp/Desktop/app-nyDriver-prod-debug.apk");
+				cap.setCapability("appPackage", "in.juspay.nammayatripartner.debug");//debug
+			       cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
+				cap.setCapability("noReset", true);//debug;
+//				cap.setCapability("app", "/Users/ajay.kumar/git/namma_yatri_automation_allu/movingTech.NY/Resources/driver-2-sept-master.apk");
 				driver = new AndroidDriver(url, cap);
 
 				implicitWaitMethod(driver,60);
@@ -83,6 +87,10 @@ public class BaseClass {
 				cap1.setCapability("newCommandTimeout", 300);
 				//cap1.setCapability("app", "/Users/sumedh.kp/Downloads/app-nyUser-prod-debug (1).apk");
 				cap1.setCapability("app", "/Users/sumedh.kp/Desktop/app-nyUser-prod-debug.apk");
+				cap1.setCapability("appPackage", "in.juspay.nammayatri.debug");//debug
+			       cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
+				cap1.setCapability("noReset", true);//debug
+//				cap1.setCapability("app", "/Users/ajay.kumar/git/namma_yatri_automation_allu/movingTech.NY/Resources/user-2-sept-master.apk");
 				driver1 = new AppiumDriver(url, cap1);
 				implicitWaitMethod(driver1,60);
 				System.out.println("Launched the User Application");

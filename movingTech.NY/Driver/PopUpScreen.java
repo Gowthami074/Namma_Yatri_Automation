@@ -30,6 +30,57 @@ public class PopUpScreen extends BaseClass {
         System.out.println("Driver accepted the ride request");
         Thread.sleep(3000);
     }
+    
+    @Test
+    public void tollAcceptOffer() throws InterruptedException {
+    	
+    	Thread.sleep(3000);
+        WebElement tollIncluded = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Toll included']"));
+        
+        if (tollIncluded.isDisplayed()) {
+            System.out.println("Driver Side Pop Up Screen, Toll Included text is validated on the Ride Request Pop Up ");
+        } else {
+            System.out.println("Driver Side Pop Up Screen,Toll Included text is not validated on the Ride Request Pop up");
+        }
+        
+        Thread.sleep(1000);
+        System.out.println("Waiting to accept the request");
+        WebElement acceptButton = driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Accept Offer']"));
+        acceptButton.click();
+        System.out.println("Driver accepted the ride request");
+        Thread.sleep(3000);
+        
+        WebElement DriverTollOverlayText1 = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Toll Charges included in Fare']"));
+        WebElement DriverTollOverlayText2 = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Please do not demand extra from the customer']"));
+        WebElement DriverTollButton = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Ok, Got it']"));
+        
+        if (DriverTollOverlayText1.isDisplayed()) {
+            System.out.println("'Overlay is validated at Driver Side Side and text **Toll Charges included in Fare** is validated ");
+        } else {
+            System.out.println("'Overlay is not validated");
+        }
+        
+        if (DriverTollOverlayText2.isDisplayed()) {
+            System.out.println("'Overlay is validated at Driver Side and text **Please do not demand extra from the customer** is validated ");
+        } else {
+            System.out.println("'Overlay is not validated");
+        }
+        
+        DriverTollButton.click();
+        
+      //android.widget.TextView[@text='₹110 Toll Charges included']
+        
+        WebElement StartRideTollText = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='₹110 Toll Charges included']"));
+        
+        if (StartRideTollText.isDisplayed()) {
+            System.out.println("'Overlay is validated at Driver Side and text **₹110 Toll Charges included** is validated ");
+        } else {
+            System.out.println("Start Ride Slider text is not validated");
+        }
+
+
+
+    }
  
     // Method to decline the ride offer (placeholder, not implemented)
     public void declineOffer() {
