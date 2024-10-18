@@ -49,6 +49,11 @@ public class StartRideScreen extends BaseClass {
         driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Start Ride']")).click();
         Thread.sleep(4000);
     }
+	
+	public void tollRideStartRideScreen() {
+		
+        
+    }
     
     public void cancelRide() {
         // Add cancel ride logic
