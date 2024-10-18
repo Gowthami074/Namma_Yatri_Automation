@@ -10,7 +10,7 @@ import io.appium.java_client.AppiumBy;
 public class DevicePermission extends BaseClass {
 
 	public void autoSuggestionDecline() {
-		if (Arrays.asList("15913008960024W", "RFCT42T5N9D", "SONJFMDUKV65OJV4", "28301JEGR03129", "1371785921000CT", "RZ8R72RE6AB", "9618349153000CS").contains(userUdid)) {
+		if (Arrays.asList("15913008960024W", "RFCT42T5N9D", "SONJFMDUKV65OJV4", "28301JEGR03129", "1371785921000CT", "RZ8R72RE6AB", "9618349153000CS", "eb23ba").contains(userUdid)) {
 
 			driver1.findElement(AppiumBy.xpath("//android.widget.Button[@text='NONE OF THE ABOVE']")).click();
 
