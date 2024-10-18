@@ -61,10 +61,16 @@ public class EstimateScreen extends BaseClass {
         }
         implicitWaitMethod(driver1,60);
     }
-  
-    public void chooseBetweenMultipleDrivers() {
+  @Test
+    public void chooseBetweenMultipleDrivers() throws InterruptedException {
+    	
         //Choose between multiple drivers
-        driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@test='Choose between multiple drivers']")).click();
+    	driver1.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.LinearLayout[2]/android.widget.LinearLayout/android.widget.LinearLayout")).click();        
+    	Thread.sleep(3000);
+    	driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Choose between multiple drivers']")).click();
+    	System.out.println("User selected choose between the drievrs");
+    	autoAssignDriver();
+    	
         //if chosen this option automatically it will assign hence give sleep of 12-15 sec
     }
     public void confirmRideByChoosingBetweenMultipleDriverOffers() {

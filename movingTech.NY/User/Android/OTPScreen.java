@@ -43,7 +43,7 @@ public class OTPScreen extends BaseClass {
 	}
 
 	@Test
-	public void readOTP() {
+	public void readOTP() throws InterruptedException {
 		// XPath to locate the TextView with the text "OTP"
 		//        String xpath = "//android.widget.TextView[@text='OTP']";
 		//
@@ -68,5 +68,10 @@ public class OTPScreen extends BaseClass {
 		// Remove non-numeric characters and spaces
 		return contentDesc.replaceAll("[^0-9]", "");
 	}
-
+	@Test
+	public void AcceptThequote() throws InterruptedException {
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Ride']")).click();
+		System.out.println("user clicked on confirmed ride");
+}
 }
