@@ -21,6 +21,10 @@ public class RideSearch extends BaseClass{
 		Thread.sleep(2000);
 		// this is notification we are getting only in vivo device, If we are not getting in other devices we can comment this x-path
 //		driver1.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW']")).click();
+		if("9618349153000CS".contains(userUdid))
+		{
+			driver1.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow']")).click();
+		}
 		
 		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']")).sendKeys("Koram");
 		Thread.sleep(3000);
