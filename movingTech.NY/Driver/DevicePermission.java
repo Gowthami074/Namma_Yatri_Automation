@@ -82,18 +82,19 @@ public class DevicePermission extends BaseClass {
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc='Search']")).click();
 			Thread.sleep(2000);
 			driver.findElement(AppiumBy.xpath("//android.widget.AutoCompleteTextView[@text='Search']")).sendKeys("Namma");
-
+			
+			implicitWaitMethod(driver,5);
 			List<WebElement> appName = driver.findElements(AppiumBy.xpath("//android.widget.TextView[@text='Namma Yatri Partner']"));
 
 			if(!appName.isEmpty() && appName.get(0).isDisplayed()) {
-				System.out.println("App name displyed");
+				System.out.println("App name displayed");
 				appName.get(0).click();
 			}
 			else {
 				driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='in.juspay.nammayatripartner.debug']")).click();
-				System.out.println("App ackage name displyed");
+				System.out.println("App Package name displayed");
 			}
-
+			implicitWaitMethod(driver,60);
 			Thread.sleep(3000);
 
 			Thread.sleep(2000);
@@ -212,8 +213,18 @@ public class DevicePermission extends BaseClass {
 			break;
 		default:
 			break;
-		}
 		
-
+		}}
+		
+	public void locationPermission() throws InterruptedException
+	{
+		switch(driverUdid) {
+		case "RFCT42T5N9D":
+			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow all the time']")).click();
+			driver.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Navigate up']")).click();
+			Thread.sleep(1000);
+		}
 	}
+
+	
 }
