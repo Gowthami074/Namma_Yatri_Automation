@@ -120,7 +120,9 @@ public class RideSearch extends BaseClass {
 //            System.out.println("User Estimate Screen do not have  Text **Toll & Parking charges are included**");
 //        }
 //        
+
         public void notificationPermission() {
+
 
 
 		implicitWaitMethod(driver,5); //This method is defined in BaseClass
