@@ -82,19 +82,6 @@ public class OTPScreen extends BaseClass {
 
 	@Test
 	public void readOTP() throws InterruptedException {
-		// XPath to locate the TextView with the text "OTP"
-		//        String xpath = "//android.widget.TextView[@text='OTP']";
-		//
-		//        // Find the element using XPath
-		//        WebElement element = driver1.findElement(By.xpath(xpath));
-		//
-		//        // Get the content-desc attribute value
-		//        String contentDesc = element.getAttribute("content-desc");
-		//
-		//        // Extract numbers from content-desc attribute
-		//        rideOTP = extractNumbers(contentDesc);
-		//
-		//        System.out.println("OTP " + rideOTP);
 
 		rideOTP =  driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='OTP']/../android.widget.RelativeLayout/android.widget.LinearLayout[2]/android.widget.TextView")).getText();
 		System.out.println("OTP " + rideOTP);

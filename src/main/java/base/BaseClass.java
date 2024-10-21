@@ -1,6 +1,8 @@
  package base;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -8,15 +10,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.StartsActivity;
+import io.qameta.allure.Attachment;
 
 
 public class BaseClass {
@@ -27,7 +36,7 @@ public class BaseClass {
 	public int flowOption;
 	public static List<String> udids;
 	protected static String driverUdid, userUdid;
- 
+
 	@BeforeSuite
 	@Parameters("flowOption")
 	public void setUp(int flowOption) throws MalformedURLException {
@@ -50,8 +59,8 @@ public class BaseClass {
 			else {
 				System.out.println("NotEnoughInput - Either FlowInput in xml is wrong or adb devices are not connected");
 			}
-			 driverUdid = System.getProperty("driverUdid");
-			 userUdid = System.getProperty("userUdid");
+			driverUdid = System.getProperty("driverUdid");
+			userUdid = System.getProperty("userUdid");
 
 			URL url = new URL("http://0.0.0.0:4725/wd/hub/");
 
@@ -64,12 +73,13 @@ public class BaseClass {
 				cap.setCapability("udid", driverUdid);
 				cap.setCapability("automationName", "UiAutomator2");
 				cap.setCapability("newCommandTimeout", 300);
-				//cap.setCapability("app", "/Users/sumedh.kp/eclipse-workspace/NammaYatriAutomation/movingTech.NY/Resources/app-nyDriver-prod-debug.apk");
-				cap.setCapability("app", "/Users/sumedh.kp/Desktop/app-nyDriver-prod-debug.apk");
-				cap.setCapability("appPackage", "in.juspay.nammayatripartner.debug");//debug
-			       cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
-				cap.setCapability("noReset", true);//debug;
-//				cap.setCapability("app", "/Users/ajay.kumar/git/namma_yatri_automation_allu/movingTech.NY/Resources/driver-2-sept-master.apk");
+//				cap.setCapability("appPackage", "in.juspay.nammayatripartner");//CUG
+//				cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG
+//				cap.setCapability("noReset", true);//CUG
+//				cap.setCapability("appPackage", "in.juspay.nammayatripartner.debug");//debug
+//				cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
+//				cap.setCapability("noReset", true);//debug
+      			cap.setCapability("app", "");
 				driver = new AndroidDriver(url, cap);
 
 				implicitWaitMethod(driver,60);
@@ -85,13 +95,15 @@ public class BaseClass {
 				cap1.setCapability("udid", userUdid);
 				cap1.setCapability("automationName", "UiAutomator2");
 				cap1.setCapability("newCommandTimeout", 300);
-				//cap1.setCapability("app", "/Users/sumedh.kp/Downloads/app-nyUser-prod-debug (1).apk");
-				cap1.setCapability("app", "/Users/sumedh.kp/Desktop/app-nyUser-prod-debug.apk");
-				cap1.setCapability("appPackage", "in.juspay.nammayatri.debug");//debug
-			       cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
-				cap1.setCapability("noReset", true);//debug
-//				cap1.setCapability("app", "/Users/ajay.kumar/git/namma_yatri_automation_allu/movingTech.NY/Resources/user-2-sept-master.apk");
-				driver1 = new AppiumDriver(url, cap1);
+				cap1.setCapability("appPackage", "in.juspay.nammayatri");//CUG  
+				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG
+				cap1.setCapability("noReset", true);//CUG
+//				cap1.setCapability("appPackage", "in.juspay.nammayatri.debug");//debug
+//				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
+//				cap1.setCapability("noReset", true);//debug
+//				cap1.setCapability("app", "");
+//				driver1 = new AppiumDriver(url, cap1);
+				driver1 = new AndroidDriver(url, cap1);
 				implicitWaitMethod(driver1,60);
 				System.out.println("Launched the User Application");
 			}
@@ -107,9 +119,7 @@ public class BaseClass {
 		List<String> udids = new ArrayList<>();
 		try {
 
-			ProcessBuilder processBuilder = new ProcessBuilder("/Users/sumedh.kp/Library/Android/sdk/platform-tools/adb", "devices", "-l");   
-		//	/usr/local/bin/adb
-			//          System.out.println(System.getenv("PATH"));
+			ProcessBuilder processBuilder = new ProcessBuilder("/usr/local/bin/adb", "devices", "-l");   
 			Process process = processBuilder.start();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line;
@@ -129,10 +139,11 @@ public class BaseClass {
 		}
 		return udids;
 	}    
- 
+
 	public void implicitWaitMethod(Object obj,int durationInSeconds) {
 		((RemoteWebDriver) obj).manage().timeouts().implicitlyWait(durationInSeconds, TimeUnit.SECONDS);
 	}
+
 
 	@AfterSuite
 	public void tearDown() {
@@ -143,4 +154,5 @@ public class BaseClass {
 			driver1.quit();
 		}
 	}
+	
 }

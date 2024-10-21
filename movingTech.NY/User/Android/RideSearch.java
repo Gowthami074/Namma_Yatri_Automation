@@ -1,7 +1,15 @@
 package User.Android;
 
+import java.time.Duration;
+
+import org.openqa.selenium.TimeoutException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.IFactoryAnnotation;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
+import org.testng.xml.IFileParser;
 
 import com.google.common.collect.ImmutableMap;
 
@@ -23,18 +31,12 @@ public class RideSearch extends BaseClass {
         WebElement HomeWhereToButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']"));
         HomeWhereToButton.click();
         Thread.sleep(2000);
-
+        notificationPermission();
         WebElement RideSearchScreenDestinationBox = driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']"));
         RideSearchScreenDestinationBox.sendKeys("Koram");
         Thread.sleep(2000);
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Koramangala']")).click();
 
-
-
-    
-        
-        // this is notification we are getting only in vivo device, If we are not getting in other devices we can comment this x-path
-        // driver1.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW']")).click();
         
         WebElement ConfirmPickUpLocation = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']"));
 
@@ -118,7 +120,54 @@ public class RideSearch extends BaseClass {
 //            System.out.println("User Estimate Screen do not have  Text **Toll & Parking charges are included**");
 //        }
 //        
-//        
+//        public void notificationPermission() {
+
+
+		implicitWaitMethod(driver,5); //This method is defined in BaseClass
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5)); // Set a small explicit wait time
+
+		try {
+			// Wait for 'ALLOW' Pop_up
+			WebElement ALLOWPop_Up = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.xpath("//android.widget.Button[@text='ALLOW']")));
+			ALLOWPop_Up.click();
+		} catch (TimeoutException e) {
+
+		}
+		try {
+			//Wait for 'Allow' Pop_up
+			WebElement Allow_Pop_Up = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.xpath("//android.widget.Button[@text='Allow']")));
+			Allow_Pop_Up.click();
+
+
+		} catch (TimeoutException e) {
+		}
+
+	}
+	@Test
+	public void CUGRideSearch() throws InterruptedException {
+
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']")).click();
+
+
+		Thread.sleep(2000);
+		WebElement startAddress = driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='Pickup Location Editable field']"));
+		startAddress.clear();
+		startAddress.click();
+		startAddress.sendKeys("Nangal");
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Nangali']")).click();
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']")).sendKeys("Byra");
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Byrakur']")).click();
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
+
+		//If User book a ride far from the pickup location.
+		//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Ride']")).click();
+
+
+	}
+        
 //    }
     
     public void scroll(int a) throws InterruptedException
