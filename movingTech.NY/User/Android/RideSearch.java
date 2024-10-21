@@ -88,37 +88,50 @@ public class RideSearch extends BaseClass {
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
     }
 
-    @Test
-    public void TollRouteRideSearch() throws InterruptedException {
-        System.out.println("Ride Search about to start for the Toll Route/Bangalore Airport");
-        Thread.sleep(3000);
+    
+//    public void TollRouteRideSearch() throws InterruptedException {
+//        System.out.println("Ride Search about to start for the Toll Route/Bangalore Airport");
+//        Thread.sleep(3000);
+//
+//        // Initialize WebElements after driver1 is initialized
+//        WebElement HomeWhereToButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']"));
+//        HomeWhereToButton.click();
+//        Thread.sleep(2000);
+//
+//        WebElement RideSearchScreenDestinationBox = driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']"));
+//        RideSearchScreenDestinationBox.sendKeys("Airport");
+//        Thread.sleep(4000);
+//        driver1.navigate().back();
+//        
+//        driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Kempegowda International Airport Bengaluru (BLR)']")).click();
+//        Thread.sleep(2000);
+//        
+//        WebElement ConfirmPickUpLocation = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']"));
+//        ConfirmPickUpLocation.click();
+//        Thread.sleep(4000);
+//        
+//        WebElement TollTextAtEstimateScreen = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Toll & Parking charges are included']"));
+//        // validating if estimate Screen have Toll Text
+//        if (TollTextAtEstimateScreen.isDisplayed()) {
+//            System.out.println("User Estimate Screen have Toll Text info **Toll & Parking charges are included** Validated ");
+//        } else {
+//            System.out.println("User Estimate Screen do not have  Text **Toll & Parking charges are included**");
+//        }
+//        
+//        
+//    }
+    
+    public void scroll(int a) throws InterruptedException
+    {
+    for (int i=a; i<=a; i++) {
 
-        // Initialize WebElements after driver1 is initialized
-        WebElement HomeWhereToButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']"));
-        HomeWhereToButton.click();
-        Thread.sleep(2000);
-
-        WebElement RideSearchScreenDestinationBox = driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']"));
-        RideSearchScreenDestinationBox.sendKeys("Airport");
-        Thread.sleep(4000);
-        driver1.navigate().back();
-        
-        driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Kempegowda International Airport Bengaluru (BLR)']")).click();
-        Thread.sleep(2000);
-        
-        WebElement ConfirmPickUpLocation = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']"));
-        ConfirmPickUpLocation.click();
-        Thread.sleep(4000);
-        
-        WebElement TollTextAtEstimateScreen = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Toll & Parking charges are included']"));
-        // validating if estimate Screen have Toll Text
-        if (TollTextAtEstimateScreen.isDisplayed()) {
-            System.out.println("User Estimate Screen have Toll Text info **Toll & Parking charges are included** Validated ");
-        } else {
-            System.out.println("User Estimate Screen do not have  Text **Toll & Parking charges are included**");
-        }
-        
-        
+	boolean canScrollMore = (Boolean)driver1.executeScript("mobile: scrollGesture", ImmutableMap.of(
+			"left", 100, "top", 100, "width", 900, "height", 900,
+			"direction", "down",
+			"percent", 3.0
+			));
+	Thread.sleep(3000);
+    }
     }
 }
 
