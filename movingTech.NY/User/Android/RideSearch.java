@@ -123,7 +123,7 @@ public class RideSearch extends BaseClass {
     
     public void scroll(int a) throws InterruptedException
     {
-    for (int i=a; i<=a; i++) {
+    for (int i=0; i<=a; i++) {
 
 	boolean canScrollMore = (Boolean)driver1.executeScript("mobile: scrollGesture", ImmutableMap.of(
 			"left", 100, "top", 100, "width", 900, "height", 900,
