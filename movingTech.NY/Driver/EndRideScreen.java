@@ -27,7 +27,7 @@ public class EndRideScreen extends BaseClass {
 	// 	Thread.sleep(2000);
 //	}
 	@Test
-	public void clickEndRide() {
+	public void clickEndRide() throws InterruptedException {
 		
 		System.out.println("Coming to tap on the EndRide");
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='End Ride']")).click();
@@ -46,6 +46,8 @@ public class EndRideScreen extends BaseClass {
 		        driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='End Ride']")).click();
 		        driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc='End Ride : Button']")).click();
 		        System.out.println("Clicked on 'End'");
+		        driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare Collected']")).click();
+				Thread.sleep(2000);
 		    }
 		}
 

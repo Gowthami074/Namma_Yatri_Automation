@@ -19,6 +19,7 @@ import base.BaseClass;
 
 public class UserLoginFlow extends BaseClass {
 
+	DevicePermission devicePermission = new DevicePermission();
     // Method to read the mobile number from a file and increment it
     public String getNextMobileNumber() throws IOException {
         String mobileFilePath = "/Users/vinodkumar/Desktop/namma_yatri_automation_allu/movingTech.NY/Resources/mobile_number.txt"; // Path to a file where the number is stored
@@ -44,7 +45,6 @@ public class UserLoginFlow extends BaseClass {
 
     @Test
     public void successfulUserLogin() throws InterruptedException, IOException {
-        DevicePermission devicePermission = new DevicePermission();
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Get Started']")).click();
         Thread.sleep(2000);
         devicePermission.autoSuggestionDecline();
@@ -87,15 +87,12 @@ public class UserLoginFlow extends BaseClass {
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Male']")).click();
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Let’s go!']")).click();
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Allow Location Access']")).click();
-        DevicePermission devicePermission = new DevicePermission();
         devicePermission.locationPermissionsConfirmation();
     }
 
     public void grantPermissions() throws InterruptedException {
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Allow Location Access']")).click();
         WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(2));
-        wait.until(ExpectedConditions.elementToBeClickable(AppiumBy.xpath("//android.widget.TextView[@text='Allow Location Access']")));
-        DevicePermission devicePermission = new DevicePermission();
         devicePermission.locationPermissionsConfirmation();
         Thread.sleep(5000);
     }

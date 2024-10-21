@@ -62,7 +62,7 @@ public class BaseClass {
 			driverUdid = System.getProperty("driverUdid");
 			userUdid = System.getProperty("userUdid");
 
-			URL url = new URL("http://0.0.0.0:4725/wd/hub/");
+			URL url = new URL("http://0.0.0.0:4723/wd/hub/");
 
 			if (flowOption == 2 || flowOption == 3) {
 				// Driver
@@ -79,7 +79,7 @@ public class BaseClass {
 //				cap.setCapability("appPackage", "in.juspay.nammayatripartner.debug");//debug
 //				cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
 //				cap.setCapability("noReset", true);//debug
-      			cap.setCapability("app", "");
+      			cap.setCapability("app", "");//Driver apk path
 				driver = new AndroidDriver(url, cap);
 
 				implicitWaitMethod(driver,60);
@@ -95,13 +95,13 @@ public class BaseClass {
 				cap1.setCapability("udid", userUdid);
 				cap1.setCapability("automationName", "UiAutomator2");
 				cap1.setCapability("newCommandTimeout", 300);
-				cap1.setCapability("appPackage", "in.juspay.nammayatri");//CUG  
-				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG
-				cap1.setCapability("noReset", true);//CUG
+//				cap1.setCapability("appPackage", "in.juspay.nammayatri");//CUG  
+//				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG
+//				cap1.setCapability("noReset", true);//CUG
 //				cap1.setCapability("appPackage", "in.juspay.nammayatri.debug");//debug
 //				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
 //				cap1.setCapability("noReset", true);//debug
-//				cap1.setCapability("app", "");
+				cap1.setCapability("app", "");//User apk path
 //				driver1 = new AppiumDriver(url, cap1);
 				driver1 = new AndroidDriver(url, cap1);
 				implicitWaitMethod(driver1,60);
