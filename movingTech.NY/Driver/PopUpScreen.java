@@ -77,10 +77,19 @@ public class PopUpScreen extends BaseClass {
         } else {
             System.out.println("Start Ride Slider text is not validated");
         }
-
-
-
     }
+
+        @Test
+        public void GoToAcceptOffer() throws InterruptedException {
+            Thread.sleep(2000);
+            WebElement acceptButton = driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Accept “Go To”']"));
+            acceptButton.click();
+            System.out.println("Driver accepted the ride request");
+            Thread.sleep(3000);
+            
+        }
+
+    
  
     // Method to decline the ride offer (placeholder, not implemented)
     public void declineOffer() {
