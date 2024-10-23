@@ -120,7 +120,7 @@ public class RideSearch extends BaseClass {
 //            System.out.println("User Estimate Screen do not have  Text **Toll & Parking charges are included**");
 //        }
 //        
-//        public void notificationPermission() {
+        public void notificationPermission() {
 
 
 		implicitWaitMethod(driver,5); //This method is defined in BaseClass
@@ -169,6 +169,22 @@ public class RideSearch extends BaseClass {
 	}
         
 //    }
+	
+	@Test
+	public void SearchForRideForGoTo()throws InterruptedException {
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']")).click();
+		Thread.sleep(2000);
+		
+//		driver1.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow']")).click();
+		Thread.sleep(2000); 
+		
+		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']")).sendKeys("jayan");
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Jayanagar']")).click();
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
+		Thread.sleep(2000);
+}
     
     public void scroll(int a) throws InterruptedException
     {
