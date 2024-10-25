@@ -56,7 +56,7 @@ public class PopUpsHandling extends BaseClass{
 		try {
 			// Wait for 'Maybe Later' button (Points Overlay)
 			WebElement maybeLaterButton = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Maybe Later']")));
-			System.out.println("Skipping Points Overlay");
+			System.out.println("Clicking on may be later of Points Overlay");
 			maybeLaterButton.click();
 		} catch (TimeoutException e) {
 			System.out.println("No Points Overlay found");
