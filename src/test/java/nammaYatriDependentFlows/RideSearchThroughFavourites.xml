@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Normal Ride Flow with favourite locations">
+    <parameter name="flowOption" value="3"></parameter>
+    
+    <!-- DriverLogin -->
+    <test name="DriverLogin" group-by-instances="true">
+        <classes>
+            <class name="Driver.DriverLoginFlow">
+                <methods>
+                    <include name="successfulDriverLogin" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- UserLogin -->
+    <test name="UserLogin">
+        <classes>
+            <class name="User.Android.UserLoginFlow">
+                <methods>
+                    <include name="successfulUserLogin" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <!-- User is started to add favourite locations -->
+     <test name="User Adding the favourites">
+        <classes>
+            <class name="User.Android.RideFlowFromUserFvrtLocation">
+                <methods>
+                    <include name="Favourite"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <!-- RideSearch and Getting Estimates -->
+    <test name="RideSearch and Getting Estimates" >
+        <classes>
+            <class name="User.Android.RideSearch">
+                <methods>
+                    <include name="FvrtBooking"></include>
+                </methods>
+            </class>
+            <class name="User.Android.EstimateScreen">
+                <methods>
+                    <include name="autoAssignDriver"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Accepting the RideRequest -->
+    <test name="Accepting the RideRequest">
+        <classes>
+            <class name="Driver.PopUpScreen">
+                <methods>
+                    <include name="acceptOffer"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Reading OTP from OTP screen -->
+    <test name="Reading OTP from OTP screen" >
+        <classes>
+            <class name="User.Android.OTPScreen">
+                <methods>
+                    <include name="readOTP"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Starting the Ride -->
+    <test name="Starting the Ride">
+        <classes>
+            <class name="Driver.StartRideScreen">
+                <methods>
+                    <include name="startRide"></include>
+                </methods>
+            </class>
+            <class name="Driver.EnterOTPPopUp">
+                <methods>
+                    <include name="enterCorrectOTP"></include>
+                </methods>
+            </class>
+            <class name="Driver.AndroidBackButton">
+                <methods>
+                    <include name="tapBack"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Ending the Ride -->
+    <test name="Ending the Ride">
+        <classes>
+            <class name="Driver.EndRideScreen">
+                <methods>
+                    <include name="clickEndRide"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- User Giving Rating -->
+    <test name="User Giving Rating">
+        <classes>
+            <class name="User.Android.UserRatingScreen">
+                <methods>
+                    <include name="ratingScreen"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Driver Giving Rating -->
+    <test name="Driver Giving Rating">
+        <classes>
+            <class name="Driver.DriverRatingScreen">
+                <methods>
+                    <include name="ratingScreen"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+    <!-- User deleting the favourites-->
+    <test name="User deleting the favourite locations">
+        <classes>
+            <class name="User.Android.RideFlowFromUserFvrtLocation">
+                <methods>
+                    <include name="RemovingFavouriteLocation" />
+                </methods>
+            </class>
+        </classes>
+    </test>  
+</suite>
