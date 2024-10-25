@@ -164,8 +164,21 @@ public class RideSearch extends BaseClass {
 
 		//If User book a ride far from the pickup location.
 		//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Ride']")).click();
-
-
+	}
+	
+	@Test
+	public void FvrtBooking() throws InterruptedException {
+		System.out.println("User started the booking with favourite location");
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']")).click();
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='Pickup Location Editable field']")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Favourites']")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Current Location']")).click();
+		System.out.println("User selected the source through favourites");
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Work']")).click();
+		System.out.println("User selected the destination through favourites");
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();	
+		Thread.sleep(5000);
 	}
         
 //    }
