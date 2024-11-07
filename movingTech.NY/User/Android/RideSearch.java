@@ -89,37 +89,7 @@ public class RideSearch extends BaseClass {
         Thread.sleep(2000);
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
     }
-
-    
-//    public void TollRouteRideSearch() throws InterruptedException {
-//        System.out.println("Ride Search about to start for the Toll Route/Bangalore Airport");
-//        Thread.sleep(3000);
-//
-//        // Initialize WebElements after driver1 is initialized
-//        WebElement HomeWhereToButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']"));
-//        HomeWhereToButton.click();
-//        Thread.sleep(2000);
-//
-//        WebElement RideSearchScreenDestinationBox = driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']"));
-//        RideSearchScreenDestinationBox.sendKeys("Airport");
-//        Thread.sleep(4000);
-//        driver1.navigate().back();
-//        
-//        driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Kempegowda International Airport Bengaluru (BLR)']")).click();
-//        Thread.sleep(2000);
-//        
-//        WebElement ConfirmPickUpLocation = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']"));
-//        ConfirmPickUpLocation.click();
-//        Thread.sleep(4000);
-//        
-//        WebElement TollTextAtEstimateScreen = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Toll & Parking charges are included']"));
-//        // validating if estimate Screen have Toll Text
-//        if (TollTextAtEstimateScreen.isDisplayed()) {
-//            System.out.println("User Estimate Screen have Toll Text info **Toll & Parking charges are included** Validated ");
-//        } else {
-//            System.out.println("User Estimate Screen do not have  Text **Toll & Parking charges are included**");
-//        }
-//        
+      
         public void notificationPermission() {
 
 
@@ -211,6 +181,59 @@ public class RideSearch extends BaseClass {
 	Thread.sleep(3000);
     }
     }
+    
+    @Test
+	public void OdishaCUGRideSearch() throws InterruptedException {
+
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']")).click();
+
+
+		Thread.sleep(2000);
+		WebElement startAddress = driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='Pickup Location Editable field']"));
+		startAddress.clear();
+		startAddress.click();
+		startAddress.sendKeys("Maitri");
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Maitri Vihar']")).click();
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']")).sendKeys("Bhuba");
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Bhubaneswar']")).click();
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
+
+		//If User book a ride far from the pickup location.
+//				driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Ride']")).click();
+	}
+    
+    public void SelectDestThroughMap() throws InterruptedException {
+		Thread.sleep(2000);
+		System.out.println("Getting in for Locate on Map RideSearch");
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']")).click();
+	//	driver.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']")).click();
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select location on map']")).click();
+		scroll();
+		Thread.sleep(5000);
+		System.out.print("Scrolling is done");
+//		estimateScroll();
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Drop Location']")).click();
+		Thread.sleep(1000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
+		//driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Ride']")).click();
+	}
+	
+	public void scroll(){
+	for(int i=0;i<6;i++) {
+		{	
+			boolean canScrollMore = (Boolean)driver1.executeScript("mobile: scrollGesture", ImmutableMap.of(
+						"left", 100, "top", 100, "width", 900, "height", 900,
+						"direction", "down",
+						"percent", 3.0
+						));	
+		}	
+		}
+	}
 }
 
 

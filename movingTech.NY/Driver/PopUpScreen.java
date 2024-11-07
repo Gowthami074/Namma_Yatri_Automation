@@ -11,22 +11,16 @@ import base.BaseClass;
 import io.appium.java_client.AppiumBy;
 
 public class PopUpScreen extends BaseClass {
-    
-    // Method to wait for the 'Accept Offer' button to be present
-    public void waitForRideRequestPopup() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(100));
-        WebElement acceptOfferButton = wait.until(ExpectedConditions.presenceOfElementLocated(
-                AppiumBy.xpath("//android.widget.Button[@text='Accept Offer']")));
-        System.out.println("Waiting for 'Accept Offer' button to be present");
-    }
+	WebElement acceptRideButton;
+	
 
     // Method to accept the ride request
     @Test
     public void acceptOffer() throws InterruptedException {
-        Thread.sleep(2000);
-        System.out.println("Waiting to accept the request");
-        WebElement acceptButton = driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Accept Offer']"));
-        acceptButton.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        acceptRideButton = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.xpath("//android.widget.Button[@text='Accept Offer']")));
+        System.out.println("Waiting for 'Accept Offer' button to be present");
+        acceptRideButton.click();
         System.out.println("Driver accepted the ride request");
         Thread.sleep(3000);
     }
@@ -43,10 +37,7 @@ public class PopUpScreen extends BaseClass {
             System.out.println("Driver Side Pop Up Screen,Toll Included text is not validated on the Ride Request Pop up");
         }
         
-        Thread.sleep(1000);
-        System.out.println("Waiting to accept the request");
-        WebElement acceptButton = driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Accept Offer']"));
-        acceptButton.click();
+        acceptOffer();
         System.out.println("Driver accepted the ride request");
         Thread.sleep(3000);
         
@@ -81,7 +72,7 @@ public class PopUpScreen extends BaseClass {
 
         @Test
         public void GoToAcceptOffer() throws InterruptedException {
-            Thread.sleep(2000);
+        	Thread.sleep(2000);
             WebElement acceptButton = driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Accept “Go To”']"));
             acceptButton.click();
             System.out.println("Driver accepted the ride request");
