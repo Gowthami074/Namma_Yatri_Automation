@@ -40,8 +40,11 @@ public class EstimateScreen extends BaseClass {
     private void tapFinalXpath() {
         // Tapping on the final XPath element
         try {
-            driver1.findElement(AppiumBy.xpath("//android.widget.LinearLayout[@content-desc='Back : Button']/../../../android.widget.LinearLayout[2]/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.LinearLayout[2]/android.widget.LinearLayout[2]")).click();
-            System.out.println("Tapped on the final element.");
+//            driver1.findElement(AppiumBy.xpath("//android.widget.LinearLayout[@content-desc='Back : Button']/../../../android.widget.LinearLayout[2]/android.widget.RelativeLayout/android.widget.RelativeLayout/android.widget.LinearLayout[2]/android.widget.LinearLayout[2]")).click();
+        	driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc='Confirm Button to Proceed With Book Any']")).click(); 
+          //android.widget.TextView[@content-desc="Confirm Button to Proceed With Book Any"]
+        	System.out.println("Tapped on the final element.");;
+        	
         } catch (NoSuchElementException e) {
             System.out.println("Final element not found.");
         }
