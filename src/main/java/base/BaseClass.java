@@ -1,4 +1,4 @@
- package base;
+package base;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -73,13 +73,13 @@ public class BaseClass {
 				cap.setCapability("udid", driverUdid);
 				cap.setCapability("automationName", "UiAutomator2");
 				cap.setCapability("newCommandTimeout", 300);
-//				cap.setCapability("appPackage", "in.juspay.nammayatripartner");//CUG
-//				cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG
+//				cap.setCapability("appPackage", "in.mobility.odishayatripartner");//CUG  in.juspay.nammayatripartner
+//				cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG 
 //				cap.setCapability("noReset", true);//CUG
-//				cap.setCapability("appPackage", "in.juspay.nammayatripartner.debug");//debug
-//				cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
-//				cap.setCapability("noReset", true);//debug
-      			cap.setCapability("app", "");//Driver apk path
+				cap.setCapability("appPackage", "in.juspay.nammayatripartner.debug");//debug
+				cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
+				cap.setCapability("noReset", true);//debug
+				//      			cap.setCapability("app", "/Users/gowthami.allu/Documents/NammaYatriAutomation/movingTech.NY/Resources/driver-2-sept-master.apk");//Driver apk path
 				driver = new AndroidDriver(url, cap);
 
 				implicitWaitMethod(driver,60);
@@ -95,14 +95,15 @@ public class BaseClass {
 				cap1.setCapability("udid", userUdid);
 				cap1.setCapability("automationName", "UiAutomator2");
 				cap1.setCapability("newCommandTimeout", 300);
-//				cap1.setCapability("appPackage", "in.juspay.nammayatri");//CUG  
-//				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG
-//				cap1.setCapability("noReset", true);//CUG
-//				cap1.setCapability("appPackage", "in.juspay.nammayatri.debug");//debug
-//				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
-//				cap1.setCapability("noReset", true);//debug
-				cap1.setCapability("app", "");//User apk path
-//				driver1 = new AppiumDriver(url, cap1);
+				cap1.setCapability("appPackage", "in.mobility.odishayatri");//CUG  in.juspay.nammayatripartner
+				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG
+				cap1.setCapability("noReset", true);//CUG
+				//				cap1.setCapability("appPackage", "in.juspay.nammayatri");//CUG  
+				//				cap1.setCapability("appPackage", "in.juspay.nammayatri.debug");//debug
+				//				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
+				//				cap1.setCapability("noReset", true);//debug
+				//				cap1.setCapability("app", "/Users/gowthami.allu/Documents/NammaYatriAutomation/movingTech.NY/Resources/user-2-sept-master.apk");//User apk path
+				//				driver1 = new AppiumDriver(url, cap1);
 				driver1 = new AndroidDriver(url, cap1);
 				implicitWaitMethod(driver1,60);
 				System.out.println("Launched the User Application");
@@ -154,5 +155,5 @@ public class BaseClass {
 			driver1.quit();
 		}
 	}
-	
+
 }
