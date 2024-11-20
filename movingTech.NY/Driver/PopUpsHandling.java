@@ -113,6 +113,7 @@ public class PopUpsHandling extends BaseClass{
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 		try {
 			WebElement enablePermission = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Got it']")));
+			enablePermission.click();
 			System.out.println("Tapping on GotIt option in Take unlimited rides PopUp screen");
             
 		} catch(TimeoutException e) {

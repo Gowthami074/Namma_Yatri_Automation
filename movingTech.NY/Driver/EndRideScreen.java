@@ -1,6 +1,7 @@
 package Driver;
 
 import java.time.Duration;
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.openqa.selenium.WebElement;
@@ -16,45 +17,45 @@ public class EndRideScreen extends BaseClass {
 	boolean endRideSuccess = false;
 
 	PopUpsHandling popUpsHandling = new PopUpsHandling();
-	// @Test
-	// public void clickEndRide() throws InterruptedException {
-	// 	System.out.println("Checking Whether Points Overlay is displaying");
-	// 	popUpsHandling.pointsOverLay();
-	// 	System.out.println("Coming to tap on the EndRide");
-	// 	driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='End Ride']")).click();
-	// 	System.out.println("Waiting to tap on the Endride in the pop up");
-	// 	Thread.sleep(3000);
-	// 	driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc='End Ride : Button']")).click();
-	// 	Thread.sleep(3000);
-	// 	popUpsHandling.takeUnlimitedRidesPopUp();
-	// 	driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare Collected']")).click();
-	// 	Thread.sleep(2000);
-	//	}
 	@Test
 	public void clickEndRide() throws InterruptedException {
 
 		System.out.println("Coming to tap on the EndRide");
-		while (!endRideSuccess) {
-			implicitWaitMethod(driver,5);
-		    try {
-		        // Wait for up to 5 seconds for the "End Ride" button to appear
-		        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-		        endRideButton = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='End Ride']")));
-		        
-		        // Attempt to click the "End Ride" button
-		        endRideButton.click();
-		        
-		        // If an alternate "End Ride" confirmation is needed, click it
-		        WebElement confirmEndRideButton = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@content-desc='End Ride : Button']")));
-		        confirmEndRideButton.click();
-		        
-		        System.out.println("Clicked on 'End Ride : Button'");
-		        endRideSuccess = true;  // Break loop if successful
+		int maxRetries = 3;
+		int retryCount = 0;
 
-		    } catch (Exception e) {
-		        System.out.println("Retrying 'End Ride' button click...");
-		    }
+		while (!endRideSuccess && retryCount < maxRetries) { // Add a retry limit
+			implicitWaitMethod(driver, 5);
+			try {
+				// Wait for the "End Ride" button to appear
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+				endRideButton = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='End Ride']")));
+				endRideButton.click();
+
+				// Wait for and click the confirmation button
+				WebElement confirmEndRideButton = wait.until(ExpectedConditions.visibilityOfElementLocated(
+						AppiumBy.xpath("//android.widget.TextView[@content-desc='End Ride : Button']")
+						));
+				confirmEndRideButton.click();
+
+				System.out.println("Clicked on 'End Ride : Button'");
+				endRideSuccess = true; // Mark success to exit loop
+
+			} catch (Exception e) {
+				System.out.println("Retrying 'End Ride' button click...");
+				retryCount++; // Increment retry count on failure
+				if (retryCount >= maxRetries) {
+					System.out.println("Exceeded maximum retry attempts.");
+					break; // Exit loop if max retries reached
+				}
+			}
 		}
+
+		if (!endRideSuccess) {
+			System.out.println("Failed to end ride after maximum retries.");
+		}
+
+
 		implicitWaitMethod(driver,60);
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare Collected']")).click();
 
