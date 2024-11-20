@@ -8,7 +8,7 @@
         <classes>
             <class name="Driver.Simulation">
                 <methods>
-                    <include name="updateUserLocationForCUG"></include>
+                    <include name="ny_userLocationForCUG"></include>
                 </methods>
             </class>
         </classes>
@@ -19,7 +19,7 @@
         <classes>
             <class name="Driver.Simulation">
                 <methods>
-                    <include name="updateDriverLocationForCUG"></include>
+                    <include name="ny_driverLocationForCUG"></include>
                 </methods>
             </class>
         </classes>
@@ -68,7 +68,7 @@
 		<classes>
 			<class name="Driver.Simulation">
 				<methods>
-					<include name="pickupSimulation" />
+					<include name="CUGPickupSimualtion" />
 				</methods>
 			</class>
 		</classes>
@@ -100,7 +100,7 @@
 		<classes>
 			<class name="Driver.Simulation">
 				<methods>
-					<include name="dropSimulation" />
+					<include name="CUGDropSimualtion" />
 				</methods>
 			</class>
 		</classes>

@@ -6,9 +6,9 @@
     <!-- Mock User Location for CUG Ride Search -->
     <test name="Mock the User location">
         <classes>
-            <class name="Driver.OdishaCUGSimulation">
+            <class name="Driver.Simulation">
                 <methods>
-                    <include name="updateUserLocationForCUG"></include>
+                    <include name="od_userLocationForCUG"></include>
                 </methods>
             </class>
         </classes>
@@ -17,9 +17,9 @@
     <!-- Mock Driver Location for CUG Ride Search -->
     <test name="Mock the Driver location">
         <classes>
-            <class name="Driver.OdishaCUGSimulation">
+            <class name="Driver.Simulation">
                 <methods>
-                    <include name="updateDriverLocationForCUG"></include>
+                    <include name="od_driverLocationForCUG"></include>
                 </methods>
             </class>
         </classes>
@@ -66,9 +66,9 @@
 <!-- Simulation Before starting the ride-->
 <test name="Simulation">
 		<classes>
-			<class name="Driver.OdishaCUGSimulation">
+			<class name="Driver.Simulation">
 				<methods>
-					<include name="pickupSimulation" />
+					<include name="CUGPickupSimualtion" />
 				</methods>
 			</class>
 		</classes>
@@ -98,9 +98,9 @@
   <!-- Simulation Before starting the ride-->
 <test name="Simulation2">
 		<classes>
-			<class name="Driver.OdishaCUGSimulation">
+			<class name="Driver.Simulation">
 				<methods>
-					<include name="dropSimulation" />
+					<include name="CUGDropSimualtion" />
 				</methods>
 			</class>
 		</classes>
