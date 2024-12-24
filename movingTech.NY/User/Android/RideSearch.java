@@ -90,7 +90,7 @@ public class RideSearch extends BaseClass {
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
     }
       
-        public void notificationPermission() {
+      	public void notificationPermission() {
 
 
 		implicitWaitMethod(driver,5); //This method is defined in BaseClass
@@ -209,13 +209,11 @@ public class RideSearch extends BaseClass {
 		Thread.sleep(2000);
 		System.out.println("Getting in for Locate on Map RideSearch");
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']")).click();
-	//	driver.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']")).click();
 		Thread.sleep(2000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select location on map']")).click();
-		scroll();
+		scroll(6);
 		Thread.sleep(5000);
 		System.out.print("Scrolling is done");
-//		estimateScroll();
 		Thread.sleep(2000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Drop Location']")).click();
 		Thread.sleep(1000);
