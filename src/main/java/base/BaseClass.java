@@ -1,8 +1,6 @@
 package base;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -10,22 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.io.FileHandler;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.ITestResult;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 
+
+import TestReport.AppReport;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.StartsActivity;
-import io.qameta.allure.Attachment;
 
 
 public class BaseClass {
@@ -36,11 +28,13 @@ public class BaseClass {
 	public int flowOption;
 	public static List<String> udids;
 	protected static String driverUdid, userUdid;
-
+    AppReport appreport =new AppReport();
+ 
 	@BeforeSuite
 	@Parameters("flowOption")
 	public void setUp(int flowOption) throws MalformedURLException {
-
+		
+		
 		try {
 			this.flowOption = flowOption;
 			udids = getDeviceUDIDs();
@@ -63,7 +57,7 @@ public class BaseClass {
 			userUdid = System.getProperty("userUdid");
 
 			URL url = new URL("http://0.0.0.0:4723/wd/hub/");
-
+			appreport.clearExistingJSONFiles();
 			if (flowOption == 2 || flowOption == 3) {
 				// Driver
 				System.out.println("Setting the capabilities of the Driver Application and Driver app Installation is in Progress");
@@ -81,7 +75,6 @@ public class BaseClass {
 				cap.setCapability("noReset", true);//debug
 				//      			cap.setCapability("app", "/Users/gowthami.allu/Documents/NammaYatriAutomation/movingTech.NY/Resources/driver-2-sept-master.apk");//Driver apk path
 				driver = new AndroidDriver(url, cap);
-
 				implicitWaitMethod(driver,60);
 				System.out.println("Launched the Driver Application");
 			}
@@ -95,12 +88,12 @@ public class BaseClass {
 				cap1.setCapability("udid", userUdid);
 				cap1.setCapability("automationName", "UiAutomator2");
 				cap1.setCapability("newCommandTimeout", 300);
-				cap1.setCapability("appPackage", "in.mobility.odishayatri");//CUG  in.juspay.nammayatripartner
-				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG
+//				cap1.setCapability("appPackage", "in.mobility.odishayatri");//CUG  in.juspay.nammayatripartner
+//				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG
 				cap1.setCapability("noReset", true);//CUG
 				//				cap1.setCapability("appPackage", "in.juspay.nammayatri");//CUG  
-				//				cap1.setCapability("appPackage", "in.juspay.nammayatri.debug");//debug
-				//				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
+								cap1.setCapability("appPackage", "in.juspay.nammayatri.debug");//debug
+								cap1.setCapability("appActivity", "com.mobility.movingtech.MainActivity");//debug
 				//				cap1.setCapability("noReset", true);//debug
 				//				cap1.setCapability("app", "/Users/gowthami.allu/Documents/NammaYatriAutomation/movingTech.NY/Resources/user-2-sept-master.apk");//User apk path
 				//				driver1 = new AppiumDriver(url, cap1);
@@ -120,7 +113,7 @@ public class BaseClass {
 		List<String> udids = new ArrayList<>();
 		try {
 
-			ProcessBuilder processBuilder = new ProcessBuilder("/usr/local/bin/adb", "devices", "-l");   
+			ProcessBuilder processBuilder = new ProcessBuilder("/Users/sumedh.kp/Library/Android/sdk/platform-tools/adb", "devices", "-l");   
 			Process process = processBuilder.start();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line;
@@ -148,12 +141,13 @@ public class BaseClass {
 
 	@AfterSuite
 	public void tearDown() {
-		if (driver != null) {
-			driver.quit();
-		}
-		if (driver1 != null) {
-			driver1.quit();
-		}
+	    // Quit the Appium drivers
+	    if (driver != null) {
+	        driver.quit();
+	    }
+	    if (driver1 != null) {
+	        driver1.quit();
+	    }
+	    appreport.generateReport();
 	}
-
 }
