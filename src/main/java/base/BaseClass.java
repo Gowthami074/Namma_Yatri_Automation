@@ -13,8 +13,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
-
-
 import TestReport.AppReport;
 import Utils.ConfigLoader;
 import io.appium.java_client.AppiumDriver;
@@ -34,7 +32,6 @@ public class BaseClass {
 	@BeforeSuite
 	@Parameters({"flowOption","userApp","driverApp"})
 	public void setUp(int flowOption,String userApp, String driverApp) throws MalformedURLException {
-		
 		try {
 			this.flowOption = flowOption;
 			udids = getDeviceUDIDs();
@@ -104,7 +101,7 @@ public class BaseClass {
 	public static List<String> getDeviceUDIDs() {
 		List<String> udids = new ArrayList<>();
 		try {
-			
+
 			ProcessBuilder processBuilder = new ProcessBuilder(ConfigLoader.getProperty("adbPath"), "devices", "-l");   
 			Process process = processBuilder.start();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
