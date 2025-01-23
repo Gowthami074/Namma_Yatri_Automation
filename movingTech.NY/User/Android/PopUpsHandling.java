@@ -1,0 +1,42 @@
+package User.Android;
+
+import java.time.Duration;
+
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import base.BaseClass;
+import io.appium.java_client.AppiumBy;
+import io.netty.handler.timeout.TimeoutException;
+
+public class PopUpsHandling extends BaseClass{
+
+	public void googleServicePhoneNumberAutofill() {
+		implicitWaitMethod(driver1,5);
+		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
+
+		try {
+			// Check if the Google autofill overlay pop-up is displayed
+			WebElement googleServicePopUp = wait.until(ExpectedConditions.visibilityOfElementLocated(
+					AppiumBy.xpath("//android.widget.FrameLayout[@resource-id='com.google.android.gms:id/design_bottom_sheet']/android.widget.LinearLayout")
+					));
+
+			if (googleServicePopUp.isDisplayed()) {
+				System.out.println("Autofill overlay is displayed. Closing it now.");
+
+				// Tap the "X" button to close the pop-up
+				WebElement closeButton = driver1.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Cancel']"));
+				closeButton.click();
+
+				System.out.println("Autofill overlay closed successfully.");
+			}
+		} catch (TimeoutException e) {
+			System.out.println("Autofill overlay did not appear, continuing test.");
+		} catch (Exception e) {
+			System.out.println("An error occurred while handling the pop-up: " + e.getMessage());
+		}
+		implicitWaitMethod(driver1,60);
+	}
+}
+
