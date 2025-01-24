@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+import Utils.ConfigLoader;
 import base.BaseClass;
 import io.appium.java_client.AppiumBy;
 
@@ -18,7 +19,9 @@ public class DriverLoginFlow extends BaseClass{
     PopUpsHandling popUpsHandling = new PopUpsHandling();
 	@Test
 	public void successfulDriverLogin() throws InterruptedException {
+		String mobileNumber = ConfigLoader.getProperty("driver.mobile.number");
 		System.out.println("Driver login begins");
+		implicitWaitMethod(driver, 10);
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Enable Location']")).click();
 		Thread.sleep(2000);
 		System.out.println(driverUdid);
@@ -54,9 +57,7 @@ public class DriverLoginFlow extends BaseClass{
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Get Started']")).click();
 		Thread.sleep(2000);
 		System.out.println("Entering Mobile Number");
-
-		driver.findElement(AppiumBy.xpath("//android.widget.EditText[@text='10-digit mobile number']")).sendKeys("8337860003"); 
-
+		driver.findElement(AppiumBy.xpath("//android.widget.EditText[@text='10-digit mobile number']")).sendKeys(mobileNumber); 
 		Thread.sleep(2000);
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']")).click();
 		Thread.sleep(2000);

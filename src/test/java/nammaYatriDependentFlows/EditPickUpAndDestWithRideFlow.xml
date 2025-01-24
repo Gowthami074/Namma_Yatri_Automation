@@ -2,6 +2,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="UserEditingPickupAndDestWithRideflow">
     <parameter name="flowOption" value="3"></parameter>
+    <parameter name="userApp" value="nammaYatriDebug"/>
+	<parameter name="driverApp" value="nammaYatriPartnerDebug"/>
     
     <!-- DriverLogin -->
     <test name="DriverLogin" group-by-instances="true">
