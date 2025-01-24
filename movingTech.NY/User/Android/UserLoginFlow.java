@@ -13,6 +13,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
 
+import io.appium.java_client.android.AndroidDriver;
+
 
 import Utils.ConfigLoader;
 
@@ -49,7 +51,8 @@ public class UserLoginFlow extends BaseClass {
 	}
 
 	@Test
-	public void successfulUserLogin() throws InterruptedException, IOException {
+	public void successfulUserLogin() throws Exception {
+		devicePermission.notification();
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Get Started']")).click();
 		Thread.sleep(2000);
 		//    devicePermission.autoSuggestionDecline();
@@ -73,36 +76,66 @@ public class UserLoginFlow extends BaseClass {
 		for (KeyEvent event : keyEvents) {
 			((PressesKey) driver1).pressKey(event);
 		}
-		implicitWaitMethod(driver,5);
+
+		implicitWaitMethod(driver1,5);
 		try {
-			WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(10));
-			WebElement registrationElement = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Just one last thing']")));
+			WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
+			WebElement registrationElement = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Let’s get you trip-ready!']")));
 			if (registrationElement.isDisplayed()) {
 				System.out.println("New number, proceeding registration.");
 				registration();
 			}
 		} catch (NoSuchElementException | org.openqa.selenium.TimeoutException e) {
 			System.out.println("Registration screen not found, checking for 'Grant Permissions' screen.");
-			try {
-				WebElement permissionsElement = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Allow Location Access']"));
-				if (permissionsElement.isDisplayed()) {
-					System.out.println("Navigating to 'Grant Permissions' screen.");
-					grantPermissions();
-				}
-			} catch (NoSuchElementException ex) {
-				System.out.println("Neither 'Registration' nor 'Grant Permissions' screen found.");
-			}
+			devicePermission.grantLocationAccess();
+			devicePermission.locationPermissionsConfirmation();
+
 		}
-		implicitWaitMethod(driver1,60);
 	}
-	public void registration() {
-		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Enter Your Name']")).sendKeys("Vinod");
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select Your Gender']")).click();
+
+
+	public void registration() throws Exception {
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Full Name (Helps driver confirm it is you)']/../android.view.ViewGroup/android.widget.EditText")).sendKeys("Automation");
+		WebElement registrationEmailElement=driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email']/../android.view.ViewGroup/android.widget.EditText"));
+		registrationEmailElement.sendKeys("automation@gmail.com");
+		((AndroidDriver) driver1).hideKeyboard();
+		WebElement continuebuttonElement =driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']"));
+		continuebuttonElement.click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Gender is required']"));
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Please choose one option']"));
+		System.out.println("Validated error message for 'Continue' without gender and disability");
+
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email']/../android.view.ViewGroup/android.widget.ImageButton")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email']/../android.view.ViewGroup/android.widget.EditText")).sendKeys(getNextMobileNumber()+"automation@gmail.com");
+		((AndroidDriver) driver1).hideKeyboard();
+		WebElement genderDropdown= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select Your Gender']/../android.view.ViewGroup/com.horcrux.svg.SvgView"));
+		genderDropdown.click();	
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Other']")).click();
+		genderDropdown.click();	
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Female']")).click();
+		genderDropdown.click();
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Male']")).click();
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Let’s go!']")).click();
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Allow Location Access']")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='No']/../../../android.view.ViewGroup/android.view.ViewGroup/com.horcrux.svg.SvgView")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Yes']/../../../android.view.ViewGroup/android.view.ViewGroup/com.horcrux.svg.SvgView")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Special Assistance']"));
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select the condition applicable to you (As per RPWD act 2016)']"));
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Blind/Low Vision']")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Hearing Impairment (Deaf/Mute)']")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Locomotor Disability']")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='By continuing, you are declaring your status as a person with a disability under the RPWD act of 2016']"));
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='My disability is not listed here']")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Your Disability (helps us optimise the app for you)']/../android.widget.EditText")).sendKeys("NA");
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Submit']")).click();	
+		System.out.println("New user registration completed with disability and validated related text.");
+		continuebuttonElement.click();
+//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email is already registered.']"));
+//		continuebuttonElement.click();
+		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(2));
+		devicePermission.grantLocationAccess();
 		devicePermission.locationPermissionsConfirmation();
 	}
+
 	public void grantPermissions() throws InterruptedException {
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Allow Location Access']")).click();
 		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(2));

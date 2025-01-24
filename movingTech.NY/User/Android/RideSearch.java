@@ -25,14 +25,13 @@ public class RideSearch extends BaseClass {
     @Test    
     public void SearchForRideFromSuggestion() throws InterruptedException {
         System.out.println("Ride Search about to start");
-        Thread.sleep(3000);
+        Thread.sleep(5000);
         
         // Initialize WebElements after driver1 is initialized
         WebElement HomeWhereToButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']"));
         HomeWhereToButton.click();
         Thread.sleep(2000);
-        notificationPermission();
-        WebElement RideSearchScreenDestinationBox = driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']"));
+        WebElement RideSearchScreenDestinationBox = driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where are you going?']"));
         RideSearchScreenDestinationBox.sendKeys("Koram");
         Thread.sleep(2000);
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Koramangala']")).click();
