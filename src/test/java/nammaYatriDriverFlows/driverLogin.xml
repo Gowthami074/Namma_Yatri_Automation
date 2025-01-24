@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
 <suite name="Suite">
-	<parameter name="flowOption" value="2"></parameter>
+<parameter name="flowOption" value="2"/>
+<parameter name="userApp" value="nammaYatriDebug"/>
+<parameter name="driverApp" value="nammaYatriPartnerDebug"/>
+
 	<test name="DriverLogin">
 		<classes>
 			<class name="Driver.DriverLoginFlow">

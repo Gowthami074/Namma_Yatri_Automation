@@ -16,6 +16,7 @@ import org.testng.annotations.Parameters;
 
 
 import TestReport.AppReport;
+import Utils.ConfigLoader;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 
@@ -31,9 +32,8 @@ public class BaseClass {
     AppReport appreport =new AppReport();
  
 	@BeforeSuite
-	@Parameters("flowOption")
-	public void setUp(int flowOption) throws MalformedURLException {
-		
+	@Parameters({"flowOption","userApp","driverApp"})
+	public void setUp(int flowOption,String userApp, String driverApp) throws MalformedURLException {
 		
 		try {
 			this.flowOption = flowOption;
@@ -67,13 +67,10 @@ public class BaseClass {
 				cap.setCapability("udid", driverUdid);
 				cap.setCapability("automationName", "UiAutomator2");
 				cap.setCapability("newCommandTimeout", 300);
-//				cap.setCapability("appPackage", "in.mobility.odishayatripartner");//CUG  in.juspay.nammayatripartner
-//				cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG 
-//				cap.setCapability("noReset", true);//CUG
-				cap.setCapability("appPackage", "in.juspay.nammayatripartner.debug");//debug
-				cap.setCapability("appActivity", "in.juspay.mobility.MainActivity");//debug
+				cap.setCapability("appPackage", ConfigLoader.getProperty(driverApp + ".appPackage"));
+				cap.setCapability("appActivity", ConfigLoader.getProperty(driverApp + ".appActivity"));
 				cap.setCapability("noReset", true);//debug
-				//      			cap.setCapability("app", "/Users/gowthami.allu/Documents/NammaYatriAutomation/movingTech.NY/Resources/driver-2-sept-master.apk");//Driver apk path
+ //    			cap.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/user-2-sept-master.apk");
 				driver = new AndroidDriver(url, cap);
 				implicitWaitMethod(driver,60);
 				System.out.println("Launched the Driver Application");
@@ -88,15 +85,10 @@ public class BaseClass {
 				cap1.setCapability("udid", userUdid);
 				cap1.setCapability("automationName", "UiAutomator2");
 				cap1.setCapability("newCommandTimeout", 300);
-//				cap1.setCapability("appPackage", "in.mobility.odishayatri");//CUG  in.juspay.nammayatripartner
-//				cap1.setCapability("appActivity", "in.juspay.mobility.MainActivity");//CUG
-				cap1.setCapability("noReset", true);//CUG
-				//				cap1.setCapability("appPackage", "in.juspay.nammayatri");//CUG  
-								cap1.setCapability("appPackage", "in.juspay.nammayatri.debug");//debug
-								cap1.setCapability("appActivity", "com.mobility.movingtech.MainActivity");//debug
-				//				cap1.setCapability("noReset", true);//debug
-				//				cap1.setCapability("app", "/Users/gowthami.allu/Documents/NammaYatriAutomation/movingTech.NY/Resources/user-2-sept-master.apk");//User apk path
-				//				driver1 = new AppiumDriver(url, cap1);
+				cap1.setCapability("appPackage", ConfigLoader.getProperty(userApp + ".appPackage"));
+				cap1.setCapability("appActivity",ConfigLoader.getProperty(userApp + ".appActivity"));
+				cap1.setCapability("noReset", true);
+//         		cap1.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/driver-2-sept-master.apk");//Driver apk path
 				driver1 = new AndroidDriver(url, cap1);
 				implicitWaitMethod(driver1,60);
 				System.out.println("Launched the User Application");
@@ -112,8 +104,8 @@ public class BaseClass {
 	public static List<String> getDeviceUDIDs() {
 		List<String> udids = new ArrayList<>();
 		try {
-
-			ProcessBuilder processBuilder = new ProcessBuilder("/Users/sumedh.kp/Library/Android/sdk/platform-tools/adb", "devices", "-l");   
+			
+			ProcessBuilder processBuilder = new ProcessBuilder(ConfigLoader.getProperty("adbPath"), "devices", "-l");   
 			Process process = processBuilder.start();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			String line;

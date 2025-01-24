@@ -11,6 +11,8 @@ import java.io.IOException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
+
+import Utils.ConfigLoader;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.android.nativekey.PressesKey;
@@ -20,9 +22,7 @@ public class UserLoginFlow extends BaseClass {
 
 	DevicePermission devicePermission = new DevicePermission();
 	PopUpsHandling popupshandling = new PopUpsHandling();
-	//	List<Integer> otpDigits = List.of(7, 8, 9, 1);
-
-
+	
 	// Method to read the mobile number from a file and increment it
 	public String getNextMobileNumber() throws IOException {
 		String mobileFilePath = "/Users/sumedh.kp/Desktop/Appium Automation/Namma_Yatri_Automation/movingTech.NY/Resources/mobile_number.txt"; // Path to a file where the number is stored
@@ -54,7 +54,7 @@ public class UserLoginFlow extends BaseClass {
 		Thread.sleep(1000);
 		popupshandling.googleServicePhoneNumberAutofill();
 		// Get dynamically incremented mobile number
-		String mobileNumber = getNextMobileNumber();
+		String mobileNumber = ConfigLoader.getProperty("customer.mobile.number");
 		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='10-digit mobile number']")).sendKeys(mobileNumber);
 		Thread.sleep(2000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']")).click();

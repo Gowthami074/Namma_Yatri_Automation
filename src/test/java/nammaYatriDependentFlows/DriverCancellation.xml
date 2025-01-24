@@ -2,6 +2,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Normal Ride Flow">
     <parameter name="flowOption" value="3"></parameter>
+    <parameter name="userApp" value="nammaYatriDebug"/>
+	<parameter name="driverApp" value="nammaYatriPartnerDebug"/>	
     
     <!-- DriverLogin -->
     <test name="DriverLogin" group-by-instances="true">
@@ -24,7 +26,7 @@
             </class>
         </classes>
     </test>
-
+   
     <!-- RideSearch and Getting Estimates -->
     <test name="RideSearch and Getting Estimates" >
         <classes>
