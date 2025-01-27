@@ -38,5 +38,21 @@ public class PopUpsHandling extends BaseClass{
 		}
 		implicitWaitMethod(driver1,60);
 	}
+	public void AC_PopUp() {
+		implicitWaitMethod(driver1,5);
+		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
+		try {
+			WebElement acPopUp = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Has your driver set the AC as per your preference? ']")));
+			if(acPopUp.isDisplayed()) {
+				driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Yes']")).click();
+				System.out.println("Tapped on Yes in the AC Pop Up");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("AC overlay did not appear, continuing test.");
+		}
+		
+		
+	}
 }
 
