@@ -1,48 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="UserEditingPickupAndDestWithRideflow">
+<suite name="UserEditingPickupAndDestWithRideflow" >
     <parameter name="flowOption" value="3"></parameter>
     <parameter name="userApp" value="nammaYatriDebug"/>
-	<parameter name="driverApp" value="nammaYatriPartnerDebug"/>
-    
-    <!-- DriverLogin -->
-    <test name="DriverLogin" group-by-instances="true">
-        <classes>
-            <class name="Driver.DriverLoginFlow">
-                <methods>
-                    <include name="successfulDriverLogin" />
-                </methods>
-            </class>
-        </classes>
-    </test>
-
-    <!-- UserLogin -->
-    <test name="UserLogin">
-        <classes>
-            <class name="User.Android.UserLoginFlow">
-                <methods>
-                    <include name="successfulUserLogin" />
-                </methods>
-            </class>
-        </classes>
-    </test>
-
-    <!-- RideSearch and Getting Estimates -->
-    <test name="RideSearch and Getting Estimates" >
+	<parameter name="driverApp" value="nammaYatriPartnerDebug"/> 
+    <!-- User Doing ride search through maps-->
+  <test name="Ride search">
         <classes>
             <class name="User.Android.RideSearch">
                 <methods>
-                    <include name="SearchForRideFromSuggestion"></include>
-                </methods>
-            </class>
-            <class name="User.Android.EstimateScreen">
-                <methods>
-                    <include name="autoAssignDriver"></include>
+                    <include name="SelectDestThroughMap()" />
                 </methods>
             </class>
         </classes>
     </test>
-    <!-- Accepting the RideRequest -->
+    <!-- Estimate screen-->
+     <test name="Estimate screen">
+        <classes>
+            <class name="User.Android.EstimateScreen">
+                <methods>
+                    <include name="react_variantSelection()"></include>
+                     <include name="slideToBook()"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+     <!--  <!Accepting the RideRequest -->
     <test name="Accepting the RideRequest">
         <classes>
             <class name="Driver.PopUpScreen">
@@ -53,109 +37,44 @@
         </classes>
     </test>
     
-    <!-- Editing the pickup location-->
- <test name="Edit pickup">
+    <test name="Editing the src and dest">
         <classes>
             <class name="User.Android.EditPickupAndDest">
                 <methods>
-                    <include name="EditPickup" />
+                    <include name="EditPickup()"></include>
+                    <include name="EditDestination()"></include>
                 </methods>
             </class>
         </classes>
     </test>
     
-    <!-- Accepting the EditPickUp Request-->
-    <test name="Accepting the edit request" >
-        <classes>
-            <class name="Driver.EditPickupDestRequest">
-                <methods>
-                    <include name="handleeditpickuppopup"></include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-    
-    <!-- Reading OTP from OTP screen -->
-    <test name="Reading OTP from OTP screen" >
-        <classes>
-            <class name="User.Android.OTPScreen">
-                <methods>
-                    <include name="readOTP"></include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-
-    <!-- Starting the Ride -->
-    <test name="Starting the Ride">
+     <test name="Satrting the ride">
         <classes>
             <class name="Driver.StartRideScreen">
                 <methods>
-                    <include name="startRide"></include>
-                </methods>
-            </class>
-            <class name="Driver.EnterOTPPopUp">
-                <methods>
-                    <include name="enterCorrectOTP"></include>
-                </methods>
-            </class>
-            <class name="Driver.AndroidBackButton">
-                <methods>
-                    <include name="tapBack"></include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-<!-- User Editing the destination-->
-  <test name="Edit Destination">
-        <classes>
-            <class name="User.Android.EditPickupAndDest">
-                <methods>
-                    <include name="EditDestination" />
-                </methods>
-            </class>
-        </classes>
-    </test>
- 
- <!-- Accepting the EditDestination Request-->
-    <test name="Accepting the edit Desrequest" >
-        <classes>
-            <class name="Driver.EditPickupDestRequest">
-                <methods>
-                    <include name="handleeditdestpopup"></include>
+                    
+                    <include name="startRide()"></include>
                 </methods>
             </class>
         </classes>
     </test>
     
-    <!-- Ending the Ride -->
-    <test name="Ending the Ride">
+    <test name="Ending the ride">
         <classes>
             <class name="Driver.EndRideScreen">
                 <methods>
-                    <include name="clickEndRide"></include>
+                    
+                    <include name="clickEndRide()"></include>
                 </methods>
             </class>
         </classes>
     </test>
-
-    <!-- User Giving Rating -->
-    <test name="User Giving Rating">
+    
+  <test name="Rate the ride ">
         <classes>
-            <class name="User.Android.UserRatingScreen">
-                <methods>
-                    <include name="ratingScreen"></include>
-                </methods>
-            </class>
-        </classes>
-    </test>
-
-    <!-- Driver Giving Rating -->
-    <test name="Driver Giving Rating">
-        <classes>
-            <class name="Driver.DriverRatingScreen">
-                <methods>
-                    <include name="ratingScreen"></include>
+            <class name="Driver.EndRideScreen">
+                <methods>   
+                    <include name="ratingScreen()"></include>
                 </methods>
             </class>
         </classes>
