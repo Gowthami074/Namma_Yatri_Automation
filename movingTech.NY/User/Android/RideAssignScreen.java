@@ -21,22 +21,6 @@ public class RideAssignScreen extends BaseClass {
 	// write about all possible ways like contct customer /sos
 
 
-	public void cancelRide() {
-
-
-
-	}
-
-	public void clickEmergencyHelp() {
-
-
-	}
-
-	public void clickCustomerSupportCall() {
-
-
-	}
-
 	@Test
 	public void TollTextAtOtpSlider() {
 		WebElement OtpSheetTollText = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Toll Charges Included']"));
