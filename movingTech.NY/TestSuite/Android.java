@@ -11,8 +11,8 @@ import Driver.StartRideScreen;
 import Driver.DriverCancellation;
 import User.Android.EstimateScreen;
 import User.Android.InterCity;
-import User.Android.OTPScreen;
 import User.Android.Rentals;
+import User.Android.RideAssignScreen;
 import User.Android.RideSearch;
 import User.Android.UserCancellation;
 import User.Android.UserLoginFlow;
@@ -84,7 +84,7 @@ public class Android extends BaseClass {
 				                new RideSearch().SearchForRideFromSuggestion();
 				                new EstimateScreen().autoAssignDriver();
 				                barrier.await(); // 2nd barrier: Wait for driver to reach the 2nd barrier
-				                new OTPScreen().readOTP();
+				                new RideAssignScreen().readOTP();
 				                barrier.await(); // 3rd barrier: Wait for driver to accept the offer
 				                new UserRatingScreen().ratingScreen();
 				                

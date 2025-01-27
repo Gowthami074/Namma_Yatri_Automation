@@ -58,7 +58,7 @@ public class EndRideScreen extends BaseClass {
 
 		implicitWaitMethod(driver,60);
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare Collected']")).click();
-
+		popUpsHandling.takeUnlimitedRidesPopUp();
 	}
 
 
