@@ -5,39 +5,18 @@
     <parameter name="userApp" value="nammaYatriDebug"/>
 	<parameter name="driverApp" value="nammaYatriPartnerDebug"/>	
     
-    <!-- DriverLogin -->
-    <test name="DriverLogin" group-by-instances="true">
-        <classes>
-            <class name="Driver.DriverLoginFlow">
-                <methods>
-                    <include name="successfulDriverLogin" />
-                </methods>
-            </class>
-        </classes>
-    </test>
-
-    <!-- UserLogin -->
-    <test name="UserLogin">
-        <classes>
-            <class name="User.Android.UserLoginFlow">
-                <methods>
-                    <include name="successfulUserLogin" />
-                </methods>
-            </class>
-        </classes>
-    </test>
-   
     <!-- RideSearch and Getting Estimates -->
     <test name="RideSearch and Getting Estimates" >
         <classes>
             <class name="User.Android.RideSearch">
                 <methods>
-                    <include name="SearchForRideFromSuggestion"></include>
+                    <include name="SelectDestThroughMap"></include>
                 </methods>
             </class>
             <class name="User.Android.EstimateScreen">
                 <methods>
-                    <include name="autoAssignDriver"></include>
+                <include name ="react_variantSelection" />
+                <include name= "slideToBook" />
                 </methods>
             </class>
         </classes>
