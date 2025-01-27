@@ -9,9 +9,11 @@ import base.BaseClass;
 import Driver.DriverprofileScreen;
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 public class EstimateScreen extends BaseClass {
 	@Test
@@ -133,8 +135,7 @@ public class EstimateScreen extends BaseClass {
 			variant.click();
 			System.out.println(vehicleVariantText + " variant slected ");
 			Thread.sleep(3000);
-			slideToBook();
-			System.out.println("Searching initiated: Looking for an awesome ride.");
+			
 
 		}
 
@@ -173,6 +174,151 @@ public class EstimateScreen extends BaseClass {
 		// Perform the action
 		driver1.perform(Arrays.asList(dragAndDrop));
 		Thread.sleep(5000);
+		System.out.println("Searching initiated: Looking for an awesome ride.");
 
 	}
+	
+//For Tip Add
+    
+    @Test
+    public void AddingTipFromEstimateScreen() throws InterruptedException {
+        // Soft Try-Catch to validate if locators are present
+        WebElement WishToAddTipText;
+        WebElement AddTipText;
+
+        try {
+            WishToAddTipText = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text = 'Wish to add a tip?']"));
+            System.out.println("**Tip Test case PASS::WishToAddTipText element found.**");
+        } catch (NoSuchElementException e) {
+            System.out.println("**Tip Test case FAIL:: WishToAddTipText element not found: " + e.getMessage());
+        }
+
+        try {
+            AddTipText = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text = 'Add Tip']"));
+            System.out.println("**Tip Test case PASS::AddTipText element found.**");
+        } catch (NoSuchElementException e) {
+            System.out.println("**Tip Test case FAIL::AddTipText element not found: " + e.getMessage());
+        }
+
+        // Tapping on 'Add Tip' and accessing the tips layout
+        driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text = 'Add Tip']")).click();
+
+        WebElement TipsLayOut = driver1.findElement(AppiumBy.xpath(
+            "//android.widget.TextView[@text = 'Select tip']/../..//following-sibling::android.widget.HorizontalScrollView/android.view.ViewGroup"));
+
+        // Find all the child TextViews within the ViewGroup
+        List<WebElement> tipTexts = TipsLayOut.findElements(AppiumBy.className("android.widget.TextView"));
+
+        // StringBuilder to format the output
+        StringBuilder formattedOutput = new StringBuilder();
+        System.out.println("Below are the options displayed after tapping on 'Add Tip':");
+
+        // Iterate through the TextViews and build the formatted string
+        for (WebElement tipText : tipTexts) {
+            String text = tipText.getText();
+            if (!text.isEmpty()) { // Ignore empty texts
+                formattedOutput.append(text).append(" ");
+            }
+        }
+
+        // Print the formatted output, trimming the trailing space
+        System.out.println(formattedOutput.toString().trim());
+
+     
+        
+       // Click the "Add/Change Tip" button
+        
+     
+     
+     // Define XPaths
+        String tipOptionsXPath = "//android.widget.ImageButton[@content-desc='Go back']/../../following-sibling::android.view.ViewGroup/android.view.ViewGroup/android.widget.HorizontalScrollView/android.view.ViewGroup/android.widget.Button";
+        String addChangeTipButtonXPath = "//android.widget.ImageButton[@content-desc='Go back']/../../../android.view.ViewGroup[3]/android.view.ViewGroup[1]/android.view.ViewGroup[2]";
+        String gettingTextAfterTipSelectedXPath = "//android.widget.ImageButton[@content-desc='Go back']/../../../android.view.ViewGroup[3]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.widget.TextView";
+
+        //  explicit wait
+        WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(10));
+
+        // Get the initial list of tip options
+        List<WebElement> tipOptions = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(AppiumBy.xpath(tipOptionsXPath)));
+
+     // Print the initial count of tip options
+     System.out.println("Number of tip options available: " + tipOptions.size());
+
+     // Iterate through the options
+     for (int i = 0; i < tipOptions.size(); i++) {
+         // Print the count again during iteration if needed
+         System.out.println("Processing tip option " + (i + 1) + " of " + tipOptions.size());
+
+         // Re-fetch the list dynamically in each iteration to avoid stale elements
+         tipOptions = wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(AppiumBy.xpath(tipOptionsXPath)));
+
+         // Select the current tip option
+         WebElement tipOption = tipOptions.get(i);
+         wait.until(ExpectedConditions.elementToBeClickable(tipOption)).click(); // Tap the current tip option
+
+         // Retrieve and print the selected tip text
+         WebElement gettingTextAfterTipSelected = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.xpath(gettingTextAfterTipSelectedXPath)));
+         System.out.println("Selected Tip: " + gettingTextAfterTipSelected.getText());
+
+         // Tap the "Add/Change Tip" button
+         WebElement addChangeTipButton = wait.until(ExpectedConditions.elementToBeClickable(AppiumBy.xpath(addChangeTipButtonXPath)));
+         addChangeTipButton.click();
+
+         // Optional delay to handle UI transitions
+         Thread.sleep(1000); // Adjust based on app responsiveness
+        
+        }
+
+        System.out.println("Finished testing all tip options before select of Variant.");
+    }
+	
+    
+    @Test
+    public void AddingTipAfterEstimateScreen() throws InterruptedException {
+		
+		
+		try {
+		    // Wait for the "Searching for an awesome ride..." element
+		    WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(60));
+		    WebElement rideScreenValidation = wait.until(ExpectedConditions.presenceOfElementLocated(
+		        AppiumBy.xpath("//android.widget.Button[@content-desc='Trip Details']")
+		    ));
+
+		    // Validate the element
+		    if (rideScreenValidation != null) {
+		        System.out.println("Ride search started.");
+		        
+		        // Start tracking time
+		        long startTime = System.currentTimeMillis();
+
+		        // Wait for "Boost Search" element
+		        WebDriverWait waitBoostSearch = new WebDriverWait(driver1, Duration.ofSeconds(30));
+		        WebElement boostSearch = waitBoostSearch.until(ExpectedConditions.presenceOfElementLocated(
+		            AppiumBy.xpath("//android.widget.TextView[@text='Boost Search']")
+		        ));
+
+		        // Assert that boostSearch is not null
+		        Assert.assertNotNull(boostSearch, "Boost Search element was not found!");
+
+		        // End tracking time
+		        long endTime = System.currentTimeMillis();
+		        long duration = endTime - startTime;
+		        double durationInSeconds = duration / 1000.0;
+
+		        // Print duration
+		        System.out.println("Time taken between 'Ride search started' and 'Boost Search': " + durationInSeconds + " seconds");
+		        System.out.println("Boost Loader is displayed");
+		    } else {
+		        System.out.println("Ride screen validation failed: Element not found.");
+		    }
+		} catch (TimeoutException e) {
+		    System.out.println("Timeout occurred while waiting for elements.");
+		    System.out.println("Captured page source:\n" + driver1.getPageSource());
+		    Assert.fail("Timeout while waiting for elements.");
+		} catch (Exception e) {
+		    e.printStackTrace();
+		    Assert.fail("An unexpected exception occurred: " + e.getMessage());
+		}
+		
+    }
 }
