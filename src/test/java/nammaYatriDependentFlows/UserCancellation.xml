@@ -38,6 +38,7 @@
             <class name="User.Android.EstimateScreen">
                 <methods>
                     <include name="react_variantSelection"></include>
+                    <include name="slideToBook"></include>
                 </methods>
             </class>
         </classes>
