@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+<parameter name="flowOption" value="1"/>
+<parameter name="userApp" value="nammaYatriDebug"/>
+<parameter name="driverApp" value="nammaYatriPartnerDebug"/>
+
+ <!-- RideSearch with Tip Combination -->
+  <test name="RideSearchWithTipCases">
+ <classes>
+            <class name="User.Android.RideSearch">
+                <methods>
+                    <include name="SearchForRideFromSuggestion"></include>
+                </methods>
+            </class>
+            <class name="User.Android.EstimateScreen">
+                <methods>
+                	
+                	<include name="AddingTipFromEstimateScreen"></include>
+                    <include name="react_variantSelection"></include>
+                    <include name="slideToBook"></include>
+                    <include name="AddingTipAfterEstimateScreen"></include>
+                    
+                    
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite> <!-- Suite -->
