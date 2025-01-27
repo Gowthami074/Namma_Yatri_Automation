@@ -37,7 +37,7 @@
             </class>
             <class name="User.Android.EstimateScreen">
                 <methods>
-                    <include name="autoAssignDriver"></include>
+                    <include name="react_variantSelection"></include>
                 </methods>
             </class>
         </classes>
