@@ -203,21 +203,19 @@ public class RideSearch extends BaseClass {
 		//If User book a ride far from the pickup location.
 //				driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Ride']")).click();
 	}
-    
+    @Test
     public void SelectDestThroughMap() throws InterruptedException {
 		Thread.sleep(2000);
 		System.out.println("Getting in for Locate on Map RideSearch");
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']")).click();
 		Thread.sleep(2000);
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select location on map']")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Map']")).click();
 		scroll(6);
 		Thread.sleep(5000);
 		System.out.print("Scrolling is done");
 		Thread.sleep(2000);
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Drop Location']")).click();
-		Thread.sleep(1000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
-		//driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Ride']")).click();
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
 	}
 	
 	public void scroll(){
@@ -226,7 +224,7 @@ public class RideSearch extends BaseClass {
 			boolean canScrollMore = (Boolean)driver1.executeScript("mobile: scrollGesture", ImmutableMap.of(
 						"left", 100, "top", 100, "width", 900, "height", 900,
 						"direction", "down",
-						"percent", 3.0
+						"percent", 1.0
 						));	
 		}	
 		}
