@@ -14,7 +14,6 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 public class EstimateScreen extends BaseClass {
-	String vehicleVariantText = "Sedan";
 	@Test
 	public void autoAssignDriver() throws InterruptedException {
 		Thread.sleep(7000);
@@ -115,7 +114,7 @@ public class EstimateScreen extends BaseClass {
 		} else {
 			WebElement bookanyElement= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Any']"));
 			bookanyElement.click();
-			getVehicleVariantFromDriverProfile();
+			//			getVehicleVariantFromDriverProfile();
 			int startX1 = bookanyElement.getLocation().getX();
 			int startY1 = bookanyElement.getLocation().getY();
 			int endX1 = startX1;
@@ -143,11 +142,20 @@ public class EstimateScreen extends BaseClass {
 	}
 	@Test
 	public void slideToBook() throws InterruptedException {
+		WebElement sliderBar;
+		WebElement orangeButton;
 
-		WebElement sliderBar = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Add Tip']/../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup"));
+		if (vehicleVariantText=="Auto") {
+			sliderBar = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Due to high demand, suggesting a tip']/../../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup"));
+			orangeButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Due to high demand, suggesting a tip']/../../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"));
 
+		}
+		else {
+			sliderBar = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Add Tip']/../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup"));
+			orangeButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Add Tip']/../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"));
+
+		}
 		// Locate the orange car button (element1)
-		WebElement orangeButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Add Tip']/../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"));
 		PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
 
 		// Get the start and end coordinates
