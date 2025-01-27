@@ -145,7 +145,7 @@ public class EstimateScreen extends BaseClass {
 		WebElement sliderBar;
 		WebElement orangeButton;
 
-		if (vehicleVariantText=="Auto") {
+		if (vehicleVariantText.equals("Auto")) {
 			sliderBar = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Due to high demand, suggesting a tip']/../../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup"));
 			orangeButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Due to high demand, suggesting a tip']/../../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"));
 
