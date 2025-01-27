@@ -114,7 +114,7 @@ public class EstimateScreen extends BaseClass {
 		} else {
 			WebElement bookanyElement= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Any']"));
 			bookanyElement.click();
-			//			getVehicleVariantFromDriverProfile();
+			getVehicleVariantFromDriverProfile();
 			int startX1 = bookanyElement.getLocation().getX();
 			int startY1 = bookanyElement.getLocation().getY();
 			int endX1 = startX1;
