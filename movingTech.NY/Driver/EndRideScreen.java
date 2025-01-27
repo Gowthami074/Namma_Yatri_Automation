@@ -1,14 +1,13 @@
 package Driver;
 
 import java.time.Duration;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
+import User.Android.RideStartIntercityRentals;
 import base.BaseClass;
 import io.appium.java_client.AppiumBy;
 
@@ -78,5 +77,17 @@ public class EndRideScreen extends BaseClass {
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Go Back']/../following-sibling::android.widget.LinearLayout/android.widget.TextView")).click();		
 		System.out.println("The ride is completed and ended");
 		Thread.sleep(4000);
+	}
+	@Test
+	public void endIntercityRentalRide() throws InterruptedException {
+		Thread.sleep(2000);
+		
+		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='End Ride']")).click();
+		Thread.sleep(2000);
+		
+		driver.findElement(AppiumBy.xpath("//android.widget.EditText")).sendKeys(RideStartIntercityRentals.endOtp);
+		Thread.sleep(2000);
+		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare Collected']")).click();
+		Thread.sleep(2000);
 	}
 }
