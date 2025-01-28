@@ -45,7 +45,8 @@ public class DriverLoginFlow extends BaseClass{
 			case "RZ8R72RE6AB":
 			case "8cb2f113":
 			case "SONJFMDUKV65OJV4":
-				driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='While using the app']")).click();
+			case "M7JZ7T8P5TQSQ4KR":	
+			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='While using the app']")).click();
 				break;
 			case "1377682723004YR":
 			case "1371785921000CT":
@@ -57,7 +58,11 @@ public class DriverLoginFlow extends BaseClass{
 			case "062c68090409":
 				driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW ONLY WHILE USING THE APP']")).click();
 				break;
-			default:
+			case "4e27c0e2":
+			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text ='ALLOW']")).click();
+			break;
+			
+		default:
 				throw new NoSuchElementException("Invalid Selectors");
 
 			}

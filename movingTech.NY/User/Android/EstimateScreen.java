@@ -177,6 +177,35 @@ public class EstimateScreen extends BaseClass {
 		System.out.println("Searching initiated: Looking for an awesome ride.");
 
 	}
+
+	
+	//slide to book for intercity
+	public void slideToBookIntercity() throws InterruptedException {
+
+		WebElement sliderBar = driver1.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[3]"));
+
+		// Locate the orange car button (element1)
+		WebElement orangeButton = driver1.findElement(AppiumBy.xpath("(//android.widget.ImageView[@content-desc='Icon'])[5]/com.horcrux.svg.SvgView"));
+		PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+
+		// Get the start and end coordinates
+		int startX1 = orangeButton.getLocation().getX();
+		int startY1 = orangeButton.getLocation().getY();
+		int endX1 = sliderBar.getLocation().getX() + sliderBar.getSize().getWidth();
+		int endY1 = sliderBar.getLocation().getY() + sliderBar.getSize().getWidth();
+		// Create the sequence for the drag and drop action
+		Sequence dragAndDrop = new Sequence(finger, 0);
+		dragAndDrop.addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(), startX1, startY1));
+		dragAndDrop.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+		dragAndDrop.addAction(finger.createPointerMove(Duration.ofMillis(500), PointerInput.Origin.viewport(), endX1, endY1));
+		dragAndDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+
+		// Perform the action
+		driver1.perform(Arrays.asList(dragAndDrop));
+		Thread.sleep(5000);
+		System.out.println("Searching initiated: Looking for an awesome ride.");
+
+	}
 	
 //For Tip Add
     

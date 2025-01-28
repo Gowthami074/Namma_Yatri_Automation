@@ -154,12 +154,12 @@ public class UserCancellation extends BaseClass{
 			System.out.println("Total cancellation reasons found: " + (reasons.size()-2));
 
 			// Iterate through all reasons (just highlighting without selection)
-			for (int i = 2; i < reasons.size(); i++) {
+			for (int i = 2; i <=reasons.size(); i++) {
 				String reasonXPath = parentXPath + "/android.view.ViewGroup[" + (i-1) + "]";
 				WebElement reason = driver1.findElement(AppiumBy.xpath(reasonXPath));
 				System.out.println("Iterating through reason " + i);
 				reason.click();
-				if(i==reasons.size()-1) {
+				if(i==reasons.size()) {
 					try {
 						WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
 						WebElement reasonNotListed = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text=\"Please elaborate "
