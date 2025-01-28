@@ -3,12 +3,12 @@ package User.Android;
 import static org.testng.Assert.assertEquals;
 
 import java.net.MalformedURLException;
-import java.security.PublicKey;
 
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Test;
 
 import base.BaseClass;
-import dev.failsafe.internal.util.Assert;
+
 import io.appium.java_client.AppiumBy;
 
 public class InterCity extends BaseClass{
@@ -16,32 +16,31 @@ public class InterCity extends BaseClass{
 
 	WebElement intercityBookingDetails;
 	
+	@Test
 	public void interCityBooking() throws InterruptedException, MalformedURLException {
 
-
+		Thread.sleep(5000);
+         System.out.println("Searching for intercity button");
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Intercity']")).click();
 //		driver1.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW']")).click();
 
 
 		SearchForRideFromSuggestion();
-		
-		roundTrip();
-		reserve();
+		oneWay();
+		//roundTrip();
+
 
 
 	}
 
 	public void SearchForRideFromSuggestion() throws InterruptedException {
 
-		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']")).click();
-		System.out.println("Tapped on Where to?");
+		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='Where are you going?']")).click();
+		System.out.println("Tapped on Where are you going?");
 		Thread.sleep(2000);
-		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where to?']")).sendKeys("Tumu");
+		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='Where are you going?']")).sendKeys("Tumu");
 		Thread.sleep(2000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Tumukuru']")).click();
-
-
-
 
 		Thread.sleep(2000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
@@ -50,16 +49,41 @@ public class InterCity extends BaseClass{
 
 
 
-	public void oneWay() {
-
+	public void oneWay() throws InterruptedException {
+		
+	System.out.println("Entered in oneway function");
+		
+	driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='View Fares']")).click();
+	Thread.sleep(2000);
+	EstimateScreen slideObj = new EstimateScreen();
+	slideObj.slideToBookIntercity();
+	Thread.sleep(2000);
+	driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Booking']")).click();
 	}
+	
+	
+	
 
 	public void roundTrip() {
 
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Round Trip']")).click();
 
 	}
+	
+	public void  cancelIntercityRide() {
+		
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	///////---------------------Old code. use or modify it according to flow-------------------/////////////////////
 	public void leaveNow() {
 
 		driver1.findElement(AppiumBy.xpath("")).click();
@@ -154,5 +178,6 @@ public class InterCity extends BaseClass{
 		
 	}
 
+	
 
 }
