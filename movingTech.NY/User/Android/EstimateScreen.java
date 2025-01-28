@@ -116,6 +116,7 @@ public class EstimateScreen extends BaseClass {
 		} else {
 			WebElement bookanyElement= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Any']"));
 			bookanyElement.click();
+			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Any']/../android.view.ViewGroup")).click();
 			getVehicleVariantFromDriverProfile();
 			int startX1 = bookanyElement.getLocation().getX();
 			int startY1 = bookanyElement.getLocation().getY();
@@ -129,8 +130,11 @@ public class EstimateScreen extends BaseClass {
 			lift.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg())); // Release
 
 			driver1.perform(Arrays.asList(lift));
-			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Any']/../android.view.ViewGroup")).click();
 
+			
+			WebElement topElement = driver1.findElement(AppiumBy.androidUIAutomator(
+			    "new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(text(\"" + vehicleVariantText + "\"));"
+			));
 			WebElement variant= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='" + vehicleVariantText + "']"));			
 			variant.click();
 			System.out.println(vehicleVariantText + " variant slected ");
@@ -145,17 +149,8 @@ public class EstimateScreen extends BaseClass {
 	public void slideToBook() throws InterruptedException {
 		WebElement sliderBar;
 		WebElement orangeButton;
-
-		if (vehicleVariantText.equals("Auto")) {
-			sliderBar = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Due to high demand, suggesting a tip']/../../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup"));
-			orangeButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Due to high demand, suggesting a tip']/../../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"));
-
-		}
-		else {
-			sliderBar = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Add Tip']/../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup"));
-			orangeButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Add Tip']/../../../android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"));
-
-		}
+		orangeButton = driver1.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Go back']/../../../android.view.ViewGroup[3]/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"));
+		sliderBar = driver1.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Go back']/../../../android.view.ViewGroup[3]/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]"));
 		// Locate the orange car button (element1)
 		PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
 
@@ -177,7 +172,6 @@ public class EstimateScreen extends BaseClass {
 		System.out.println("Searching initiated: Looking for an awesome ride.");
 
 	}
-
 	
 	//slide to book for intercity
 	public void slideToBookIntercity() throws InterruptedException {
