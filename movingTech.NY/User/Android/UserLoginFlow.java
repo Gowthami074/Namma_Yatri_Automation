@@ -52,6 +52,7 @@ public class UserLoginFlow extends BaseClass {
 
 	@Test
 	public void successfulUserLogin() throws Exception {
+		implicitWaitMethod(driver1,60);
 		devicePermission.notification();
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Get Started']")).click();
 		Thread.sleep(2000);
@@ -91,6 +92,7 @@ public class UserLoginFlow extends BaseClass {
 			devicePermission.locationPermissionsConfirmation();
 
 		}
+		implicitWaitMethod(driver1,60);
 	}
 
 

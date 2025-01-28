@@ -2,12 +2,16 @@ package User.Android;
 
 import io.appium.java_client.AppiumBy;
 
+import java.time.Duration;
 import java.util.Map;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.ImmutableMap;
@@ -66,7 +70,7 @@ public class RideAssignScreen extends BaseClass {
 
 	@Test
 	public void readOTP() throws InterruptedException {
-		implicitWaitMethod(driver,10);
+		implicitWaitMethod(driver1,5);
 		try {
 			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Got it']"));
 			System.out.println("Parking Charges Pop Up is displaying");
@@ -75,11 +79,18 @@ public class RideAssignScreen extends BaseClass {
 		}catch(Exception e) {
 			System.out.println("Parking Charges Pop Up is not displaying");
 		}
-		implicitWaitMethod(driver,60);
-	
-		String OTP =  driver1.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='Hamburger Menu']/ancestor::android.view.ViewGroup//android.widget.TextView[contains(@text, 'OTP')]")).getText();
-		rideOTP = OTP.replace("OTP •", "").trim();
-		System.out.println("OTP " + rideOTP);
+		implicitWaitMethod(driver1,60);
+		
+		WebElement otpElement = driver1.findElement(By.xpath("//android.view.ViewGroup[contains(@content-desc, 'OTP')]"));
+
+		// Extract the 'content-desc' attribute
+		String contentDesc = otpElement.getAttribute("content-desc");
+
+		// Extract only the numeric OTP using regex
+		rideOTP = contentDesc.replaceAll("\\D", ""); // Removes all non-digit characters
+
+		System.out.println("Extracted OTP: " + rideOTP);
+
 	}
 
 	private String extractNumbers(String contentDesc) {
