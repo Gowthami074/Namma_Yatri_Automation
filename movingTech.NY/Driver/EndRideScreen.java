@@ -80,13 +80,13 @@ public class EndRideScreen extends BaseClass {
 	}
 	@Test
 	public void endIntercityRentalRide() throws InterruptedException {
-		Thread.sleep(2000);
-		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='End Ride']")));
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='End Ride']")).click();
 		Thread.sleep(2000);
-		
+		System.out.println("Driver entering end otp=" + RideStartIntercityRentals.endOtp );
 		driver.findElement(AppiumBy.xpath("//android.widget.EditText")).sendKeys(RideStartIntercityRentals.endOtp);
-		Thread.sleep(2000);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Fare Collected']")));
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare Collected']")).click();
 		Thread.sleep(2000);
 	}
