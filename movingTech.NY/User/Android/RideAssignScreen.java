@@ -66,8 +66,17 @@ public class RideAssignScreen extends BaseClass {
 
 	@Test
 	public void readOTP() throws InterruptedException {
-
-		parkingChargesPopUp();
+		implicitWaitMethod(driver,10);
+		try {
+			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Got it']"));
+			System.out.println("Parking Charges Pop Up is displaying");
+			parkingChargesPopUp();
+			
+		}catch(Exception e) {
+			System.out.println("Parking Charges Pop Up is not displaying");
+		}
+		implicitWaitMethod(driver,60);
+	
 		String OTP =  driver1.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='Hamburger Menu']/ancestor::android.view.ViewGroup//android.widget.TextView[contains(@text, 'OTP')]")).getText();
 		rideOTP = OTP.replace("OTP •", "").trim();
 		System.out.println("OTP " + rideOTP);

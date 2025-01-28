@@ -31,13 +31,12 @@ public class PopUpsHandling extends BaseClass{
 
 				System.out.println("Autofill overlay closed successfully.");
 			}
-		} catch (TimeoutException e) {
-			System.out.println("Autofill overlay did not appear, continuing test.");
 		} catch (Exception e) {
-			System.out.println("An error occurred while handling the pop-up: " + e.getMessage());
+			System.out.println("Autofill overlay did not appear, continuing test.");
 		}
 		implicitWaitMethod(driver1,60);
 	}
+	
 	public void AC_PopUp() {
 		implicitWaitMethod(driver1,5);
 		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
