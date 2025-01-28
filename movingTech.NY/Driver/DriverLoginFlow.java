@@ -21,7 +21,7 @@ public class DriverLoginFlow extends BaseClass{
 	public void successfulDriverLogin() throws InterruptedException {
 		Boolean loginFlow = false;
 		Boolean locDetection = false;
-		implicitWaitMethod(driver,25);
+		implicitWaitMethod(driver,15);
 		try {
 			System.out.println("Checking whether we are getting Enable Location screen");
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Enable Location']"));	
@@ -65,7 +65,7 @@ public class DriverLoginFlow extends BaseClass{
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm']")).click();
 			Thread.sleep(2000);
 		}
-		implicitWaitMethod(driver,15);
+		implicitWaitMethod(driver,10);
 		try {
 			System.out.println("Validating whether we are getting Get Started Screen");
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text=\"Get Started\"]"));

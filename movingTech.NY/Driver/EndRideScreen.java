@@ -54,10 +54,10 @@ public class EndRideScreen extends BaseClass {
 			System.out.println("Failed to end ride after maximum retries.");
 		}
 
-
+		popUpsHandling.takeUnlimitedRidesPopUp();
 		implicitWaitMethod(driver,60);
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare Collected']")).click();
-		popUpsHandling.takeUnlimitedRidesPopUp();
+		
 	}
 
 
