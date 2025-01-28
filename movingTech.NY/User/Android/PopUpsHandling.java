@@ -51,7 +51,7 @@ public class PopUpsHandling extends BaseClass{
 			System.out.println("AC overlay did not appear, continuing test.");
 		}
 		
-		
+		implicitWaitMethod(driver1,60);
 	}
 }
 
