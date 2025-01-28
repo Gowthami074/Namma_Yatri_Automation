@@ -87,7 +87,7 @@ public class BaseClass {
 				cap1.setCapability("noReset", true);
 //         		cap1.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/driver-2-sept-master.apk");//Driver apk path
 				driver1 = new AndroidDriver(url, cap1);
-				implicitWaitMethod(driver1,60);
+				implicitWaitMethod(driver1,100);
 				System.out.println("Launched the User Application");
 			}
 		} catch (Exception exp) {
