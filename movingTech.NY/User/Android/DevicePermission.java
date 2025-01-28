@@ -66,7 +66,7 @@ public class DevicePermission extends BaseClass {
 		}
 	}
 	public void grantLocationAccess() {
-		if (Arrays.asList("15913008960024W", "RFCT42T5N9D", "SONJFMDUKV65OJV4", "28301JEGR03129", "1371785921000CT", "RZ8R72RE6AB", "9618349153000CS", "eb23ba","85LRIFMFM7SCSS7D").contains(userUdid)) {
+		if (Arrays.asList("15913008960024W", "RFCT42T5N9D", "SONJFMDUKV65OJV4", "28301JEGR03129", "1371785921000CT", "RZ8R72RE6AB", "9618349153000CS", "eb23ba","85LRIFMFM7SCSS7D","RZ8N91FWYXT").contains(userUdid)) {
 
 			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Grant Location Access']")).click();
 
