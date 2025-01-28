@@ -1,5 +1,9 @@
 package User.Android;
 
+import java.time.Duration;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import base.BaseClass;
@@ -10,12 +14,12 @@ public class RideStartIntercityRentals extends BaseClass {
 	public static String endOtp = "";
 	@Test
 	public void copyEndRideOtp() {
+		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(20));
+		wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[contains(@text, 'End OTP •')]")));
 		String dynamicEndOtp = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[contains(@text, 'End OTP •')]")).getText();
-		System.out.println("End ride OTP:"+ dynamicEndOtp);
 		String[] splitOTP = dynamicEndOtp.split("\\•");
 		endOtp = splitOTP[1].trim();
+		System.out.println("End ride OTP:"+ endOtp);
+		
 	}
-	
-	
-
 }

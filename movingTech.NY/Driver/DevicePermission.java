@@ -32,6 +32,7 @@ public class DevicePermission extends BaseClass {
 		case "RZ8R72RE6AB":
 		case "062c68090409":
 		case "eb23ba":
+		case "4e27c0e2":
 			break;
 		default:
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Notification Access']")).click();
@@ -143,6 +144,10 @@ public class DevicePermission extends BaseClass {
 			driver.findElement(AppiumBy.xpath("//android.widget.Switch[@resource-id='android:id/switch_widget']")).click();
 			driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Back']")).click();
 			break;
+		case "4e27c0e2":
+			driver.findElement(AppiumBy.xpath("//android.widget.CheckBox[@resource-id='android:id/checkbox']")).click();
+			driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Back']")).click();
+			break;
 		default: 
 			break;
 		}
@@ -157,6 +162,7 @@ public class DevicePermission extends BaseClass {
 		case "8cb2f113":
 		case "SONJFMDUKV65OJV4":
 		case "062c68090409":
+		case "4e27c0e2":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW']")).click();
 			break;
 		case "RZ8N91FWYXT":
@@ -181,12 +187,13 @@ public class DevicePermission extends BaseClass {
 		case "1377682723004YR":
 		case "15913008960024W": 
 		case "9618349153000CS":
+		case "4e27c0e2":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW']")).click();
 			break;
 		case "RZ8N91FWYXT":
 		case "RFCT42T5N9D":
 		case "R9ZTB0KD0FA":
-		case "28301JEGR03129" :
+		case "28301JEGR03129":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow']")).click();
 			break;
 		default:
@@ -210,6 +217,9 @@ public class DevicePermission extends BaseClass {
 						driver.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@content-desc='Back']/android.widget.ImageView")).click();
 			//need to add one more back x-path
 			
+			break;
+		case "4e27c0e2":
+			driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Back']")).click();
 			break;
 		default:
 			break;
