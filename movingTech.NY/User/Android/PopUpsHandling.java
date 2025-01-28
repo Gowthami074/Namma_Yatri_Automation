@@ -43,7 +43,7 @@ public class PopUpsHandling extends BaseClass{
 		try {
 			WebElement acPopUp = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Has your driver set the AC as per your preference? ']")));
 			if(acPopUp.isDisplayed()) {
-				driver1.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='Got it']")).click();
+				driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Yes']")).click();
 				System.out.println("Tapped on Yes in the AC Pop Up");
 			}
 			
