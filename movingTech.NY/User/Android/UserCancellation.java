@@ -32,7 +32,7 @@ public class UserCancellation extends BaseClass{
 
 		WebElement element1 = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text=\"Chatting with \"]"));
 		Thread.sleep(5000);
-		scroll(element1);
+		scroll(element1,true);
 		System.out.println("Scroll completed");
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Cancel ride']")).click();
 		cancelRideConfirmationPopUp();
@@ -52,7 +52,7 @@ public class UserCancellation extends BaseClass{
 		cancellationReasonPopUp(false);
 	}
 
-	public void scroll(WebElement quotesElement) {
+	public void scroll(WebElement quotesElement,Boolean cancelRideCheck) {
 		// Get the screen size
 		Dimension screenSize = driver1.manage().window().getSize();
 		int screenHeight = screenSize.getHeight();
@@ -72,7 +72,8 @@ public class UserCancellation extends BaseClass{
 				"endX", elementX,
 				"endY", scrollToY
 				));
-		implicitWaitMethod(driver1,10);
+		if(cancelRideCheck ==true)
+		{implicitWaitMethod(driver1,10);
 		try {
 			WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
 			WebElement cancelRide = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Cancel ride']")));
@@ -82,7 +83,7 @@ public class UserCancellation extends BaseClass{
 		catch(Exception e) {
 			System.err.println("Cancel ride is not displaying");
 			WebElement fareEstimate =  driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text=\"Fare estimate\"]"));
-			scroll(fareEstimate);
+			scroll(fareEstimate,true);
 			if(iterationCount<3) {
 				iterationCount++;
 			}
@@ -90,7 +91,7 @@ public class UserCancellation extends BaseClass{
 				throw e;
 			}
 		}
-	}
+	}}
 
 
 	public void popUpDismisser() {

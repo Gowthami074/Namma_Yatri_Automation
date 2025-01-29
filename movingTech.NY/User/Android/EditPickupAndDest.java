@@ -22,13 +22,13 @@ public class EditPickupAndDest extends BaseClass {
 		WebElement upi = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Tool center']"));
 		System.out.println(upi);
 		Thread.sleep(5000);
-		usercancl.scroll(upi);
+		usercancl.scroll(upi,false);
 		System.out.println("Scroll completed");
 		Thread.sleep(2000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Edit']")).click();
 		Thread.sleep(2000);
-		ridesearch.scroll(0);
-		 System.out.println("User wants to edit the poickup outside the threshold");
+		ridesearch.scroll(2);
+		 System.out.println("User wants to edit the pickup outside the threshold");
 		Thread.sleep(2000);
 		driver1.navigate().back();
 //		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm New Pickup']")).click();
@@ -38,7 +38,7 @@ public class EditPickupAndDest extends BaseClass {
 	public void EditDestination() throws InterruptedException {
 		WebElement upi = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Tool center']"));
 		Thread.sleep(5000);
-		usercancl.scroll(upi);
+		usercancl.scroll(upi,false);
 		System.out.println("Scroll completed");
 			Thread.sleep(2000);
 		 driver1.findElement(AppiumBy.xpath("(//android.widget.TextView[@text=\"Edit\"])[2]")).click();
@@ -49,10 +49,32 @@ public class EditPickupAndDest extends BaseClass {
 			Thread.sleep(2000);
 		 System.out.println("Destination edited sucessfully");
 		 driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Drop Location']")).click();
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		 System.out.println("User got the revised estimates");
 		 driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Request Drop Change']")).click();
 		 System.out.println("User requested for the edit destination..... waiting for driver response");
 			Thread.sleep(2000);
 	}
+	
+	@Test
+	public void EditDestinationafterridestart() throws InterruptedException {
+		WebElement upi = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Tool center']"));
+		System.out.println(upi);
+		Thread.sleep(5000);
+		usercancl.scroll(upi,false);
+		System.out.println("Scroll completed");
+		Thread.sleep(2000);
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Edit']")).click();
+		 driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Map']")).click();
+		ridesearch.scroll(5);
+		Thread.sleep(2000);
+		 System.out.println("Destination edited sucessfully");
+		 driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Drop Location']")).click();
+			Thread.sleep(2000);
+		 System.out.println("User got the revised estimates");
+		 driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Request Drop Change']")).click();
+		 System.out.println("User requested for the edit destination..... waiting for driver response");
+			Thread.sleep(2000);	
+	}
+	
 }
