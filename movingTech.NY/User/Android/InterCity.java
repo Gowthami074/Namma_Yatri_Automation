@@ -3,8 +3,11 @@ package User.Android;
 import static org.testng.Assert.assertEquals;
 
 import java.net.MalformedURLException;
+import java.time.Duration;
 
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 
 import base.BaseClass;
@@ -19,18 +22,14 @@ public class InterCity extends BaseClass{
 	@Test
 	public void interCityBooking() throws InterruptedException, MalformedURLException {
 
-		Thread.sleep(5000);
-         System.out.println("Searching for intercity button");
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Intercity']")).click();
-//		driver1.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW']")).click();
-
-
+	
+        System.out.println("Searching for intercity button");
+        WebDriverWait wait = new WebDriverWait(driver1 , Duration.ofSeconds(10));
+        WebElement intercity = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Intercity']")));
+        intercity.click();
 		SearchForRideFromSuggestion();
 		oneWay();
 		//roundTrip();
-
-
-
 	}
 
 	public void SearchForRideFromSuggestion() throws InterruptedException {
@@ -59,6 +58,7 @@ public class InterCity extends BaseClass{
 	slideObj.slideToBookIntercity();
 	Thread.sleep(2000);
 	driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Booking']")).click();
+	System.out.println("Started with intercity ride search...");
 	}
 	
 	
