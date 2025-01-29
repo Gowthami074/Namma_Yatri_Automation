@@ -178,7 +178,7 @@ public class EstimateScreen extends BaseClass {
 		getVehicleVariantFromDriverProfile();
 		WebElement variant= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='" + vehicleVariantText + "']"));			
 		variant.click();
-		
+		implicitWaitMethod(driver1 , 5);
 		try {
 		
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Got it']")).click();
@@ -213,6 +213,7 @@ public class EstimateScreen extends BaseClass {
 			Thread.sleep(5000);
 		}
 		System.out.println("Done with slide to book for intercity ride");
+		implicitWaitMethod(driver1 ,60);
 
 	}
 	
