@@ -23,7 +23,7 @@ public class RideAssignScreen extends BaseClass {
 	//about chat or messaging feature 
 	// also about cancel ride 
 	// write about all possible ways like contct customer /sos
-
+	PopUpsHandling popupshandling = new PopUpsHandling();
 
 	@Test
 	public void TollTextAtOtpSlider() {
@@ -70,17 +70,8 @@ public class RideAssignScreen extends BaseClass {
 
 	@Test
 	public void readOTP() throws InterruptedException {
-		implicitWaitMethod(driver1,5);
-		try {
-			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Got it']"));
-			System.out.println("Parking Charges Pop Up is displaying");
-			parkingChargesPopUp();
-			
-		}catch(Exception e) {
-			System.out.println("Parking Charges Pop Up is not displaying");
-		}
-		implicitWaitMethod(driver1,60);
 		
+		popupshandling.parkingChargesPopUp();
 		WebElement otpElement = driver1.findElement(By.xpath("//android.view.ViewGroup[contains(@content-desc, 'OTP')]"));
 
 		// Extract the 'content-desc' attribute

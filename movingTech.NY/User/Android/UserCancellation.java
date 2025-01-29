@@ -24,10 +24,11 @@ import org.openqa.selenium.remote.RemoteWebElement;
 public class UserCancellation extends BaseClass{
 
 	int iterationCount = 0;
+	PopUpsHandling popupshandling = new PopUpsHandling();
 
 	@Test
 	public void userCancellation() throws InterruptedException {
-
+		popupshandling.parkingChargesPopUp();
 		System.out.println("Trying to cancel from user side");
 
 		WebElement element1 = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text=\"Chatting with \"]"));

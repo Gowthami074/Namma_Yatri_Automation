@@ -12,14 +12,15 @@ import org.openqa.selenium.Point;
 
 import com.google.common.collect.ImmutableMap;
 
-public class DriverCancellation extends BaseClass {
+import User.Android.PopUpsHandling;
 
+public class DriverCancellation extends BaseClass {
+	
+	PopUpsHandling popupshandling = new PopUpsHandling();
 	@Test
     public void cancelRide() throws InterruptedException {
+		popupshandling.parkingChargesPopUp();
         System.out.println("Driver cancel about to start");
-        
-        
-        
         WebElement scrollableElement = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Ride Fare']"));
         
         scroll(scrollableElement);

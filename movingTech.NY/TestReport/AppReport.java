@@ -11,7 +11,11 @@ public class AppReport {
 				System.out.println("Serving Allure Report...");
 				String command = "/usr/local/bin/allure serve allure-results --clean";
 				Runtime.getRuntime().exec(command);
-			} catch (IOException e) {
+				System.out.println("Generating Allure Report...");
+				String generateCommand = "/usr/local/bin/allure generate --single-file allure-results --clean";
+				Process generateProcess = Runtime.getRuntime().exec(generateCommand);
+				generateProcess.waitFor();  // Wait for the report generation to complete
+			} catch (Exception e) {
 				e.printStackTrace();
 				System.err.println("Failed to serve Allure report.");
 			}
