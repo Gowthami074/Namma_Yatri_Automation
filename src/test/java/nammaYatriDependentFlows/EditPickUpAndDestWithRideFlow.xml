@@ -1,32 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="UserEditingPickupAndDestWithRideflow" >
+<suite name="UserEditingPickupAndDestWithRideflow">
+
     <parameter name="flowOption" value="3"></parameter>
     <parameter name="userApp" value="nammaYatriDebug"/>
 	<parameter name="driverApp" value="nammaYatriPartnerDebug"/> 
-    <!-- User Doing ride search through maps-->
-  <test name="Ride search">
+	
+   <test name="RideSearch and Getting Estimates" >
         <classes>
             <class name="User.Android.RideSearch">
                 <methods>
-                    <include name="SelectDestThroughMap()" />
+                    <include name="SearchForRideFromSuggestion"></include>
                 </methods>
             </class>
-        </classes>
-    </test>
-    <!-- Estimate screen-->
-     <test name="Estimate screen">
-        <classes>
             <class name="User.Android.EstimateScreen">
                 <methods>
-                    <include name="react_variantSelection()"></include>
-                     <include name="slideToBook()"></include>
+                    <include name="react_variantSelection"></include>
+                    <include name="slideToBook"></include>
                 </methods>
             </class>
         </classes>
     </test>
-
-     <!--  <!Accepting the RideRequest -->
+    
+    <!-- Accepting the RideRequest -->
     <test name="Accepting the RideRequest">
         <classes>
             <class name="Driver.PopUpScreen">
@@ -36,45 +32,144 @@
             </class>
         </classes>
     </test>
-    
-    <test name="Editing the src and dest">
+	 
+    <!-- Editing the src location-->
+    <test name="Editing the src">
         <classes>
             <class name="User.Android.EditPickupAndDest">
                 <methods>
-                    <include name="EditPickup()"></include>
-                    <include name="EditDestination()"></include>
+                    <include name="EditPickup"></include>
                 </methods>
             </class>
         </classes>
     </test>
     
-     <test name="Satrting the ride">
+        <!-- Editing the destination-->
+    <test name="Editing the destintion before ride start">
+        <classes>
+            <class name="User.Android.EditPickupAndDest">
+                <methods>
+                    <include name="EditDestination"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+    
+        <!-- Accepting the edit destination request-->
+         <test name="Accepting the Edit Dest request beofore ride start">
+        <classes>
+            <class name="Driver.EditPickupDestRequest">
+                <methods>
+                    <include name="handleeditdestpopup"></include>
+                </methods>
+            </class>
+        </classes>
+        </test>
+        
+         <!-- Navigating back to app-->
+     <test name="navigating back to app">
+        <classes>
+        <class name="Driver.AndroidBackButton">
+                <methods>
+                    <include name="tapBack"></include>
+                </methods>
+            </class>
+            </classes>
+            </test>
+            
+             <!-- Reading OTP from OTP screen -->
+    <test name="Reading OTP from OTP screen" >
+        <classes>
+            <class name="User.Android.RideAssignScreen">
+                <methods>
+                    <include name="readOTP"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+        
+        <!-- Starting the Ride -->
+    <test name="Starting the Ride">
         <classes>
             <class name="Driver.StartRideScreen">
                 <methods>
-                    
-                    <include name="startRide()"></include>
+                    <include name="startRide"></include>
+                </methods>
+            </class>
+            <class name="Driver.EnterOTPPopUp">
+                <methods>
+                    <include name="enterCorrectOTP"></include>
+                </methods>
+            </class>
+            <class name="Driver.AndroidBackButton">
+                <methods>
+                    <include name="tapBack"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+ 
+       <!-- Editing the destination-->
+     <test name="Editing the destintion after ride start">
+        <classes>
+            <class name="User.Android.EditPickupAndDest">
+                <methods>
+                    <include name="EditDestinationafterridestart"></include>
                 </methods>
             </class>
         </classes>
     </test>
     
+    <!-- Accepting the edit destination request-->
+      <test name="Accepting the Edit Dest request after the ride start">
+        <classes>
+            <class name="Driver.EditPickupDestRequest">
+                <methods>
+                    <include name="handleeditdestpopup"></include>
+                </methods>
+            </class>
+        </classes>
+      </test>
+        
+        <!-- Navigating back to app-->
+        <test name="Navigating back to our application">
+        <classes>
+        <class name="Driver.AndroidBackButton">
+                <methods>
+                    <include name="tapBack"></include>
+                </methods>
+                </class>
+        </classes>
+          </test>
+                    
+    <!-- Ending the ride-->
     <test name="Ending the ride">
         <classes>
             <class name="Driver.EndRideScreen">
-                <methods>
-                    
-                    <include name="clickEndRide()"></include>
+                <methods>                   
+                    <include name="clickEndRide"></include>
                 </methods>
             </class>
         </classes>
     </test>
-    
-  <test name="Rate the ride ">
+   
+  <!-- User Giving Rating -->
+    <test name="User Giving Rating">
         <classes>
-            <class name="Driver.EndRideScreen">
-                <methods>   
-                    <include name="ratingScreen()"></include>
+            <class name="User.Android.UserRatingScreen">
+                <methods>
+                    <include name="ratingScreen2"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Driver Giving Rating -->
+    <test name="Driver Giving Rating">
+        <classes>
+            <class name="Driver.DriverRatingScreen">
+                <methods>
+                    <include name="ratingScreen"></include>
                 </methods>
             </class>
         </classes>
