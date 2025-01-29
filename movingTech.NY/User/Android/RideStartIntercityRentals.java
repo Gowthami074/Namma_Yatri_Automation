@@ -12,8 +12,11 @@ import io.appium.java_client.AppiumBy;
 public class RideStartIntercityRentals extends BaseClass {
 	
 	public static String endOtp = "";
+	PopUpsHandling popup= new PopUpsHandling();
+	
 	@Test
 	public void copyEndRideOtp() {
+		popup.AC_PopUp();
 		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(20));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[contains(@text, 'End OTP •')]")));
 		String dynamicEndOtp = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[contains(@text, 'End OTP •')]")).getText();
