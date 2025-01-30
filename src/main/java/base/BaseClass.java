@@ -87,9 +87,9 @@ public class BaseClass {
 				cap1.setCapability("automationName", "UiAutomator2");
 				cap1.setCapability("newCommandTimeout", 300);
 				cap1.setCapability("appPackage", ConfigLoader.getProperty(userApp + ".appPackage"));
-				cap1.setCapability("appActivity",ConfigLoader.getProperty(userApp + ".appActivity"));
+			    cap1.setCapability("appActivity",ConfigLoader.getProperty(userApp + ".appActivity"));
 				cap1.setCapability("noReset", true);
-				//cap1.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/MASTER_WED_22_app-odishaYatri-prod-debug.apk");//Driver apk path
+//         		cap1.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/driver-2-sept-master.apk");//Driver apk path
 				driver1 = new AndroidDriver(url, cap1);
 				implicitWaitMethod(driver1,100);
 				System.out.println("Launched the User Application");
