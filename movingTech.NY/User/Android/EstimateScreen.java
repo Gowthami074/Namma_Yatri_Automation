@@ -139,8 +139,6 @@ public class EstimateScreen extends BaseClass {
 			variant.click();
 			System.out.println(vehicleVariantText + " variant slected ");
 			Thread.sleep(3000);
-			
-
 		}
 
 
@@ -151,9 +149,7 @@ public class EstimateScreen extends BaseClass {
 		WebElement orangeButton;
 		orangeButton = driver1.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Go back']/../../../android.view.ViewGroup[3]/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"));
 		sliderBar = driver1.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Go back']/../../../android.view.ViewGroup[3]/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]"));
-		// Locate the orange car button (element1)
 		PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
-
 		// Get the start and end coordinates
 		int startX1 = orangeButton.getLocation().getX();
 		int startY1 = orangeButton.getLocation().getY();
@@ -165,12 +161,10 @@ public class EstimateScreen extends BaseClass {
 		dragAndDrop.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
 		dragAndDrop.addAction(finger.createPointerMove(Duration.ofMillis(500), PointerInput.Origin.viewport(), endX1, endY1));
 		dragAndDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
-
 		// Perform the action
 		driver1.perform(Arrays.asList(dragAndDrop));
 		Thread.sleep(5000);
 		System.out.println("Searching initiated: Looking for an awesome ride.");
-
 	}
 	
 	//slide to book for intercity
@@ -216,6 +210,59 @@ public class EstimateScreen extends BaseClass {
 		implicitWaitMethod(driver1 ,60);
 
 	}
+	
+	
+	
+	public void slideToBookRental() throws InterruptedException {
+		getVehicleVariantFromDriverProfile();
+		WebElement variant= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='" + vehicleVariantText + "']"));			
+		variant.click();
+		implicitWaitMethod(driver1 , 5);
+		try {
+		
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Got it']")).click();
+		
+		}
+		catch(Exception e) {
+		System.out.println("No rate card popup while selecting estimates");
+			
+		}
+		finally
+		{
+			WebElement sliderBar = driver1.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup"));
+			WebElement orangeButton = driver1.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@resource-id=\"android:id/content\"]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]"));
+			PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH, "finger");
+			// Get the start and end coordinates
+			int startX1 = orangeButton.getLocation().getX();
+			int startY1 = orangeButton.getLocation().getY();
+			int endX1 = sliderBar.getLocation().getX() + sliderBar.getSize().getWidth();
+			int endY1 = sliderBar.getLocation().getY() + sliderBar.getSize().getWidth();
+			// Create the sequence for the drag and drop action
+			Sequence dragAndDrop = new Sequence(finger, 0);
+			dragAndDrop.addAction(finger.createPointerMove(Duration.ofMillis(0), PointerInput.Origin.viewport(), startX1, startY1));
+			dragAndDrop.addAction(finger.createPointerDown(PointerInput.MouseButton.LEFT.asArg()));
+			dragAndDrop.addAction(finger.createPointerMove(Duration.ofMillis(500), PointerInput.Origin.viewport(), endX1, endY1));
+			dragAndDrop.addAction(finger.createPointerUp(PointerInput.MouseButton.LEFT.asArg()));
+			// Perform the action
+			driver1.perform(Arrays.asList(dragAndDrop));
+			Thread.sleep(5000);
+		}
+		System.out.println("Done with slide to book for Rental ride");
+		implicitWaitMethod(driver1 ,60);
+
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 //For Tip Add
     
