@@ -36,56 +36,40 @@ public class Rentals extends BaseClass{
 
 		}
 		System.out.println("Tapping on --");
-		for (int i = 12; i > 1; i--) {
-			//		  Tapping on -
-			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select Package']/../../android.widget.LinearLayout[2]/android.widget.LinearLayout/android.widget.TextView[1]")).click();
-			String hours=driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select Package']/../../android.widget.LinearLayout[2]/android.widget.TextView")).getText();
-			String distance= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='-']/../../../android.widget.LinearLayout[3]/android.widget.LinearLayout/android.widget.TextView[2]")).getText();
-			System.out.println("For "+i+"st Tap"+" "+hours+" "+distance+" Selected.");
-
+		for (int i = 4; i > 1; i--) {
+			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='-']")).click();
 		}
-		Thread.sleep(8000);
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='View Fares']")).click();
-		Thread.sleep(18000);
+		System.out.println("Tapping on Continue location");
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']")).click();
+		Thread.sleep(2000);
 
-		WebElement chooseRide =driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Choose your ride']"));
-		Thread.sleep(5000);
-//		quotesscroll(chooseRide);
-		System.out.println("Scrollling completed");
+		System.out.println("Tapping on Confirm Location");
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
+		Thread.sleep(2000);
 
+		WebElement chooseRide = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Rides for you']"));
+		scroll(chooseRide);
+		System.out.println("Scrolling completed");
+		// locate all variants
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Non-AC Mini']")).click();
 
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Sedan']")).click();
+		System.out.println("Clicked on Sedan");
+		
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='XL Cab']")).click();
+		System.out.println("Clicked on XL");
+
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='AC Mini']")).click();
-//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='XL Cab']")).click();
+		System.out.println("Clicked on Ac mini");	
 		
 		
-
-		String Auto = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Auto']/../../../../android.widget.LinearLayout[3]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.TextView")).getText();
-
-		String non_AC = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Non-AC Mini']/../../../../android.widget.LinearLayout[3]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.TextView")).getText();
-
-		String sedan = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Sedan']/../../../../android.widget.LinearLayout[3]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.TextView")).getText();
-		String ac_mini = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='AC Mini']/../../../../android.widget.LinearLayout[3]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.TextView")).getText();
-		String xl_Cab= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='XL Cab']/../../../../android.widget.LinearLayout[3]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.TextView")).getText();
-		System.out.println("Auto fare-"+Auto+" Non_Ac fare "+non_AC+" Sedan fare "+sedan+" Xl Cab "+xl_Cab);
-		
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Book Rental AC Mini']")).click();
-		
-		Thread.sleep(2000);
-		WebElement additionalCharges=driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Additional Charges']"));
-
-		scroll(additionalCharges);
-		
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Rental']")).click();
-		
-		System.out.println("Rentals");
-				System.out.println("Rentals");
-
-		
-
+		System.out.println("Clicked on all variants");
+		EstimateScreen obj= new EstimateScreen();	
+		obj.slideToBookRental();
+	
+		// performing slide to book
+		System.out.println("performing slide to booking function");             
 	}
-
 	public static void scroll(WebElement element) {
 		// Get the screen size
 		Dimension screenSize = driver1.manage().window().getSize();
