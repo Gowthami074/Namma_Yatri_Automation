@@ -14,6 +14,7 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Parameters;
 import TestReport.AppReport;
+import TestReport.TestListener;
 import Utils.ConfigLoader;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -67,7 +68,7 @@ public class BaseClass {
 				cap.setCapability("appPackage", ConfigLoader.getProperty(driverApp + ".appPackage"));
 				cap.setCapability("appActivity", ConfigLoader.getProperty(driverApp + ".appActivity"));
 				cap.setCapability("noReset", true);//debug
- //    			cap.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/user-2-sept-master.apk");
+    			//cap.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/app-nyDriver-prod-debug.apk");
 				driver = new AndroidDriver(url, cap);
 				implicitWaitMethod(driver,60);
 				System.out.println("Launched the Driver Application");
@@ -85,7 +86,7 @@ public class BaseClass {
 				cap1.setCapability("appPackage", ConfigLoader.getProperty(userApp + ".appPackage"));
 				cap1.setCapability("appActivity",ConfigLoader.getProperty(userApp + ".appActivity"));
 				cap1.setCapability("noReset", true);
-//         		cap1.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/driver-2-sept-master.apk");//Driver apk path
+         		//cap1.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/MASTER_WED_22_app-odishaYatri-prod-debug.apk");//Driver apk path
 				driver1 = new AndroidDriver(url, cap1);
 				implicitWaitMethod(driver1,100);
 				System.out.println("Launched the User Application");
@@ -130,7 +131,16 @@ public class BaseClass {
 
 	@AfterSuite
 	public void tearDown() {
-	    // Quit the Appium drivers
+	   //  Quit the Appium drivers
+		if (driver != null) {
+	        String driverScreenshotName = "driver_test_failed_" + System.currentTimeMillis();
+	       TestListener.captureScreenshot(driverScreenshotName, driver); // Capture for driver
+	    }
+	    if (driver1 != null) {
+	        String userScreenshotName = "user_test_failed_" + System.currentTimeMillis();
+	        TestListener.captureScreenshot(userScreenshotName, driver1); // Capture for driver1
+	    }
+		
 	    if (driver != null) {
 	        driver.quit();
 	    }
