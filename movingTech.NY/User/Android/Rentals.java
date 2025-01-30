@@ -1,39 +1,33 @@
 package User.Android;
 
+import java.time.Duration;
+
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
 import com.google.common.collect.ImmutableMap;
-
-import Main.TestingFlowInputOptions;
 import base.BaseClass;
 import io.appium.java_client.AppiumBy;
-import net.bytebuddy.description.ModifierReviewable.OfAbstraction;
 
-public class Rentals extends BaseClass{
-
-
-	public void rentalbooking() throws InterruptedException {
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Rentals']")).click();
-		String sourceAddress =	driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Trip Details']/../../android.widget.LinearLayout[2]/android.widget.LinearLayout[2]/android.widget.LinearLayout[1]")).getText();
-		String destinationAddress =	driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Trip Details']/../../android.widget.LinearLayout[2]/android.widget.LinearLayout[2]/android.widget.LinearLayout[2]")).getText();
-		System.out.println("The source and destination address are"+sourceAddress+" "+destinationAddress);
-
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select Package']/../android.widget.ImageView")).click();
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Got It!']")).click();
-
-
-		for (int i = 1; i < 12; i++) {
-			//		  Tapping on +
-			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select Package']/../../android.widget.LinearLayout[2]/android.widget.LinearLayout/android.widget.TextView[2]")).click();
-			String hours=driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select Package']/../../android.widget.LinearLayout[2]/android.widget.TextView")).getText();
-			String distance= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='-']/../../../android.widget.LinearLayout[3]/android.widget.LinearLayout/android.widget.TextView[2]")).getText();
-			System.out.println("For "+i+"st Tap"+" "+hours+" "+distance+" Selected.");
-
-
+public class Rentals extends BaseClass {
+	@Test
+	public void rentalbooking() throws Exception {
+		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(30));
+		// Wait for "Rentals" section to appear
+		WebElement rentalsText = wait.until(ExpectedConditions.visibilityOfElementLocated(
+				AppiumBy.xpath("//android.widget.TextView[@text='Rentals']")
+				));
+		System.out.println("Rentals section is now visible.");
+		rentalsText.click();    
+		System.out.println("Tapping on ++");
+		for (int i = 1; i < 4; i++) {
+			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='+']")).click();
 		}
 		System.out.println("Tapping on --");
 		for (int i = 4; i > 1; i--) {
@@ -52,7 +46,8 @@ public class Rentals extends BaseClass{
 		System.out.println("Scrolling completed");
 		// locate all variants
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Non-AC Mini']")).click();
-
+		System.out.println("Clicked on Non-ac mini");
+		
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Sedan']")).click();
 		System.out.println("Clicked on Sedan");
 		
@@ -61,8 +56,7 @@ public class Rentals extends BaseClass{
 
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='AC Mini']")).click();
 		System.out.println("Clicked on Ac mini");	
-		
-		
+			
 		System.out.println("Clicked on all variants");
 		EstimateScreen obj= new EstimateScreen();	
 		obj.slideToBookRental();
