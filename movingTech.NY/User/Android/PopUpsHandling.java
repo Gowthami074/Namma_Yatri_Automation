@@ -53,5 +53,22 @@ public class PopUpsHandling extends BaseClass{
 		
 		implicitWaitMethod(driver1,60);
 	}
+	
+	public void parkingChargesPopUp() {
+		implicitWaitMethod(driver1,15);
+		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
+		try {
+			WebElement parkingpopUp = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.Button[@content-desc='Got it']")));
+			if(parkingpopUp.isDisplayed()) {
+				driver1.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='Got it']")).click();
+				System.out.println("Tapping on the Got it");
+			}
+			
+		} catch (Exception e) {
+			System.out.println("Parking Charges PopUp is not displaying");
+		}
+		
+		implicitWaitMethod(driver1,60);
+	}
 }
 

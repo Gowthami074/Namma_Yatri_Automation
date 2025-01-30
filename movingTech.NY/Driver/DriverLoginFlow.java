@@ -17,6 +17,7 @@ import io.appium.java_client.AppiumBy;
 
 public class DriverLoginFlow extends BaseClass{
 	PopUpsHandling popUpsHandling = new PopUpsHandling();
+	
 	@Test
 	public void successfulDriverLogin() throws InterruptedException {
 		Boolean loginFlow = false;
