@@ -26,9 +26,9 @@
 <version>1.7</version>
 </dependency>
 <dependency>
-<groupId>org.testng</groupId>
+    <groupId>org.testng</groupId>
     <artifactId>testng</artifactId>
-    <version>7.4.0</version>
+    <version>7.8.0</version>
     <scope>test</scope>
 </dependency>
 <dependency>
@@ -49,5 +49,37 @@
 </dependency>
 </dependencies>
 
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.5.2</version>
+            <configuration>
+                <suiteXmlFiles>
+              	    <suiteXmlFile>src/test/java/nammaYatriDependentFlows/AutoAssignRideFlow.xml</suiteXmlFile>
+                    <suiteXmlFile>src/test/java/nammaYatriDependentFlows/UserCancellation.xml</suiteXmlFile>
+                    <suiteXmlFile>src/test/java/nammaYatriDependentFlows/DriverCancellation.xml</suiteXmlFile>
+                </suiteXmlFiles>
+                <properties>
+                    <property>
+                        <name>disableXmlReport</name>
+                        <value>true</value>
+                    </property>
+                </properties>
+            </configuration>
+        </plugin>
+    </plugins>
+</build>
+
+<!--To run via terminal:
+
+ 1.mvn test => to run all test.xml files in <suiteXmlFile></suiteXmlFile> tag
+ 
+ 2.mvn test -DsuiteXmlFile= filename.xml  => to run specific test.xml files in <suiteXmlFile></suiteXmlFile> tag
+
+-->
 
 </project>
+
+
