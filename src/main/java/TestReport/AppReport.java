@@ -2,16 +2,26 @@ package TestReport;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import base.BaseClass;
 
 public class AppReport {
 
 	public void generateReport() {
+		List<String> udids = new ArrayList<>();
+		String commandToFind = "allure";
+		String commandPath = BaseClass.findCommandPath(commandToFind);
+		System.out.println(commandToFind.toUpperCase() + " Path: " + (commandPath != null ? commandPath : commandToFind + " not found"));
 		new Thread(() -> {
 			try {
 				System.out.println("Serving Allure Report...");
-				String command = "/opt/homebrew/bin/allure serve allure-results --clean";
-				Runtime.getRuntime().exec(command);
-			} catch (IOException e) {
+				String servecommand = commandPath+" serve allure-results";
+				String generatecommand = commandPath+" generate --single-file allure-results";
+				Runtime.getRuntime().exec(servecommand);
+				Runtime.getRuntime().exec(generatecommand);
+			} catch (Exception e) {
 				e.printStackTrace();
 				System.err.println("Failed to serve Allure report.");
 			}
