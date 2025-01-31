@@ -1,5 +1,6 @@
 package User.Android;
 import io.appium.java_client.AppiumBy;
+import io.appium.java_client.android.AndroidDriver;
 import io.netty.handler.timeout.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.PointerInput;
@@ -14,8 +15,11 @@ import java.util.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
+import User.Android.EstimateScreen;
 public class EstimateScreen extends BaseClass {
+	
 	@Test
 	public void autoAssignDriver() throws InterruptedException {
 		Thread.sleep(7000);
@@ -103,6 +107,8 @@ public class EstimateScreen extends BaseClass {
 	}
 	public void cancelAutoConfirm() {
 	}
+	
+
 	@Test
 	public void react_variantSelection() throws InterruptedException {
 
@@ -264,11 +270,12 @@ public class EstimateScreen extends BaseClass {
 	
 	
 	
-//For Tip Add
+//For Tip Add cases 
     
     @Test
     public void AddingTipFromEstimateScreen() throws InterruptedException {
-        // Soft Try-Catch to validate if locators are present
+    	
+    	System.out.println("Geeting In For Tip Check at Estimate Screen");
         WebElement WishToAddTipText;
         WebElement AddTipText;
 
@@ -310,12 +317,6 @@ public class EstimateScreen extends BaseClass {
         // Print the formatted output, trimming the trailing space
         System.out.println(formattedOutput.toString().trim());
 
-     
-        
-       // Click the "Add/Change Tip" button
-        
-     
-     
      // Define XPaths
         String tipOptionsXPath = "//android.widget.ImageButton[@content-desc='Go back']/../../following-sibling::android.view.ViewGroup/android.view.ViewGroup/android.widget.HorizontalScrollView/android.view.ViewGroup/android.widget.Button";
         String addChangeTipButtonXPath = "//android.widget.ImageButton[@content-desc='Go back']/../../../android.view.ViewGroup[3]/android.view.ViewGroup[1]/android.view.ViewGroup[2]";
@@ -358,53 +359,167 @@ public class EstimateScreen extends BaseClass {
         System.out.println("Finished testing all tip options before select of Variant.");
     }
 	
-    
+
     @Test
     public void AddingTipAfterEstimateScreen() throws InterruptedException {
-		
-		
-		try {
-		    // Wait for the "Searching for an awesome ride..." element
-		    WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(60));
-		    WebElement rideScreenValidation = wait.until(ExpectedConditions.presenceOfElementLocated(
-		        AppiumBy.xpath("//android.widget.Button[@content-desc='Trip Details']")
-		    ));
+    	implicitWaitMethod(driver,110);// We are making driver side object to be waited for 110 Sec until tip cases are validated
+    	System.out.println("Getting Inside Tip After Estimate Screen -> " + vehicleVariantText);
+        try {
+            WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(60));
+            
+            // Check if vehicle variant is "Auto" before looking for the tip selection element
+            if (vehicleVariantText.equals("Auto")) {
+                try {
+                    WebElement tipButtonNone = driver1.findElement(AppiumBy.xpath(
+                        "//android.widget.TextView[@text='None']"
+                    ));
+                    tipButtonNone.click();
+                    System.out.println("Tip selection set to 'None'.");
+                } catch (NoSuchElementException e) {
+                    System.out.println("Tip selection element not found, skipping tip selection.");
+                }
+                
+            }
+            
+           // Call slideToBook() method from EstimateScreen
+            EstimateScreen estimateScreen = new EstimateScreen();
+            estimateScreen.slideToBook();
+            System.out.println("slideToBook() method executed.");
+            
+            // Validate the ride search screen (AFTER slideToBook action)
+            WebElement rideScreenValidation = wait.until(ExpectedConditions.presenceOfElementLocated(
+                AppiumBy.xpath("//android.widget.Button[@content-desc='Trip Details']")
+            ));
 
-		    // Validate the element
-		    if (rideScreenValidation != null) {
-		        System.out.println("Ride search started.");
-		        
-		        // Start tracking time
-		        long startTime = System.currentTimeMillis();
+            if (rideScreenValidation != null) {
+                System.out.println("Ride search started.");
+            } else {
+                System.out.println("Ride screen validation failed: Element not found.");
+                Assert.fail("Ride screen validation failed.");
+            }
 
-		        // Wait for "Boost Search" element
-		        WebDriverWait waitBoostSearch = new WebDriverWait(driver1, Duration.ofSeconds(30));
-		        WebElement boostSearch = waitBoostSearch.until(ExpectedConditions.presenceOfElementLocated(
-		            AppiumBy.xpath("//android.widget.TextView[@text='Boost Search']")
-		        ));
+            // Start tracking time
+            long startTime = System.currentTimeMillis();
 
-		        // Assert that boostSearch is not null
-		        Assert.assertNotNull(boostSearch, "Boost Search element was not found!");
+            // Wait for "Boost Search" element
+            WebDriverWait waitBoostSearch = new WebDriverWait(driver1, Duration.ofSeconds(32));
+            WebElement boostSearch = waitBoostSearch.until(ExpectedConditions.presenceOfElementLocated(
+                AppiumBy.xpath("//android.widget.TextView[@text='Boost Search']")
+            ));
 
-		        // End tracking time
-		        long endTime = System.currentTimeMillis();
-		        long duration = endTime - startTime;
-		        double durationInSeconds = duration / 1000.0;
+            // Assert that boostSearch is not null
+            Assert.assertNotNull(boostSearch, "Boost Search element was not found!");
 
-		        // Print duration
-		        System.out.println("Time taken between 'Ride search started' and 'Boost Search': " + durationInSeconds + " seconds");
-		        System.out.println("Boost Loader is displayed");
-		    } else {
-		        System.out.println("Ride screen validation failed: Element not found.");
-		    }
-		} catch (TimeoutException e) {
-		    System.out.println("Timeout occurred while waiting for elements.");
-		    System.out.println("Captured page source:\n" + driver1.getPageSource());
-		    Assert.fail("Timeout while waiting for elements.");
-		} catch (Exception e) {
-		    e.printStackTrace();
-		    Assert.fail("An unexpected exception occurred: " + e.getMessage());
-		}
-		
+            // End tracking time
+            long endTime = System.currentTimeMillis();
+            double durationInSeconds = (endTime - startTime) / 1000.0;
+
+            // Print duration
+            System.out.println("Time taken between 'Ride search started' and 'Boost Search': " + durationInSeconds + " seconds");
+            System.out.println("Boost Loader is displayed");
+        } catch (TimeoutException e) {
+            System.out.println("Timeout occurred while waiting for elements.");
+            System.out.println("Captured page source:\n" + driver1.getPageSource());
+            Assert.fail("Timeout while waiting for elements.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Assert.fail("An unexpected exception occurred: " + e.getMessage());
+        }
+        
+       // Closing on Boost Search loader
+        WebElement CrossBoostLoader = driver1.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='Icon']"));
+        CrossBoostLoader.click();
+
+        // Opening 'Trip Details' bottom sheet
+        WebElement TripDetails = driver1.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='Trip Details']"));
+        TripDetails.click();
+
+        // Validate if details displayed
+        WebElement FareEstimate = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare estimate']"));
+        Assert.assertTrue(FareEstimate.isDisplayed(), "Trip details Bottom Sheet is not visible!");
+
+        // validating and storing base fare estimate before adding a tip in number format
+        WebElement BaseFareValue = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare estimate']/../following-sibling::android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView")); 
+        String baseFareText = BaseFareValue.getText().replaceAll("[^0-9]", ""); 
+        int baseFare = Integer.parseInt(baseFareText); 
+        System.out.println("Base Fare Estimate price without tip: " + baseFare);
+
+        // Close Trip Details Bottom Sheet
+        WebElement TripDetailCross = driver1.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Cancel search']"));
+        TripDetailCross.click();
+
+        // Click on 'Add' tip option from ride search screen
+        WebElement AddTipOption = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Add']"));
+        AddTipOption.click();
+
+        // Select a tip amount and extract only its numeric value
+        WebElement SelectTipOption = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Add a tip to driver']/../../following-sibling::android.view.ViewGroup[2]/android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.View[2]/android.view.ViewGroup/android.widget.TextView"));
+        String selectedTipText = SelectTipOption.getText().replaceAll("[^0-9]", ""); 
+        int selectedTip = Integer.parseInt(selectedTipText); 
+        System.out.println("Selected Tip Amount: " + selectedTip);
+        SelectTipOption.click();
+
+        // Apply 'Boost Search' with tip
+        WebElement BoostSearchButton = driver1.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='Boost Search, Icon']"));
+        BoostSearchButton.click();
+
+        // Check selected tip value on the screen
+        WebElement SelectedTipValidation = driver1.findElement(AppiumBy.xpath("//android.view.ViewGroup[@content-desc='Change']/../../../android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.TextView"));
+        String displayedTipText = SelectedTipValidation.getText().replaceAll("[^0-9]", ""); 
+        int displayedTip = Integer.parseInt(displayedTipText); 
+        System.out.println("Displayed Tip Amount: " + displayedTip);
+
+        // Validate if the selected tip matches the displayed tip
+        if (selectedTip == displayedTip) {
+            System.out.println("Test Passed: Selected tip is correctly displayed.");
+        } else {
+            System.out.println("Test Failed: Selected tip (" + selectedTip + ") does not match displayed value (" + displayedTip + ").");
+        }
+
+        // Re-open 'Trip Details' to check if the fare is updated
+        TripDetails.click();
+
+        // validating if applied tip is added in base estimate Fare
+        WebElement RevisedBaseFareValue = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare estimate']/../following-sibling::android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView"));
+        String revisedFareText = RevisedBaseFareValue.getText().replaceAll("[^0-9]", ""); 
+        int revisedFare = Integer.parseInt(revisedFareText); 
+        System.out.println("Revised Base Fare Estimate price: " + revisedFare);
+
+        // Validate if the revised base fare is equal to the initial base fare + selected tip
+        if (revisedFare == (baseFare + selectedTip)) {
+            System.out.println("Test Passed: Revised base fare is correctly updated.");
+        } else {
+            System.out.println("Test Failed: Expected revised fare (" + (baseFare + selectedTip) + "), but found (" + revisedFare + ").");
+        }
+        
+    
+        System.out.println("Killing the app...");
+        ((AndroidDriver) driver1).terminateApp("in.juspay.nammayatri.debug"); // Replace with actual package name
+        Thread.sleep(3000); // Wait for app to close completely
+
+        System.out.println("Relaunching the app...");
+        ((AndroidDriver) driver1).activateApp("in.juspay.nammayatri.debug"); // Relaunch the app
+        Thread.sleep(5000); // Wait for app to load fully
+
+        
+
+        // Try to find Selected Tip again after relaunch
+        try {
+            SelectedTipValidation = driver1.findElement(AppiumBy.xpath("//android.view.ViewGroup[@content-desc='Change']/../../../android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.TextView"));
+            String relaunchedDisplayedTipText = SelectedTipValidation.getText().replaceAll("[^0-9]", ""); 
+            int relaunchedDisplayedTip = Integer.parseInt(relaunchedDisplayedTipText); 
+
+            System.out.println("After relaunch, displayed tip amount: " + relaunchedDisplayedTip);
+
+            // Validate if the selected tip persists after relaunch
+            if (selectedTip == relaunchedDisplayedTip) {
+                System.out.println("Test Passed: Selected tip is correctly displayed after relaunch.");
+            } else {
+                System.out.println("Test Failed: After relaunch, selected tip (" + selectedTip + ") does not match displayed value (" + relaunchedDisplayedTip + ").");
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println("Test Failed: Selected Tip validation element is not displayed after relaunch.");
+        }
     }
-}
+    
+    }
