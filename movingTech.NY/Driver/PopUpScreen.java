@@ -17,6 +17,7 @@ public class PopUpScreen extends BaseClass {
     // Method to accept the ride request
     @Test
     public void acceptOffer() throws InterruptedException {
+    	implicitWaitMethod(driver,60);
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         acceptRideButton = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.xpath("//android.widget.Button[@text='Accept Offer']")));
         System.out.println("Waiting for 'Accept Offer' button to be present");

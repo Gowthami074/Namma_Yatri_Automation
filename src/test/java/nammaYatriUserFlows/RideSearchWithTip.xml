@@ -1,29 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Suite">
-<parameter name="flowOption" value="1"/>
-<parameter name="userApp" value="nammaYatriDebug"/>
-<parameter name="driverApp" value="nammaYatriPartnerDebug"/>
+<suite name="UserSideTipCasesWithRideFlow">
+    <parameter name="flowOption" value="3"/>
+    <parameter name="userApp" value="nammaYatriDebug"/>
+    <parameter name="driverApp" value="nammaYatriPartnerDebug"/>
 
- <!-- RideSearch with Tip Combination -->
-  <test name="RideSearchWithTipCases">
- <classes>
+    <!-- RideSearch with Tip Combination -->
+    <test name="RideSearchWithTipCases">
+   
+        <classes>
             <class name="User.Android.RideSearch">
                 <methods>
-                    <include name="SearchForRideFromSuggestion"></include>
+                    <include name="SearchForRideFromSuggestion"/>
                 </methods>
             </class>
+            <!-- Tip Cases & Variant Selection & initiating search with tip -->
             <class name="User.Android.EstimateScreen">
                 <methods>
-                	
-                	<include name="AddingTipFromEstimateScreen"></include>
-                    <include name="react_variantSelection"></include>
-                    <include name="slideToBook"></include>
-                    <include name="AddingTipAfterEstimateScreen"></include>
-                    
-                    
+                    <include name="AddingTipFromEstimateScreen"/>
+                    <include name="react_variantSelection"/>
+                    <include name="AddingTipAfterEstimateScreen"/>
+                </methods>
+            </class>
+        </classes>
+    </test> <!-- Accepting the RideRequest -->
+    <test name="Accepting the RideRequest">
+        <classes>
+            <class name="Driver.PopUpScreen">
+                <methods>
+                    <include name="acceptOffer"></include> 
                 </methods>
             </class>
         </classes>
     </test>
-</suite> <!-- Suite -->
+
+    <!-- Reading OTP from OTP screen -->
+    <test name="Reading OTP from OTP screen" >
+        <classes>
+            <class name="User.Android.RideAssignScreen">
+                <methods>
+                    <include name="readOTP"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Starting the Ride -->
+    <test name="Starting the Ride">
+        <classes>
+            <class name="Driver.StartRideScreen">
+                <methods>
+                    <include name="startRide"></include>
+                </methods>
+            </class>
+            <class name="Driver.EnterOTPPopUp">
+                <methods>
+                    <include name="enterCorrectOTP"></include>
+                </methods>
+            </class>
+            <class name="Driver.AndroidBackButton">
+                <methods>
+                    <include name="tapBack"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Ending the Ride -->
+    <test name="Ending the Ride">
+        <classes>
+            <class name="Driver.EndRideScreen">
+                <methods>
+                    <include name="clickEndRide"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- User Giving Rating -->
+    <test name="User Giving Rating">
+        <classes>
+            <class name="User.Android.UserRatingScreen">
+                <methods>
+                    <include name="ratingScreen2"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!-- Driver Giving Rating -->
+    <test name="Driver Giving Rating">
+        <classes>
+            <class name="Driver.DriverRatingScreen">
+                <methods>
+                    <include name="ratingScreen"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
+    
+
