@@ -13,7 +13,7 @@ public class ConfigLoader {
 
     private static void loadProperties() {
         try {
-            String configFilePath = System.getProperty("user.dir") + "/app.config.properties";
+            String configFilePath = System.getProperty("user.dir") + "/src/test/resources/config file/app.config.properties";
             FileReader fr = new FileReader(configFilePath);
             properties = new Properties();
             properties.load(fr);

@@ -1,7 +1,6 @@
 package TestReport;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class AppReport {
 			try {
 				System.out.println("Serving Allure Report...");
 				String servecommand = commandPath+" serve allure-results";
-				String generatecommand = commandPath+" generate --single-file allure-results";
+				String generatecommand = commandPath+" generate --clean --single-file allure-results";
 				Runtime.getRuntime().exec(servecommand);
 				Runtime.getRuntime().exec(generatecommand);
 			} catch (Exception e) {
