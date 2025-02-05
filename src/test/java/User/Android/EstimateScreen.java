@@ -19,7 +19,8 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import User.Android.EstimateScreen;
 public class EstimateScreen extends BaseClass {
-	
+	private int baseFare;
+    private int selectedTip;
 	@Test
 	public void autoAssignDriver() throws InterruptedException {
 		Thread.sleep(7000);
@@ -441,7 +442,7 @@ public class EstimateScreen extends BaseClass {
         // validating and storing base fare estimate before adding a tip in number format
         WebElement BaseFareValue = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Fare estimate']/../following-sibling::android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView")); 
         String baseFareText = BaseFareValue.getText().replaceAll("[^0-9]", ""); 
-        int baseFare = Integer.parseInt(baseFareText); 
+        baseFare = Integer.parseInt(baseFareText); 
         System.out.println("Base Fare Estimate price without tip: " + baseFare);
 
         // Close Trip Details Bottom Sheet
@@ -455,7 +456,7 @@ public class EstimateScreen extends BaseClass {
         // Select a tip amount and extract only its numeric value
         WebElement SelectTipOption = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Add a tip to driver']/../../following-sibling::android.view.ViewGroup[2]/android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.View[2]/android.view.ViewGroup/android.widget.TextView"));
         String selectedTipText = SelectTipOption.getText().replaceAll("[^0-9]", ""); 
-        int selectedTip = Integer.parseInt(selectedTipText); 
+        selectedTip = Integer.parseInt(selectedTipText); 
         System.out.println("Selected Tip Amount: " + selectedTip);
         SelectTipOption.click();
 
@@ -521,5 +522,60 @@ public class EstimateScreen extends BaseClass {
             System.out.println("Test Failed: Selected Tip validation element is not displayed after relaunch.");
         }
     }
+    
+    @Test
+    public void TryAgainRideSearch() throws InterruptedException {
+    	
+    	
+    	String tryAgainXpath = "//android.widget.TextView[@text='Please try boosted search']";
+
+        // Start tracking time
+        long startTime = System.currentTimeMillis();
+
+        // Wait for "Try Again Loader" element
+        WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(190));
+        WebElement tryAgainLoader = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.xpath(tryAgainXpath)));
+
+        // Assertion: Verify if element is displayed
+        Assert.assertNotNull(tryAgainLoader, "Try Again loader is not displayed!");
+
+        // End tracking time
+        double durationInSeconds = (System.currentTimeMillis() - startTime) / 1000.0;
+        System.out.println("Time taken to validate the Try Again Loader: " + durationInSeconds + " seconds");
+        
+        // Checking variant, Base fare & Applied tip values on the Try again Screen and Locating and extracting values for validation
+     
+        WebElement VariatCheck = driver1.findElement(AppiumBy.xpath(
+            "//android.widget.TextView[@text='Please try boosted search']/../following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.widget.TextView"));
+        String displayedVariant = VariatCheck.getText();
+
+        WebElement BaseFareCheck = driver1.findElement(AppiumBy.xpath(
+            "//android.widget.TextView[@text='Please try boosted search']/../following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView[2]"));
+        String displayedBaseFareText = BaseFareCheck.getText().replaceAll("[^0-9]", ""); 
+        int displayedBaseFare = Integer.parseInt(displayedBaseFareText);
+
+        WebElement TipValueCheck = driver1.findElement(AppiumBy.xpath(
+            "//android.widget.TextView[@text='Selected tip']/../following-sibling::android.view.ViewGroup/android.widget.HorizontalScrollView/android.view.ViewGroup/android.widget.Button[2]/android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView[2]"));
+        String displayedTipText = TipValueCheck.getText().replaceAll("[^0-9]", "");
+        int displayedTip = Integer.parseInt(displayedTipText);
+        // 1. Validate the Variant Selection
+        Assert.assertEquals(displayedVariant, vehicleVariantText, "Variant name mismatch on Try Again screen!");
+        System.out.println("'" + displayedVariant + "' variant name is validated on the Try Again screen, which is the selected variant.");
+
+        // 2. Validate the Base Fare
+        Assert.assertEquals(displayedBaseFare, baseFare, "Base fare mismatch on Try Again screen!");
+        System.out.println("Base fare which was " + displayedBaseFare + " is validated on the Try Again screen.");
+
+        // 3. Validate the Tip Selection
+        Assert.assertEquals(displayedTip, selectedTip, "Tip value mismatch on Try Again screen!");
+        System.out.println("'" + displayedTip + "' is the selected tip, which was chosen during Boost Search.");
+        
+        // Click Boost Search button again
+        WebElement BoostSearchButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Boost Search']"));
+        BoostSearchButton.click();
+    
+    	
+    }
+    
     
     }
