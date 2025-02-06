@@ -1,5 +1,4 @@
 name: Android CI with Maven
-
 on:
   push:
     branches:
@@ -10,20 +9,24 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
-
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
-
+      
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-
+          
+      - name: Install Appium
+        run: |
+          npm install -g appium
+          appium --version
+          
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
+        
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
@@ -31,18 +34,46 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-
-      - name: Run Android Emulator
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 29
-          script: |
-            mvn clean verify
-            mvn android:emulator-start
-            mvn android:instrumentation-test
-
-      - name: Build and Test
+    
+      - name: Prepare Android Emulator
         run: |
-          mvn clean install
-          mvn android:deploy
-          mvn android:instrumentation-test
+          echo "y" | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "emulator"
+          echo "y" | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "system-images;android-30;google_apis;x86_64"
+          ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager list device
+          echo "Creating emulator 1"
+          echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd -n test_emulator1 -k "system-images;android-30;google_apis;x86_64"
+          echo "Creating emulator 2"
+          echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd -n test_emulator2 -k "system-images;android-30;google_apis;x86_64"
+      
+      - name: Start Emulator
+        run: |
+          ${ANDROID_HOME}/emulator/emulator -avd test_emulator1 \
+            -no-snapshot-load \
+            -no-window \
+            -gpu on \
+            -no-boot-anim \
+            -memory 2048 \
+            -wipe-data &
+
+          ${ANDROID_HOME}/emulator/emulator -avd test_emulator2 \
+            -no-snapshot-load \
+            -no-window \
+            -gpu on \
+            -no-boot-anim \
+            -memory 2048 \
+            -wipe-data &
+          
+      - name: Wait for Emulator
+        timeout-minutes: 15
+        run: |
+          adb wait-for-device
+          adb shell 'while [[ -z $(getprop sys.boot_completed) ]]; do sleep 2; done'
+          adb shell settings put global window_animation_scale 0
+          adb shell settings put global transition_animation_scale 0
+          adb shell settings put global animator_duration_scale 0
+          adb devices
+      
+      - name: Run Tests
+        run: |
+          appium & sleep 5
+          mvn test -DsuiteXmlFile=nammaYatriUserFlows/AutoAssignRideFlow.xml
