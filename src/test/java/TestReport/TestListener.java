@@ -1,4 +1,4 @@
-2package TestReport;
+package TestReport;
 
 import java.io.*;
 import org.openqa.selenium.OutputType;
