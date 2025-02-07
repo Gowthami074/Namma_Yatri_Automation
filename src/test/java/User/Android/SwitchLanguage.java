@@ -73,6 +73,14 @@ public class SwitchLanguage extends BaseClass {
         String confirmButtonXpath = getConfirmButtonXpath(targetLanguage);
         String confirmButtonText = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath(confirmButtonXpath))).getText();
         System.out.println("Validated Confirm button text: " + confirmButtonText);
+
+        // Switch back to English
+        wait.until(ExpectedConditions.elementToBeClickable(AppiumBy.xpath("//android.view.ViewGroup[@content-desc=\"English, English\"]/android.view.ViewGroup"))).click();
+        System.out.println("Switched back to English Language");
+
+        // Click on 'Confirm App Language' button again
+        wait.until(ExpectedConditions.elementToBeClickable(AppiumBy.xpath("//android.widget.TextView[@text='ಅಪ್ಲಿಕೇಶನ್ ಭಾಷೆಯನ್ನು ದೃಢೀಕರಿಸಿ']"))).click();
+        System.out.println("Clicked on Confirm App Language to switch back to English");
     }
 
     // Method to return the App Language XPath based on selected language
