@@ -2,6 +2,8 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="CUG Ride Flow">
     <parameter name="flowOption" value="3"></parameter>
+       <parameter name="userApp" value="nammaYatriCUG"/>
+<parameter name="driverApp" value="nammaYatriPartnerCUG"/>
     <listeners>
         <listener class-name="TestReport.TestListener"/> 
     </listeners>
