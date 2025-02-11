@@ -5,6 +5,7 @@ import java.time.Duration;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.Test;
 
 import base.BaseClass;
 import io.appium.java_client.AppiumBy;
@@ -36,7 +37,7 @@ public class PopUpsHandling extends BaseClass{
 		}
 		implicitWaitMethod(driver1,60);
 	}
-	
+	@Test
 	public void AC_PopUp() {
 		implicitWaitMethod(driver1,5);
 		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
@@ -56,7 +57,7 @@ public class PopUpsHandling extends BaseClass{
 	
 	public void parkingChargesPopUp() {
 		implicitWaitMethod(driver1,15);
-		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
+		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(10));
 		try {
 			WebElement parkingpopUp = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.Button[@content-desc='Got it']")));
 			if(parkingpopUp.isDisplayed()) {

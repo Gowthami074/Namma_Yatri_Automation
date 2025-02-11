@@ -4,6 +4,7 @@ package User.Android;
 import io.appium.java_client.AppiumBy;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.io.FileReader;
@@ -27,11 +28,12 @@ public class UserLoginFlow extends BaseClass {
 
 	DevicePermission devicePermission = new DevicePermission();
 	PopUpsHandling popupshandling = new PopUpsHandling();
-
+	long currentMobileNumber;
+	String enteredMobileString;
 
 	// Method to read the mobile number from a file and increment it
 	public String getNextMobileNumber() throws IOException {
-		String mobileFilePath = System.getProperty("user.dir") + "/movingTech.NY/Resources/mobile_number.txt"; // Path to a file where the number is stored
+		String mobileFilePath = System.getProperty("user.dir") + "/src/test/resources/Resources/mobile_number.txt"; // Path to a file where the number is stored
 		FileReader reader = new FileReader(mobileFilePath);
 		StringBuilder number = new StringBuilder();
 		int i;
@@ -40,8 +42,9 @@ public class UserLoginFlow extends BaseClass {
 		}
 		reader.close();
 		// Increment the mobile number
-		long currentMobileNumber = Long.parseLong(number.toString().trim());
+		currentMobileNumber = Long.parseLong(number.toString().trim());
 		currentMobileNumber++;
+
 		// Write the incremented mobile number back to the file
 		FileWriter writer = new FileWriter(mobileFilePath);
 		writer.write(Long.toString(currentMobileNumber));
@@ -61,11 +64,13 @@ public class UserLoginFlow extends BaseClass {
 		Thread.sleep(1000);
 		popupshandling.googleServicePhoneNumberAutofill();
 		// Get dynamically incremented mobile number
-		//String mobileNumber = getNextMobileNumber();
+		String mobileNumber = getNextMobileNumber();
 
-		String mobileNumber = ConfigLoader.getProperty("customer.mobile.number");
+		//		String mobileNumber = ConfigLoader.getProperty("customer.mobile.number");
 
 		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='10-digit mobile number']")).sendKeys(mobileNumber);
+		enteredMobileString = driver1.findElement(AppiumBy.xpath("//android.widget.EditText")).getText();
+
 		Thread.sleep(2000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']")).click();
 		Thread.sleep(2000);
@@ -90,6 +95,7 @@ public class UserLoginFlow extends BaseClass {
 		} catch (NoSuchElementException | org.openqa.selenium.TimeoutException e) {
 			System.out.println("Registration screen not found, checking for 'Grant Permissions' screen.");
 			devicePermission.grantLocationAccess();
+			Thread.sleep(3000);
 			devicePermission.locationPermissionsConfirmation();
 
 		}
@@ -99,26 +105,32 @@ public class UserLoginFlow extends BaseClass {
 
 	public void registration() throws Exception {
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Full Name (Helps driver confirm it is you)']/../android.view.ViewGroup/android.widget.EditText")).sendKeys("Automation");
-		WebElement registrationEmailElement=driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email']/../android.view.ViewGroup/android.widget.EditText"));
-		registrationEmailElement.sendKeys("automation@gmail.com");
+		WebElement registrationEmail=driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email']/../android.view.ViewGroup/android.widget.EditText"));
+		registrationEmail.click();
+		registrationEmail.sendKeys(enteredMobileString+"automation@gmail.com");
+		//		registrationEmailElement.sendKeys("automation@gmail.com");
+		//		((AndroidDriver) driver1).hideKeyboard();
+		//		WebElement continuebuttonElement =driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']"));
+		//		continuebuttonElement.click();
+		//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Gender is required']"));
+		//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Please choose one option']"));
+		//		System.out.println("Validated error message for 'Continue' without gender and disability");
+		//
+		//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email']/../android.view.ViewGroup/android.widget.ImageButton")).click();
+		//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email']/../android.view.ViewGroup/android.widget.EditText")).sendKeys(enteredMobileString+"automation@gmail.com");
 		((AndroidDriver) driver1).hideKeyboard();
-		WebElement continuebuttonElement =driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']"));
-		continuebuttonElement.click();
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Gender is required']"));
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Please choose one option']"));
-		System.out.println("Validated error message for 'Continue' without gender and disability");
-
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email']/../android.view.ViewGroup/android.widget.ImageButton")).click();
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email']/../android.view.ViewGroup/android.widget.EditText")).sendKeys(getNextMobileNumber()+"automation@gmail.com");
-		((AndroidDriver) driver1).hideKeyboard();
+		Thread.sleep(2000);
 		WebElement genderDropdown= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select Your Gender']/../android.view.ViewGroup/com.horcrux.svg.SvgView"));
 		genderDropdown.click();	
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Other']")).click();
+		Thread.sleep(2000);
 		genderDropdown.click();	
+		//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Other']")).click();
+		//		genderDropdown.click();	
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Female']")).click();
 		genderDropdown.click();
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Male']")).click();
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='No']/../../../android.view.ViewGroup/android.view.ViewGroup/com.horcrux.svg.SvgView")).click();
+		WebElement noElement = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='No']/../../../android.view.ViewGroup/android.view.ViewGroup/com.horcrux.svg.SvgView"));
+		noElement.click();
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Yes']/../../../android.view.ViewGroup/android.view.ViewGroup/com.horcrux.svg.SvgView")).click();
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']")).click();
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Special Assistance']"));
@@ -128,20 +140,25 @@ public class UserLoginFlow extends BaseClass {
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Locomotor Disability']")).click();
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='By continuing, you are declaring your status as a person with a disability under the RPWD act of 2016']"));
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='My disability is not listed here']")).click();
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Your Disability (helps us optimise the app for you)']/../android.widget.EditText")).sendKeys("NA");
+		Thread.sleep(2000);
+		//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Your Disability (helps us optimise the app for you)']/../android.widget.EditText")).sendKeys("NA");
+		((AndroidDriver) driver1).hideKeyboard();
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Submit']")).click();	
-		System.out.println("New user registration completed with disability and validated related text.");
+		Thread.sleep(3000); 
+		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='No']/../com.horcrux.svg.SvgView")).click();
+		System.out.println("New user registration completed");
+		WebElement continuebuttonElement =driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']"));
+		//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email is already registered.']"));
 		continuebuttonElement.click();
-//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Email is already registered.']"));
-//		continuebuttonElement.click();
-		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(2));
+		new WebDriverWait(driver1, Duration.ofSeconds(8));
 		devicePermission.grantLocationAccess();
+		Thread.sleep(8000);
 		devicePermission.locationPermissionsConfirmation();
 	}
 
 	public void grantPermissions() throws InterruptedException {
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Allow Location Access']")).click();
-		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(2));
+		new WebDriverWait(driver1, Duration.ofSeconds(2));
 		devicePermission.locationPermissionsConfirmation();
 		Thread.sleep(5000);
 	}

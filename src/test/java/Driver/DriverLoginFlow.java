@@ -62,6 +62,10 @@ public class DriverLoginFlow extends BaseClass{
 			case "4e27c0e2":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text ='ALLOW']")).click();
 			break;
+			case "emulator-5554":
+			case "emulator-5556":
+				driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow only while using the app']")).click();
+				break;
 			
 		default:
 				throw new NoSuchElementException("Invalid Selectors");
