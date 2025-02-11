@@ -21,6 +21,19 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
+      - name: Install Git LFS
+        run: |
+         git lfs install
+         git lfs pull
+
+      - name: Verify APK File Integrity
+        run: |
+         ls -lh src/test/resources/Resources/
+         file src/test/resources/Resources/app-nyDriver-prod-debug.apk
+         file src/test/resources/Resources/app-nammaYatri-prod-debug.apk
+         unzip -l src/test/resources/Resources/app-nyDriver-prod-debug.apk || echo "APK is corrupted!"
+         unzip -l src/test/resources/Resources/app-nammaYatri-prod-debug.apk || echo "APK is corrupted!"
+
       - name: Install Appium and Drivers
         run: |
           npm install -g appium
