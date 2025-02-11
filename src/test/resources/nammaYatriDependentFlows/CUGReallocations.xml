@@ -2,7 +2,9 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="CUG Ride Flow">
     <parameter name="flowOption" value="3"></parameter>
-    
+    <listeners>
+        <listener class-name="TestReport.TestListener"/> 
+    </listeners>
     <!-- Mock User Location for CUG Ride Search -->
     <test name="Mock the User location">
         <classes>
