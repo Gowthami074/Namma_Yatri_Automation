@@ -4,6 +4,9 @@
 <parameter name="flowOption" value="3"></parameter>
 <parameter name="userApp" value="nammaYatriDebug"/>
 <parameter name="driverApp" value="nammaYatriPartnerDebug"/>
+<listeners>
+        <listener class-name="TestReport.TestListener"/>
+    </listeners>
     
     <!-- DriverLogin -->
     <test name="DriverLogin" group-by-instances="true">
@@ -77,6 +80,11 @@
             <class name="Driver.EnterOTPPopUp">
                 <methods>
                     <include name="enterCorrectOTP"></include>
+                </methods>
+            </class>
+            <class name="User.Android.PopUpsHandling">
+                <methods>
+                    <include name="AC_PopUp"></include>
                 </methods>
             </class>
             <class name="Driver.AndroidBackButton">

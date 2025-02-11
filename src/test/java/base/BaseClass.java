@@ -68,6 +68,7 @@ public class BaseClass {
 				cap.setCapability("udid", driverUdid);
 				cap.setCapability("automationName", "UiAutomator2");
 				cap.setCapability("newCommandTimeout", 300);
+				cap.setCapability("uiautomator2ServerLaunchTimeout", 180000);
 //				cap.setCapability("appPackage", ConfigLoader.getProperty(driverApp + ".appPackage"));
 //				cap.setCapability("appActivity", ConfigLoader.getProperty(driverApp + ".appActivity"));
 //				cap.setCapability("noReset", true);//debug
@@ -86,10 +87,11 @@ public class BaseClass {
 				cap1.setCapability("udid", userUdid);
 				cap1.setCapability("automationName", "UiAutomator2");
 				cap1.setCapability("newCommandTimeout", 300);
+				cap1.setCapability("uiautomator2ServerLaunchTimeout", 180000);
 //				cap1.setCapability("appPackage", ConfigLoader.getProperty(userApp + ".appPackage"));
 //			    cap1.setCapability("appActivity",ConfigLoader.getProperty(userApp + ".appActivity"));
 //				cap1.setCapability("noReset", true);
-         		cap1.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/Resources/app-nammaYatri-prod-debug.apk");//Driver apk path
+         		cap1.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/Resources/app-nammaYatri-prod-debug.apk");
 				driver1 = new AndroidDriver(url, cap1);
 				implicitWaitMethod(driver1,100);
 				System.out.println("Launched the User Application");

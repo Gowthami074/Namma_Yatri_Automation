@@ -33,6 +33,7 @@ public class RideSearch extends BaseClass {
         Thread.sleep(2000);
         WebElement RideSearchScreenDestinationBox = driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where are you going?']"));
         RideSearchScreenDestinationBox.sendKeys("Koram");
+		((AndroidDriver) driver1).hideKeyboard();
         Thread.sleep(2000);
         driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Koramangala']")).click();
 
