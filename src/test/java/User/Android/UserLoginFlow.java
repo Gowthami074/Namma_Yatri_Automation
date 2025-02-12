@@ -87,7 +87,7 @@ public class UserLoginFlow extends BaseClass {
 		implicitWaitMethod(driver1,5);
 		try {
 			WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
-			WebElement registrationElement = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Let’s get you trip-ready!']")));
+			WebElement registrationElement = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Full Name (Helps driver confirm it is you)']")));
 			if (registrationElement.isDisplayed()) {
 				System.out.println("New number, proceeding registration.");
 				registration();
