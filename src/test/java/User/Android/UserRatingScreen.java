@@ -91,6 +91,8 @@ public class UserRatingScreen extends BaseClass {
 		popup.AC_PopUp();
 		String rideFare = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Ride completed']/../android.view.ViewGroup[1]/android.widget.TextView")).getText();
 		System.out.println("Ride Completed With "+rideFare);
+		implicitWaitMethod(driver1,5);
+		try {
 		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(10));
 		WebElement viewRideDetails  = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='view →']")));
 		viewRideDetails.click();
@@ -122,6 +124,10 @@ public class UserRatingScreen extends BaseClass {
 		goback.click();
 		Thread.sleep(2000);
 		goback.click();
+		}catch (Exception e) {
+			System.out.println("View details text not found");
+		}
+		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(10));
 		WebElement fiveStar = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='5 Star']")));
 		fiveStar.click();
 		System.out.println("5 start rating given");

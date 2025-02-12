@@ -58,6 +58,7 @@ public class BaseClass {
 			userUdid = System.getProperty("userUdid");
 
 			URL url = new URL("http://0.0.0.0:4723/wd/hub/");
+			
 			appreport.clearExistingJSONFiles();
 			if (flowOption == 2 || flowOption == 3) {
 				// Driver
@@ -68,10 +69,13 @@ public class BaseClass {
 				cap.setCapability("udid", driverUdid);
 				cap.setCapability("automationName", "UiAutomator2");
 				cap.setCapability("newCommandTimeout", 300);
-				cap.setCapability("appPackage", ConfigLoader.getProperty(driverApp + ".appPackage"));
-				cap.setCapability("appActivity", ConfigLoader.getProperty(driverApp + ".appActivity"));
-				cap.setCapability("noReset", true);//debug
-				//cap.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/app-nyDriver-prod-debug.apk");
+				cap.setCapability("uiautomator2ServerLaunchTimeout", 180000);
+//				cap.setCapability("appPackage", ConfigLoader.getProperty(driverApp + ".appPackage"));
+//				cap.setCapability("appActivity", ConfigLoader.getProperty(driverApp + ".appActivity"));
+//				cap.setCapability("noReset", true);//debug
+				//cap.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/Resources/app-nyDriver-prod-debug.apk");
+				cap.setCapability("app", "https://github.com/Gowthami074/Namma_Yatri_Automation/releases/download/v1.0.0/app-nyDriver-prod-debug.apk");
+				
 				driver = new AndroidDriver(url, cap);
 				implicitWaitMethod(driver,60);
 				System.out.println("Launched the Driver Application");
@@ -86,10 +90,13 @@ public class BaseClass {
 				cap1.setCapability("udid", userUdid);
 				cap1.setCapability("automationName", "UiAutomator2");
 				cap1.setCapability("newCommandTimeout", 300);
-				cap1.setCapability("appPackage", ConfigLoader.getProperty(userApp + ".appPackage"));
-			    cap1.setCapability("appActivity",ConfigLoader.getProperty(userApp + ".appActivity"));
-				cap1.setCapability("noReset", true);
-//         		cap1.setCapability("app", System.getProperty("user.dir") + "/movingTech.NY/Resources/driver-2-sept-master.apk");//Driver apk path
+				cap1.setCapability("uiautomator2ServerLaunchTimeout", 180000);
+//				cap1.setCapability("appPackage", ConfigLoader.getProperty(userApp + ".appPackage"));
+//			    cap1.setCapability("appActivity",ConfigLoader.getProperty(userApp + ".appActivity"));
+//				cap1.setCapability("noReset", true);
+//         		cap1.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/Resources/app-nammaYatri-prod-debug.apk");
+				cap1.setCapability("app", "https://github.com/Gowthami074/Namma_Yatri_Automation/releases/download/v1.0.0/app-nammaYatri-prod-debug.apk");
+
 				driver1 = new AndroidDriver(url, cap1);
 				implicitWaitMethod(driver1,100);
 				System.out.println("Launched the User Application");
@@ -145,6 +152,24 @@ public class BaseClass {
 			String userScreenshotName = "user_test_failed_" + System.currentTimeMillis();
 			TestListener.captureScreenshot(userScreenshotName, driver1); // Capture for driver1
 		}
+		
+		
+		if (driver != null) {
+		    String driverLogName = "driver_test_logs_" + System.currentTimeMillis();
+		    // Write log content (you can modify this based on your logging)
+		    TestListener.attachTestLogs(driverLogName); 
+		    // Attach log to Allure
+		}
+
+		if (driver1 != null) {
+		    String userLogName = "user_test_logs_" + System.currentTimeMillis();
+		    // Write log content (you can modify this based on your logging)
+		    TestListener.attachTestLogs(userLogName); 
+		    // Attach log to Allure
+		}
+
+
+
 
 		if (driver != null) {
 			driver.quit();

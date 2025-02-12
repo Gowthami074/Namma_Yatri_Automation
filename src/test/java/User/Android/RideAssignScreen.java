@@ -21,6 +21,7 @@ import base.BaseClass;
 public class RideAssignScreen extends BaseClass {
 
 PopUpsHandling popUpsHandling = new PopUpsHandling();
+WebElement otpElement;
 
 	@Test
 	public void TollTextAtOtpSlider() {
@@ -68,8 +69,9 @@ PopUpsHandling popUpsHandling = new PopUpsHandling();
 	@Test
 	public void readOTP() throws InterruptedException {
 		popUpsHandling.parkingChargesPopUp();
-		
-		WebElement otpElement = driver1.findElement(By.xpath("//android.view.ViewGroup[contains(@content-desc, 'OTP')]"));
+		implicitWaitMethod(driver1,60);
+        WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(30));
+        otpElement = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.xpath("//android.view.ViewGroup[contains(@content-desc, 'OTP')]")));
 
 		// Extract the 'content-desc' attribute
 		String contentDesc = otpElement.getAttribute("content-desc");

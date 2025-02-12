@@ -41,6 +41,11 @@ public class DevicePermission extends BaseClass {
 
 			driver1.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW ONLY WHILE USING THE APP']")).click();
 		}
+		else if (Arrays.asList("emulator-5556","emulator-5554","emulator-5558").contains(userUdid)) {
+
+			driver1.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow only while using the app']")).click();
+		}
+
 
 		else {
 			System.out.println("No action required for this Udid: " + userUdid);
@@ -66,7 +71,7 @@ public class DevicePermission extends BaseClass {
 		}
 	}
 	public void grantLocationAccess() {
-		if (Arrays.asList("15913008960024W", "RFCT42T5N9D", "SONJFMDUKV65OJV4", "28301JEGR03129", "1371785921000CT", "RZ8R72RE6AB", "9618349153000CS", "eb23ba","85LRIFMFM7SCSS7D","RZ8N91FWYXT").contains(userUdid)) {
+		if (Arrays.asList("15913008960024W", "RFCT42T5N9D", "SONJFMDUKV65OJV4", "28301JEGR03129","062c68090409", "1371785921000CT", "RZ8R72RE6AB", "9618349153000CS", "eb23ba","85LRIFMFM7SCSS7D","RZ8N91FWYXT","emulator-5556","emulator-5554","emulator-5558").contains(userUdid)) {
 
 			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Grant Location Access']")).click();
 

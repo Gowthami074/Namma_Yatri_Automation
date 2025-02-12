@@ -1,7 +1,5 @@
 package Driver;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.openqa.selenium.WebElement;
@@ -33,6 +31,9 @@ public class DevicePermission extends BaseClass {
 		case "062c68090409":
 		case "eb23ba":
 		case "4e27c0e2":
+		case"emulator-5554":
+		case"emulator-5556":
+		case"emulator-5558":
 			break;
 		default:
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Notification Access']")).click();
@@ -44,10 +45,10 @@ public class DevicePermission extends BaseClass {
 		Thread.sleep(2000);
 		if("28301JEGR03129".contains(driverUdid))
 		{
-		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Enable Permission']")).click();
-		driver.findElement(AppiumBy.xpath("//android.widget.RadioButton[@text='Allow all the time']")).click();
-		driver.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Navigate up']")).click();
-		
+			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Enable Permission']")).click();
+			driver.findElement(AppiumBy.xpath("//android.widget.RadioButton[@text='Allow all the time']")).click();
+			driver.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Navigate up']")).click();
+
 		}
 	}
 
@@ -71,7 +72,7 @@ public class DevicePermission extends BaseClass {
 		driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='GO!']")).click();
 		Thread.sleep(2000);
 	}
-  
+
 
 
 	private void drawOverApplicationsFlow() throws InterruptedException {
@@ -83,7 +84,7 @@ public class DevicePermission extends BaseClass {
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc='Search']")).click();
 			Thread.sleep(2000);
 			driver.findElement(AppiumBy.xpath("//android.widget.AutoCompleteTextView[@text='Search']")).sendKeys("Namma");
-			
+
 			implicitWaitMethod(driver,5);
 			List<WebElement> appName = driver.findElements(AppiumBy.xpath("//android.widget.TextView[@text='Namma Yatri Partner']"));
 
@@ -148,6 +149,16 @@ public class DevicePermission extends BaseClass {
 			driver.findElement(AppiumBy.xpath("//android.widget.CheckBox[@resource-id='android:id/checkbox']")).click();
 			driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Back']")).click();
 			break;
+		case"emulator-5554":
+		case"emulator-5556":
+		case"emulator-5558":
+			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Allow display over other apps']")).click();
+			Thread.sleep(2000);
+			driver.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Navigate up']")).click();
+			AndroidBackButton back = new AndroidBackButton();
+			back.tapBack();
+			Thread.sleep(2000);
+			break;
 		default: 
 			break;
 		}
@@ -170,11 +181,14 @@ public class DevicePermission extends BaseClass {
 		case "R9ZTB0KD0FA":
 		case "RZ8R72RE6AB":
 		case "28301JEGR03129":
+		case"emulator-5554":
+		case"emulator-5556":
+		case"emulator-5558":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow']")).click();
 			break;
 		case "eb23ba":
 			driver.findElement(AppiumBy.xpath("//android.widget.CheckedTextView[@text='No restrictions']")).click();
-		//	driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Back']")).click();
+			//	driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Back']")).click();
 			break;
 		default:
 			break;
@@ -202,30 +216,30 @@ public class DevicePermission extends BaseClass {
 		}
 	}
 	private void autoStartPermission() {
-		
+
 		switch(driverUdid) {
 		case "062c68090409":
 			driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0))"
 					+ ".scrollIntoView(new UiSelector()" + ".textMatches(\"" +driverApp+ "\").instance(0))"));
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Namma Yatri Partner']/../../android.widget.CheckBox")).click();
-						driver.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@content-desc='Back']/android.widget.ImageView")).click();
+			driver.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@content-desc='Back']/android.widget.ImageView")).click();
 			break;
 		case "eb23ba":
 			driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0))"
 					+ ".scrollIntoView(new UiSelector()" + ".textMatches(\"" +driverApp+ "\").instance(0))"));
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Namma Yatri Partner']/../../android.widget.CheckBox")).click();
-						driver.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@content-desc='Back']/android.widget.ImageView")).click();
+			driver.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@content-desc='Back']/android.widget.ImageView")).click();
 			//need to add one more back x-path
-			
+
 			break;
 		case "4e27c0e2":
 			driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Back']")).click();
 			break;
 		default:
 			break;
-		
+
 		}}
-		
+
 	public void locationPermission() throws InterruptedException
 	{
 		switch(driverUdid) {
@@ -236,5 +250,5 @@ public class DevicePermission extends BaseClass {
 		}
 	}
 
-	
+
 }
