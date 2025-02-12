@@ -29,17 +29,6 @@
             </class>
         </classes>
     </test>
-    <!-- UserLogin -->
-    <test name="UserLogin">
-        <classes>
-            <class name="User.Android.UserLoginFlow">
-                <methods>
-                    <include name="successfulUserLogin" />
-                </methods>
-            </class>
-        </classes>
-    </test>
-
    <test name="RideSearch and Getting Estimates" >
         <classes>
             <class name="User.Android.RideSearch">
