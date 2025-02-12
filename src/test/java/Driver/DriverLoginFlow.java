@@ -9,6 +9,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import Utils.ConfigLoader;
@@ -24,10 +25,17 @@ public class DriverLoginFlow extends BaseClass{
 		Boolean locDetection = false;
 		implicitWaitMethod(driver,15);
 		
-		WebDriverWait wait = new WebDriverWait(driver , Duration.ofSeconds(300));
+		WebDriverWait wait = new WebDriverWait(driver , Duration.ofSeconds(180));
 		
 		try {
 			System.out.println("Checking whether we are getting Enable Location screen");
+			try {
+				wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Enable Location Permission']")));
+
+				}catch(Exception e) {
+					System.out.println("App is either on splash screen or app has not launched.");
+					Assert.assertEquals(true, locDetection);
+				}
 			WebElement enableLocation = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Enable Location']")));
 			enableLocation.click();
 			locDetection = true;
