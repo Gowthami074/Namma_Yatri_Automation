@@ -23,8 +23,7 @@ jobs:
           appium driver list
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
-- name: Install VNC Server & Ngrok
+        - name: Install VNC Server & Ngrok
         run: |
           brew install x11vnc ngrok
           brew install --cask xquartz
@@ -55,7 +54,6 @@ jobs:
         run: |
           echo "Use the following address to connect via VNC Viewer:"
           grep -o "tcp://.*" ngrok.log
-
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
