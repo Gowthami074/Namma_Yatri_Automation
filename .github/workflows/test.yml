@@ -24,7 +24,7 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-   name: Install VNC Server & Ngrok
+- name: Install VNC Server & Ngrok
         run: |
           brew install x11vnc ngrok
           brew install --cask xquartz
@@ -51,11 +51,11 @@ jobs:
           sleep 5
           curl -s http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].public_url'
 
-
       - name: Log VNC Connection Details
         run: |
           echo "Use the following address to connect via VNC Viewer:"
-          cat ngrok.log | grep -o "tcp://.*"
+          grep -o "tcp://.*" ngrok.log
+
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
