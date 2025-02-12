@@ -8,17 +8,17 @@
         <listener class-name="TestReport.TestListener"/>
     </listeners>
     
-  <test name="UserLogin">
-     <classes>
-      <class name="User.Android.UserLoginFlow">
-      	<methods>
-      		<include name="successfulUserLogin"/>
-      	</methods>
-      	</class>
-      	</classes>
-   </test>
-   
-    
+ <!-- UserLogin -->
+    <test name="UserLogin">
+        <classes>
+            <class name="User.Android.UserLoginFlow">
+                <methods>
+                    <include name="successfulUserLogin" />
+                </methods>
+            </class>
+        </classes>
+    </test>
+
     <!-- DriverLogin -->
     <test name="DriverLogin" group-by-instances="true">
         <classes>
@@ -28,7 +28,7 @@
                 </methods>
             </class>
         </classes>
-    </test>
+    </test>   
 
    <test name="RideSearch and Getting Estimates" >
         <classes>
