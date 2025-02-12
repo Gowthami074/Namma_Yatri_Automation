@@ -70,7 +70,7 @@ public class UserLoginFlow extends BaseClass {
 
 		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='10-digit mobile number']")).sendKeys(mobileNumber);
 		enteredMobileString = driver1.findElement(AppiumBy.xpath("//android.widget.EditText")).getText();
-
+		System.out.println(enteredMobileString +" : Mobile number");
 		Thread.sleep(2000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']")).click();
 		Thread.sleep(2000);
@@ -104,7 +104,7 @@ public class UserLoginFlow extends BaseClass {
 
 
 	public void registration() throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver1 , Duration.ofSeconds(300));
+		WebDriverWait wait = new WebDriverWait(driver1 , Duration.ofSeconds(60));
 		try {
 			System.out.println("Entered into registration Screen");
 			WebElement registrationScreen = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Full Name (Helps driver confirm it is you)']/../android.view.ViewGroup/android.widget.EditText")));
@@ -163,6 +163,7 @@ public class UserLoginFlow extends BaseClass {
 		catch (Exception e) {
 			System.out.println("Screen not loaded and new user Registration test failed.");
 		}
+		implicitWaitMethod(driver1,60);
 	}
 
 	public void grantPermissions() throws InterruptedException {
