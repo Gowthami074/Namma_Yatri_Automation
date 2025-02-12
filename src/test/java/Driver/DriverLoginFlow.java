@@ -23,9 +23,13 @@ public class DriverLoginFlow extends BaseClass{
 		Boolean loginFlow = false;
 		Boolean locDetection = false;
 		implicitWaitMethod(driver,15);
+		
+		WebDriverWait wait = new WebDriverWait(driver , Duration.ofSeconds(300));
+		
 		try {
 			System.out.println("Checking whether we are getting Enable Location screen");
-			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Enable Location']"));	
+			WebElement enableLocation = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Enable Location']")));
+			enableLocation.click();
 			locDetection = true;
 		}
 		catch(Exception e)
