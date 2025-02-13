@@ -41,6 +41,9 @@ jobs:
             ~/.android/adb*
           key: avd-${{ runner.os }}
 
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Install XQuartz
         run: brew install --cask xquartz
 
@@ -53,45 +56,36 @@ jobs:
       - name: Wait for XQuartz to start
         run: sleep 5
 
+      - name: Install x11vnc and ngrok
+        run: brew install x11vnc ngrok
 
-      - name: Install VNC Server & Ngrok
-        run: |
-            brew install x11vnc ngrok
-            brew install --cask xquartz
-            brew install Xvfb
-  
-      - name: Start Virtual Display
-        run: |
-            export DISPLAY=:1
-            Xvfb :1 -screen 0 1280x800x24 &
-  
       - name: Start VNC Server
         run: |
-            echo "Starting VNC Server..."
-            nohup x11vnc -forever -rfbport 5900 -shared -noxdamage -repeat -passwd ${{ secrets.VNC_PASSWORD }} &
-  
+          echo "Starting x11vnc Server..."
+          nohup x11vnc -forever -rfbport 5900 -shared -noxdamage -repeat -passwd ${{ secrets.VNC_PASSWORD }} &
+
       - name: Get Local VNC Address
         run: |
-            echo "Your VNC Server is running. Connect using the following address:"
-            ifconfig | grep "inet " | awk '{ print "VNC Address: "$2":5900" }'
-  
-      - name: Set up Ngrok (Expose VNC)
+          echo "Your local VNC Server is running. Connect using the following address:"
+          ifconfig | grep "inet " | awk '{ print "VNC Address: "$2":5900" }'
+
+      - name: Start Ngrok Tunnel (Expose VNC)
         run: |
-            echo "Starting Ngrok..."
-            ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-            nohup ngrok tcp 5900 > ngrok.log 2>&1 &
-            sleep 10  # Wait for Ngrok to establish the tunnel
-  
+          echo "Starting Ngrok..."
+          ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
+          nohup ngrok tcp 5900 > ngrok.log 2>&1 &
+          sleep 10  # Wait for Ngrok to establish the tunnel
+
       - name: Get Public VNC Address
         run: |
-            echo "Fetching Ngrok tunnel URL..."
-            curl -s http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].public_url' > ngrok_url.txt
-            cat ngrok_url.txt || echo "Ngrok tunnel not found!"
-  
+          echo "Fetching Ngrok tunnel URL..."
+          curl -s http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].public_url' > ngrok_url.txt
+          cat ngrok_url.txt || echo "Ngrok tunnel not found!"
+
       - name: Log VNC Connection Details
         run: |
-            echo "Use the following address to connect via VNC Viewer:"
-            cat ngrok_url.txt || echo "No Ngrok tunnel found!"
+          echo "Use the following address to connect via VNC Viewer:"
+          cat ngrok_url.txt || echo "No Ngrok tunnel found!"
       
       - name: Prepare Android Emulator
         run: |
