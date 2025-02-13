@@ -5,32 +5,30 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   build:
     runs-on: macos-13
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
+
       - name: Install Appium and Drivers
         run: |
           npm install -g appium
           appium --version
           appium driver install uiautomator2
           appium driver list
+
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-      - name: Cache Emulator
+
+       - name: Cache Emulator
         uses: actions/cache@v3
         with:
           path: |
@@ -149,6 +147,46 @@ jobs:
           # Set location for emulator 2
           echo "Setting location for emulator 2 (port $EMULATOR2_ADB_PORT) to $LATITUDE2, $LONGITUDE2"
           ${ANDROID_HOME}/platform-tools/adb -s emulator-$EMULATOR2_ADB_PORT emu geo fix $LONGITUDE2 $LATITUDE2
+
+      - name: Install VNC Server & Ngrok
+        run: |
+          brew install x11vnc ngrok
+          brew install --cask xquartz
+          brew install Xvfb
+
+      - name: Start Virtual Display
+        run: |
+          export DISPLAY=:1
+          Xvfb :1 -screen 0 1280x800x24 &
+
+      - name: Start VNC Server
+        run: |
+          echo "Starting VNC Server..."
+          nohup x11vnc -forever -rfbport 5900 -shared -noxdamage -repeat -passwd ${{ secrets.VNC_PASSWORD }} &
+
+      - name: Get Local VNC Address
+        run: |
+          echo "Your VNC Server is running. Connect using the following address:"
+          ifconfig | grep "inet " | awk '{ print "VNC Address: "$2":5900" }'
+
+      - name: Set up Ngrok (Expose VNC)
+        run: |
+          echo "Starting Ngrok..."
+          ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
+          nohup ngrok tcp 5900 > ngrok.log 2>&1 &
+          sleep 10  # Wait for Ngrok to establish the tunnel
+
+      - name: Get Public VNC Address
+        run: |
+          echo "Fetching Ngrok tunnel URL..."
+          curl -s http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].public_url' > ngrok_url.txt
+          cat ngrok_url.txt || echo "Ngrok tunnel not found!"
+
+      - name: Log VNC Connection Details
+        run: |
+          echo "Use the following address to connect via VNC Viewer:"
+          cat ngrok_url.txt || echo "No Ngrok tunnel found!"
+
       - name: Start Appium Server
         run: |
           appium --log appium.log --relaxed-security --base-path /wd/hub &
@@ -161,6 +199,7 @@ jobs:
             cat appium.log
             exit 1
           fi
+
       - name: Run Tests
         run: |
           mvn test -DsuiteXmlFile=nammaYatriDependentFlows/AutoAssignRideFlow.xml
