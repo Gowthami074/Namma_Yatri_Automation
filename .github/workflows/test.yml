@@ -69,22 +69,25 @@ jobs:
           echo "Your local VNC Server is running. Connect using the following address:"
           ifconfig | grep "inet " | awk '{ print "VNC Address: "$2":5900" }'
 
-      - name: Start Ngrok Tunnel (Expose VNC)
+       - name: Install Ngrok
         run: |
-          echo "Starting Ngrok..."
+          brew install ngrok
           ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-          nohup ngrok tcp 5900 > ngrok.log 2>&1 &
+      
+      - name: Start Ngrok Tunnel
+        run: |
+          nohup ngrok http 4723 > ngrok.log 2>&1 &
           sleep 10  # Wait for Ngrok to establish the tunnel
-
-      - name: Get Public VNC Address
+      
+      - name: Get Ngrok URL
         run: |
           echo "Fetching Ngrok tunnel URL..."
           curl -s http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].public_url' > ngrok_url.txt
           cat ngrok_url.txt || echo "Ngrok tunnel not found!"
-
-      - name: Log VNC Connection Details
+      
+      - name: Log Ngrok Connection Details
         run: |
-          echo "Use the following address to connect via VNC Viewer:"
+          echo "Use the following address to connect to Appium server:"
           cat ngrok_url.txt || echo "No Ngrok tunnel found!"
       
       - name: Prepare Android Emulator
