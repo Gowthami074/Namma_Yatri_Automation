@@ -1,4 +1,5 @@
 name: Android CI with Maven
+
 on:
   push:
     branches:
@@ -6,17 +7,19 @@ on:
   pull_request:
     branches:
       - main
+
 jobs:
   build:
     runs-on: macos-13
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
-
 
       - name: Install Appium and Drivers
         run: |
@@ -24,8 +27,10 @@ jobs:
           appium --version
           appium driver install uiautomator2
           appium driver list
+
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
+
       - name: Cache Maven packages
         uses: actions/cache@v3
         with:
@@ -33,63 +38,71 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: Cache Emulator
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-${{ runner.os }}
-
-      - name: Checkout repository
-        uses: actions/checkout@v4
 
       - name: Install XQuartz
         run: brew install --cask xquartz
 
       - name: Start XQuartz
         run: open -a XQuartz
+        env:
+          DISPLAY: ":0"
 
-      - name: Set DISPLAY environment variable
+      - name: Wait for XQuartz to Start
+        run: sleep 5  # Allow X server to initialize
+
+      - name: Verify XQuartz is Running
+        run: |
+          echo "Checking X server..."
+          ps aux | grep Xquartz || echo "X server is NOT running!"
+
+      - name: Set DISPLAY Environment Variable
         run: echo "DISPLAY=:0" >> $GITHUB_ENV
-
-      - name: Wait for XQuartz to start
-        run: sleep 5
-
-      - name: Install x11vnc and ngrok
-        run: brew install x11vnc ngrok
 
       - name: Start VNC Server
         run: |
           echo "Starting x11vnc Server..."
-          nohup x11vnc -forever -rfbport 5900 -shared -noxdamage -repeat -passwd ${{ secrets.VNC_PASSWORD }} &
+          nohup x11vnc -display :0 -forever -rfbport 5900 -shared -noxdamage -repeat -passwd ${{ secrets.VNC_PASSWORD }} -bg &
+          sleep 5  # Give it time to start
 
-      - name: Get Local VNC Address
+      - name: Verify Running Services (Appium & VNC)
         run: |
-          echo "Your local VNC Server is running. Connect using the following address:"
-          ifconfig | grep "inet " | awk '{ print "VNC Address: "$2":5900" }'
+          echo "Checking running services..."
+          netstat -an | grep LISTEN || echo "No services are listening on expected ports!"
 
-       - name: Install Ngrok
+      - name: Start SSH Tunnel for VNC via Serveo
         run: |
-          brew install ngrok
-          ngrok authtoken ${{ secrets.NGROK_AUTH_TOKEN }}
-      
-      - name: Start Ngrok Tunnel
+          echo "Creating SSH tunnel for VNC..."
+          nohup ssh -o StrictHostKeyChecking=no -R 5900:localhost:5900 serveo.net > serveo_vnc.log 2>&1 &
+          sleep 10  # Allow time for the tunnel to establish
+
+      - name: Fetch Serveo VNC Tunnel URL
         run: |
-          nohup ngrok http 4723 > ngrok.log 2>&1 &
-          sleep 10  # Wait for Ngrok to establish the tunnel
-      
-      - name: Get Ngrok URL
+          echo "Fetching Serveo VNC tunnel URL..."
+          TUNNEL_URL=$(grep -o "serveo.net:5900" serveo_vnc.log || echo "No tunnel found!")
+          echo "VNC public URL: $TUNNEL_URL"
+          echo "$TUNNEL_URL" > serveo_vnc_url.txt
+          cat serveo_vnc_url.txt
+
+      - name: Log Serveo VNC Connection Details
+        run: cat serveo_vnc_url.txt || echo "No Serveo tunnel found!"
+
+      - name: Start SSH Tunnel for Appium via Serveo
         run: |
-          echo "Fetching Ngrok tunnel URL..."
-          curl -s http://127.0.0.1:4040/api/tunnels | jq -r '.tunnels[0].public_url' > ngrok_url.txt
-          cat ngrok_url.txt || echo "Ngrok tunnel not found!"
-      
-      - name: Log Ngrok Connection Details
+          echo "Creating SSH tunnel for Appium..."
+          nohup ssh -o StrictHostKeyChecking=no -R 4723:localhost:4723 serveo.net > serveo_appium.log 2>&1 &
+          sleep 10  # Allow time for the tunnel to establish
+
+      - name: Fetch Serveo Appium Tunnel URL
         run: |
-          echo "Use the following address to connect to Appium server:"
-          cat ngrok_url.txt || echo "No Ngrok tunnel found!"
-      
+          echo "Fetching Serveo Appium tunnel URL..."
+          TUNNEL_URL=$(grep -o "serveo.net:4723" serveo_appium.log || echo "No tunnel found!")
+          echo "Appium public URL: $TUNNEL_URL"
+          echo "$TUNNEL_URL" > serveo_appium_url.txt
+          cat serveo_appium_url.txt
+
+      - name: Log Serveo Appium Connection Details
+        run: cat serveo_appium_url.txt || echo "No Serveo tunnel found!"
+
       - name: Prepare Android Emulator
         run: |
           echo "y" | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-29" "emulator"
@@ -99,6 +112,7 @@ jobs:
           echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd -n test_emulator1 -k "system-images;android-29;google_apis;x86" -d "pixel_2"
           echo "Creating emulator 2"
           echo "no" | ${ANDROID_HOME}/cmdline-tools/latest/bin/avdmanager create avd -n test_emulator2 -k "system-images;android-29;google_apis;x86" -d "pixel_2"
+
       - name: Configure Emulators
         run: |
           for avd in test_emulator1 test_emulator2; do
@@ -109,103 +123,11 @@ jobs:
             echo "disk.dataPartition.size=2048M" >> ~/.android/avd/$avd.avd/config.ini
             echo "hw.cpu.ncore=4" >> ~/.android/avd/$avd.avd/config.ini
           done
-      - name: Verify Hardware Acceleration
-        run: |
-          ${ANDROID_HOME}/emulator/emulator-check accel
-      - name: Start Emulators
-        run: |
-          EMULATOR1_ADB_PORT=5556
-          EMULATOR2_ADB_PORT=5558
-          ports=("$EMULATOR1_ADB_PORT" "$EMULATOR2_ADB_PORT")
-          i=0
-          for avd in test_emulator1 test_emulator2; do
-            port=${ports[$i]}
-            echo "Starting $avd on port $port"
-            ${ANDROID_HOME}/emulator/emulator -avd $avd \
-              -no-snapshot-load \
-              -gpu swiftshader_indirect \
-              -no-boot-anim \
-              -no-audio \
-              -no-snapshot \
-              -camera-back none \
-              -camera-front none \
-              -memory 2048 \
-              -cores 4 \
-              -accel on \
-              -wipe-data \
-              -port $port &
-            i=$((i+1))
-          done
-      - name: Wait for Emulators
-        timeout-minutes: 20
-        run: |
-          # Wait for ADB to start
-          adb start-server
-          sleep 5
-          # Wait for both emulators to appear in adb devices
-          max_attempts=30
-          attempt=0
-          while [ $attempt -lt $max_attempts ]; do
-            device_count=$(adb devices | grep -c emulator)
-            if [ $device_count -eq 2 ]; then
-              echo "Both emulators are detected"
-              break
-            fi
-            echo "Waiting for emulators to be detected (attempt $attempt)... Found $device_count"
-            sleep 10
-            attempt=$((attempt + 1))
-          done
-          if [ $device_count -ne 2 ]; then
-            echo "Failed to detect both emulators"
-            exit 1
-          fi
-          # Get both emulator serials
-          emulator_serials=($(adb devices | grep emulator | awk '{print $1}'))
-          # Function to wait for an emulator
-          wait_for_emulator() {
-            local avd=$1
-            local serial=$2
-            echo "Waiting for $avd (serial: $serial)"
-            # Wait for device
-            adb -s $serial wait-for-device
-            # Wait for boot completion
-            while [[ -z $(adb -s $serial shell getprop sys.boot_completed 2>/dev/null | tr -d '\r') ]]; do
-              echo "Waiting for boot completion..."
-              sleep 2
-            done
-            # Disable animations
-            adb -s $serial shell settings put global window_animation_scale 0
-            adb -s $serial shell settings put global transition_animation_scale 0
-            adb -s $serial shell settings put global animator_duration_scale 0
-            # Verify device is ready
-            adb -s $serial shell input keyevent 82
-            echo "$avd is ready (serial: $serial)"
-          }
-          # Wait for each emulator using their specific serial numbers
-          wait_for_emulator test_emulator1 "${emulator_serials[0]}"
-          wait_for_emulator test_emulator2 "${emulator_serials[1]}"
-          # Show final device list
-          echo "Final device list:"
-          adb devices
-      - name: Set Emulator Locations
-        run: |
-          EMULATOR1_ADB_PORT=5556
-          EMULATOR2_ADB_PORT=5558
-          LATITUDE1="12.942146806113909"
-          LONGITUDE1="77.62207138605775"
-          LATITUDE2="12.942146806113909"
-          LONGITUDE2="77.62207138605775"
-          # Set location for emulator 1
-          echo "Setting location for emulator 1 (port $EMULATOR1_ADB_PORT) to $LATITUDE1, $LONGITUDE1"
-          ${ANDROID_HOME}/platform-tools/adb -s emulator-$EMULATOR1_ADB_PORT emu geo fix $LONGITUDE1 $LATITUDE1
-          # Set location for emulator 2
-          echo "Setting location for emulator 2 (port $EMULATOR2_ADB_PORT) to $LATITUDE2, $LONGITUDE2"
-          ${ANDROID_HOME}/platform-tools/adb -s emulator-$EMULATOR2_ADB_PORT emu geo fix $LONGITUDE2 $LATITUDE2
+
       - name: Start Appium Server
         run: |
-          appium --log appium.log --relaxed-security --base-path /wd/hub &
+          nohup appium --log appium.log --relaxed-security --base-path /wd/hub &
           sleep 10
-          # Check if Appium is running properly
           response=$(curl --silent http://localhost:4723/wd/hub/status)
           echo "Appium server response: $response"
           if [[ $response != *"ready"* ]]; then
@@ -213,6 +135,7 @@ jobs:
             cat appium.log
             exit 1
           fi
+
       - name: Run Tests
         run: |
           mvn test -DsuiteXmlFile=nammaYatriUserFlows/userLoginyml.xml
