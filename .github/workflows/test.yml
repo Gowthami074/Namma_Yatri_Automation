@@ -202,4 +202,3 @@ jobs:
       - name: Run Tests
         run: |
           mvn test -DsuiteXmlFile=nammaYatriDependentFlows/AutoAssignRideFlow.xml
-          
