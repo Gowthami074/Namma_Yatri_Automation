@@ -18,6 +18,16 @@
             </class>
         </classes>
     </test>
+     <!-- Mock Driver Location for Master Ride Search -->
+    <test name="Mock the Driver location">
+        <classes>
+            <class name="Driver.Simulation">
+                <methods>
+                    <include name="masterDriverLocation"></include>
+                </methods>
+            </class>
+        </classes>
+    </test> 
 
     <!-- UserLogin -->
     <test name="UserLogin">
@@ -57,6 +67,17 @@
             </class>
         </classes>
     </test>
+    
+    <!-- Mock Driver Location for Master Pickup -->
+    <test name="Mock the Driver location">
+        <classes>
+            <class name="Driver.Simulation">
+                <methods>
+                    <include name="masterPickupSimualtion"></include>
+                </methods>
+            </class>
+        </classes>
+    </test> 
 
     <!-- Reading OTP from OTP screen -->
     <test name="Reading OTP from OTP screen" >
@@ -94,6 +115,18 @@
             </class>
         </classes>
     </test>
+    
+    <!-- Mock Driver Location for Master Drop -->
+    <test name="Mock the Driver location">
+        <classes>
+            <class name="Driver.Simulation">
+                <methods>
+                    <include name="masterDropSimualtion"></include>
+                </methods>
+            </class>
+        </classes>
+    </test> 
+    
 
     <!-- Ending the Ride -->
     <test name="Ending the Ride">
