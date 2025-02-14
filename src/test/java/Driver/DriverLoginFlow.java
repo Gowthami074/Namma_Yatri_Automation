@@ -47,9 +47,6 @@ public class DriverLoginFlow extends BaseClass{
 		}
 		if(locDetection)
 		{
-			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Enable Location']")).click();
-			Thread.sleep(2000);
-			System.out.println(driverUdid);
 			System.out.println("Trying to Tap While Using the app");
 			switch(driverUdid) {
 			case "RZ8N91FWYXT": 

@@ -12,6 +12,7 @@ import io.appium.java_client.remote.SupportsLocation;
 
 public class Simulation extends BaseClass{
 
+	String NY_BLR_DRIVER_LOCATION= "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5Aq30i4qBOSt5WGPzkEQEBSNWXxQqNNRG9RS1pmHn-XXdOs68XCjTDQK3it69Vy-DVININg3U91Jg/pub?gid=1112824985&single=true&output=csv";
 	String NY_BLR_DROP_link = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5Aq30i4qBOSt5WGPzkEQEBSNWXxQqNNRG9RS1pmHn-XXdOs68XCjTDQK3it69Vy-DVININg3U91Jg/pub?gid=0&single=true&output=csv";
 	String NY_BLR_PICK_UP_link ="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5Aq30i4qBOSt5WGPzkEQEBSNWXxQqNNRG9RS1pmHn-XXdOs68XCjTDQK3it69Vy-DVININg3U91Jg/pub?gid=660481894&single=true&output=csv";
 	String NY_BLR_CUG_DROP_link = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5Aq30i4qBOSt5WGPzkEQEBSNWXxQqNNRG9RS1pmHn-XXdOs68XCjTDQK3it69Vy-DVININg3U91Jg/pub?gid=593925876&single=true&output=csv";
@@ -65,15 +66,20 @@ public class Simulation extends BaseClass{
 		Thread.sleep(5000);
 
 	}
+	
+	public void masterDriverLocation() throws InterruptedException {
+		fetchAndPrintCSVData(NY_BLR_DRIVER_LOCATION);
+	}
 
 	@Test
 	public void masterPickupSimualtion() throws InterruptedException {
-		fetchAndPrintCSVData(NY_BLR_DROP_link);
+		fetchAndPrintCSVData(NY_BLR_PICK_UP_link);
 	}
 
 	@Test
 	public void masterDropSimualtion() throws InterruptedException {
-		fetchAndPrintCSVData(NY_BLR_PICK_UP_link);
+		fetchAndPrintCSVData(NY_BLR_DROP_link);
+		
 	}
 	@Test
 	public void CUGPickupSimualtion() throws InterruptedException {
