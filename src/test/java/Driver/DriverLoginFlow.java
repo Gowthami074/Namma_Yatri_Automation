@@ -60,6 +60,7 @@ public class DriverLoginFlow extends BaseClass{
 			case "8cb2f113":
 			case "SONJFMDUKV65OJV4":
 			case "M7JZ7T8P5TQSQ4KR":	
+			case "XWY9R8ZDDMSW7PDI":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='While using the app']")).click();
 				break;
 			case "1377682723004YR":
@@ -137,6 +138,8 @@ public class DriverLoginFlow extends BaseClass{
 		popUpsHandling.upiOverlayPopUp();
 		popUpsHandling.yatriCoinsOverlayPopUp();
 		popUpsHandling.pointsOverLay();
+		popUpsHandling.DueHandlingPopUp();
+		
 		popUpsHandling.driverModeValidation();		
 	}
 }

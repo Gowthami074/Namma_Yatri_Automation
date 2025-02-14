@@ -122,6 +122,57 @@ public class PopUpsHandling extends BaseClass{
 		implicitWaitMethod(driver,60);
 		
 	}
+	public void DueHandlingPopUp() {
+	    implicitWaitMethod(driver, 5);
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+	    int retryCount = 0;
+	    int maxRetry = 3; // Maximum number of retries
+
+	    try {
+	        
+	        WebElement ClearDueText = wait.until(ExpectedConditions.visibilityOfElementLocated(
+	                AppiumBy.xpath("//android.widget.TextView[@text='Clear your dues now to enjoy non-stop rides.']")));
+
+	        if (ClearDueText.isDisplayed()) {
+	            System.out.println("Due pop-up is validated on Home Screen");
+
+	            // Get the due of the Due amount or message
+	            WebElement GetTextOfDue = driver.findElement(AppiumBy.xpath(
+	                    "//android.widget.TextView[@text='Clear your dues now to enjoy non-stop rides.']/../../android.widget.LinearLayout[4]/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.TextView"));
+	            String dueText = GetTextOfDue.getText();
+	            System.out.println("Due info on Pop Up Screen--> " + dueText);
+
+	            // Retry loop for clicking Home and checking if the pop-up is removed
+	            while (retryCount < maxRetry) {
+	                // Click on the Home button
+	                WebElement Home = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Home']"));
+	                Home.click();
+	                Thread.sleep(2000); // Wait for the pop-up to disappear
+
+	                // Checking if the Due Pop-Up is removed
+	                boolean isPopUpRemoved = driver.findElements(AppiumBy.xpath("//android.widget.TextView[@text='Clear your dues now to enjoy non-stop rides.']")).isEmpty();
+
+	                if (isPopUpRemoved) {
+	                    System.out.println("Due pop-up is removed");
+	                    break;
+	                } else {
+	                    System.out.println("Due pop-up is still present. Retrying... (" + (retryCount + 1) + ")");
+	                    retryCount++;
+	                }
+	            }
+
+	            // If maximum retries reached and pop-up is still present
+	            if (retryCount == maxRetry) {
+	                System.out.println("Due pop-up is still present after maximum retries.");
+	            }
+	        }
+	    } catch (Exception e) {
+	        System.out.println("No DUE pop-up is validated. Moving to the next method.");
+	    }
+
+	    implicitWaitMethod(driver, 60);
+	}
+
 	}
 
 
