@@ -128,7 +128,7 @@ public class UserLoginFlow extends BaseClass {
 			WebElement genderDropdown= driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Select Your Gender']/../android.view.ViewGroup/com.horcrux.svg.SvgView"));
 			genderDropdown.click();	
 			Thread.sleep(2000);
-			genderDropdown.click();	
+//			genderDropdown.click();	
 			//		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Other']")).click();
 			//		genderDropdown.click();	
 			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Female']")).click();
