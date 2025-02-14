@@ -119,7 +119,7 @@ public class UserRatingScreen extends BaseClass {
 
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Download PDF']")).click();
 		System.out.println("Driver Receipt downloaded successfully");
-		Thread.sleep(7000);
+		Thread.sleep(12000);
 		WebElement goback = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//com.horcrux.svg.SvgView[@content-desc='Go back']")));
 		goback.click();
 		Thread.sleep(2000);

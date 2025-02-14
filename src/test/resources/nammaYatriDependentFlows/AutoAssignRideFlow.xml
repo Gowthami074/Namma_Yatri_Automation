@@ -69,7 +69,7 @@
     </test>
     
     <!-- Mock Driver Location for Master Pickup -->
-    <test name="Mock the Driver location">
+    <test name="Mock the Driver location  Master Pickup">
         <classes>
             <class name="Driver.Simulation">
                 <methods>
@@ -117,7 +117,7 @@
     </test>
     
     <!-- Mock Driver Location for Master Drop -->
-    <test name="Mock the Driver location">
+    <test name="Mock the Driver location Master Drop">
         <classes>
             <class name="Driver.Simulation">
                 <methods>
