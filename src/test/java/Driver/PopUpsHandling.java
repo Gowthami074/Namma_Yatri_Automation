@@ -172,6 +172,96 @@ public class PopUpsHandling extends BaseClass{
 
 	    implicitWaitMethod(driver, 60);
 	}
+	
+	public void AddUpI() {
+		implicitWaitMethod(driver, 5);
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+	    int retryCount = 0;
+	    int maxRetry = 3; // Maximum number of retries
+
+	    try {
+	    	 WebElement AddUpi = wait.until(ExpectedConditions.visibilityOfElementLocated(
+		                AppiumBy.xpath("//android.widget.TextView[@text='Add UPI detail to receive referral reward amount']")));
+
+		        if (AddUpi.isDisplayed()) {
+		            System.out.println("Add UPI pop-up is validated on Home Screen");
+		            
+		            while (retryCount < maxRetry) {
+		                // Click on the AddUPILater button
+		                WebElement AddUpiLater = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Later']"));
+		                AddUpiLater.click();
+		                Thread.sleep(2000);
+		                
+		                boolean isPopUpRemoved = driver.findElements(AppiumBy.xpath("//android.widget.TextView[@text='Add UPI detail to receive referral reward amount']")).isEmpty();
+		                
+		                if (isPopUpRemoved) {
+		                    System.out.println("Add UPI pop-up is removed");
+		                    break;
+		                } else {
+		                    System.out.println("Add UPI pop-up is still present. Retrying... (" + (retryCount + 1) + ")");
+		                    retryCount++;
+		                }
+		            }
+
+		            // If maximum retries reached and pop-up is still present
+		            if (retryCount == maxRetry) {
+		                System.out.println("Add UPI pop-up is still present after maximum retries.");
+		            }
+		        }
+		    } catch (Exception e) {
+		        System.out.println("No Add UPI pop-up is validated. Moving to the next method.");
+		    }
+
+		    implicitWaitMethod(driver, 60);
+
+		                
+		                
+		                
+		                
+	}
+	
+    public void DisablePopUp() {
+    	implicitWaitMethod(driver, 5);
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+	    int retryCount = 0;
+	    int maxRetry = 3; // Maximum number of retries
+
+	    try {
+	    	 WebElement AssistancePopUp = wait.until(ExpectedConditions.visibilityOfElementLocated(
+		                AppiumBy.xpath("//android.widget.TextView[@text='Customer may need assistance']")));
+
+		        if (AssistancePopUp.isDisplayed()) {
+		            System.out.println("Disable pop-up is validated on Home Screen");
+		            
+		            while (retryCount < maxRetry) {
+		                // Click on the AddUPILater button
+		                WebElement GotIt = driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Got It!']"));
+		                GotIt.click();
+		                Thread.sleep(2000);
+		                
+		                boolean isPopUpRemoved = driver.findElements(AppiumBy.xpath("//android.widget.TextView[@text='Customer may need assistance']")).isEmpty();
+		                
+		                if (isPopUpRemoved) {
+		                    System.out.println("Disable pop-up is removed");
+		                    break;
+		                } else {
+		                    System.out.println("Disable pop-up is still present. Retrying... (" + (retryCount + 1) + ")");
+		                    retryCount++;
+		                }
+		            }
+
+		            // If maximum retries reached and pop-up is still present
+		            if (retryCount == maxRetry) {
+		                System.out.println("Disable pop-up is still present after maximum retries.");
+		            }
+		        }
+		    } catch (Exception e) {
+		        System.out.println("No Disable pop-up is validated. Moving to the next method.");
+		    }
+
+		    implicitWaitMethod(driver, 60);
+		
+	}
 
 	}
 

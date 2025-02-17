@@ -135,6 +135,7 @@ public class DriverLoginFlow extends BaseClass{
 		popUpsHandling.upiOverlayPopUp();
 		popUpsHandling.yatriCoinsOverlayPopUp();
 		popUpsHandling.pointsOverLay();
+		popUpsHandling.AddUpI();
 		popUpsHandling.DueHandlingPopUp();
 		
 		popUpsHandling.driverModeValidation();		
