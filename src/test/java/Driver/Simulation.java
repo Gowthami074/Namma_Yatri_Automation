@@ -7,11 +7,13 @@ import java.net.URL;
 import org.openqa.selenium.html5.Location;
 import org.testng.annotations.Test;
 
+import User.Android.RideAssignScreen;
 import base.BaseClass;
 import io.appium.java_client.remote.SupportsLocation;
 
 public class Simulation extends BaseClass{
 
+	
 	String NY_BLR_DRIVER_LOCATION= "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5Aq30i4qBOSt5WGPzkEQEBSNWXxQqNNRG9RS1pmHn-XXdOs68XCjTDQK3it69Vy-DVININg3U91Jg/pub?gid=1112824985&single=true&output=csv";
 	String NY_BLR_DROP_link = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5Aq30i4qBOSt5WGPzkEQEBSNWXxQqNNRG9RS1pmHn-XXdOs68XCjTDQK3it69Vy-DVININg3U91Jg/pub?gid=0&single=true&output=csv";
 	String NY_BLR_PICK_UP_link ="https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5Aq30i4qBOSt5WGPzkEQEBSNWXxQqNNRG9RS1pmHn-XXdOs68XCjTDQK3it69Vy-DVININg3U91Jg/pub?gid=660481894&single=true&output=csv";
@@ -66,7 +68,7 @@ public class Simulation extends BaseClass{
 		Thread.sleep(5000);
 
 	}
-	
+	@Test
 	public void masterDriverLocation() throws InterruptedException {
 		fetchAndPrintCSVData(NY_BLR_DRIVER_LOCATION);
 	}
@@ -95,14 +97,14 @@ public class Simulation extends BaseClass{
 
 	}
 
-	public void dropSimulation(double drop_lat, double drop_lon, double drop_alt) throws InterruptedException {
-
-		Location drop_Location = new Location(drop_lat, drop_lon, drop_alt);
-		((SupportsLocation)driver).setLocation(drop_Location);
-		Thread.sleep(8000);
-		System.out.println("Drop Location: Latitude: " + drop_lat + ", Longitude: " + drop_lon + ", Altitude: " + drop_alt);
-
-	}
+//	public void dropSimulation(double drop_lat, double drop_lon, double drop_alt) throws InterruptedException {
+//
+//		Location drop_Location = new Location(drop_lat, drop_lon, drop_alt);
+//		((SupportsLocation)driver).setLocation(drop_Location);
+//		Thread.sleep(8000);
+//		System.out.println("Drop Location: Latitude: " + drop_lat + ", Longitude: " + drop_lon + ", Altitude: " + drop_alt);
+//
+//	}
 
 	public static void fetchAndPrintCSVData(String sheetUrl) {
 		try {
@@ -122,6 +124,7 @@ public class Simulation extends BaseClass{
 					String altitude = row[2].trim();
 					double altitude2 = Double.parseDouble(altitude);
 
+				
 					Location pick_location = new Location(latitude, longitude, altitude2);
 					((SupportsLocation)driver).setLocation(pick_location);
 					simulateLocation(latitude, longitude, altitude);
@@ -139,8 +142,13 @@ public class Simulation extends BaseClass{
 	public static boolean isNumeric(String str) {
 		return str.matches("-?\\d+(\\.\\d+)?");
 	}
-	public static void simulateLocation(double latitude, double longitude, String altitude) {
+	public static void simulateLocation(double latitude, double longitude, String altitude) throws Exception {
 		System.out.println("Simulating location:   at [" + latitude + ", " + longitude + "," + altitude +"]");
+		 Thread.sleep(2000); 
+		RideAssignScreen vehivcleIcon = new RideAssignScreen();
+		vehivcleIcon.VehiclePosition();
+
+		
 	}
 
 

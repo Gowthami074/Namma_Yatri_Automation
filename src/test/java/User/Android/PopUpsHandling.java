@@ -39,12 +39,12 @@ public class PopUpsHandling extends BaseClass{
 	}
 	@Test
 	public void AC_PopUp() {
-		implicitWaitMethod(driver1,5);
-		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
+		implicitWaitMethod(driver1,15);
+		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(15));
 		try {
 			WebElement acPopUp = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Has your driver set the AC as per your preference? ']")));
 			if(acPopUp.isDisplayed()) {
-				driver1.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='Got it']")).click();
+				driver1.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='Yes']")).click();
 				System.out.println("Tapped on Yes in the AC Pop Up");
 			}
 			
@@ -54,11 +54,12 @@ public class PopUpsHandling extends BaseClass{
 		
 		implicitWaitMethod(driver1,60);
 	}
-	
+	@Test
 	public void parkingChargesPopUp() {
 		implicitWaitMethod(driver1,15);
-		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(10));
+		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(15));
 		try {
+			Thread.sleep(5000);
 			WebElement parkingpopUp = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.Button[@content-desc='Got it']")));
 			if(parkingpopUp.isDisplayed()) {
 				driver1.findElement(AppiumBy.xpath("//android.widget.Button[@content-desc='Got it']")).click();
