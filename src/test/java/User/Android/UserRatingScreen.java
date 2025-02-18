@@ -118,12 +118,19 @@ public class UserRatingScreen extends BaseClass {
 		System.out.println("Details From Receipt:: Total Paid Ammount: "+totalPaidAmount+"Trip Time: "+tripTime);
 
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Download PDF']")).click();
+		
+		 if("062c68090409".contains(userUdid)) 
+		{
+			driver1.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW']")).click();
+			Thread.sleep(2000);
+		}
 		System.out.println("Driver Receipt downloaded successfully");
 		Thread.sleep(12000);
 		WebElement goback = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//com.horcrux.svg.SvgView[@content-desc='Go back']")));
 		goback.click();
-		Thread.sleep(2000);
-		goback.click();
+		Thread.sleep(5000);
+		WebElement goback2 = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//com.horcrux.svg.SvgView[@content-desc='Go back']")));
+		goback2.click();
 		}catch (Exception e) {
 			System.out.println("View details text not found");
 		}
