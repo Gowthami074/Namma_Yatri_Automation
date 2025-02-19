@@ -30,6 +30,7 @@ public class DevicePermission extends BaseClass {
 		case "RZ8R72RE6AB":
 		case "062c68090409":
 		case "eb23ba":
+		case "192.168.10.200:5555":
 		case "4e27c0e2":
 		case"emulator-5554":
 		case"emulator-5556":
@@ -81,6 +82,7 @@ public class DevicePermission extends BaseClass {
 		case "1377682723004YR":
 		case "15913008960024W":
 		case "9618349153000CS":
+		case "192.168.10.199:5555":
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc='Search']")).click();
 			Thread.sleep(2000);
 			driver.findElement(AppiumBy.xpath("//android.widget.AutoCompleteTextView[@text='Search']")).sendKeys("Namma");
@@ -140,6 +142,7 @@ public class DevicePermission extends BaseClass {
 			driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Back']")).click();
 			break;
 		case "eb23ba":
+		case "192.168.10.200:5555":
 			driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0))"
 					+ ".scrollIntoView(new UiSelector()" + ".textMatches(\"" +driverApp+ "\").instance(0))"));
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Namma Yatri Partner']/../../android.widget.ImageView")).click();
@@ -171,6 +174,7 @@ public class DevicePermission extends BaseClass {
 		case "1377682723004YR":
 		case "15913008960024W": 
 		case "9618349153000CS":
+		case "192.168.10.199:5555":
 		case "8cb2f113":
 		case "SONJFMDUKV65OJV4":
 		case "062c68090409":
@@ -189,6 +193,7 @@ public class DevicePermission extends BaseClass {
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow']")).click();
 			break;
 		case "eb23ba":
+		case "192.168.10.200:5555":
 			driver.findElement(AppiumBy.xpath("//android.widget.CheckedTextView[@text='No restrictions']")).click();
 			//	driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Back']")).click();
 			break;
@@ -203,6 +208,7 @@ public class DevicePermission extends BaseClass {
 		case "1377682723004YR":
 		case "15913008960024W": 
 		case "9618349153000CS":
+		case "192.168.10.199:5555":
 		case "4e27c0e2":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW']")).click();
 			break;
@@ -228,6 +234,7 @@ public class DevicePermission extends BaseClass {
 			driver.findElement(AppiumBy.xpath("//android.widget.FrameLayout[@content-desc='Back']/android.widget.ImageView")).click();
 			break;
 		case "eb23ba":
+		case "192.168.10.200:5555":
 			driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0))"
 					+ ".scrollIntoView(new UiSelector()" + ".textMatches(\"" +driverApp+ "\").instance(0))"));
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Namma Yatri Partner']/../../android.widget.CheckBox")).click();
