@@ -74,6 +74,7 @@ public class BaseClass {
 //				cap.setCapability("appActivity", ConfigLoader.getProperty(driverApp + ".appActivity"));
 //				cap.setCapability("noReset", true);//debug
 				//cap.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/Resources/app-nyDriver-prod-debug.apk");
+				cap.setCapability("fullReset", true);
 				cap.setCapability("app", "https://github.com/Gowthami074/Namma_Yatri_Automation/releases/download/v1.0.0/app-nyDriver-prod-debug.apk");
 				
 				driver = new AndroidDriver(url, cap);
@@ -95,7 +96,9 @@ public class BaseClass {
 //			    cap1.setCapability("appActivity",ConfigLoader.getProperty(userApp + ".appActivity"));
 //				cap1.setCapability("noReset", true);
 //         		cap1.setCapability("app", System.getProperty("user.dir") + "/src/test/resources/Resources/app-nammaYatri-prod-debug.apk");
+				cap1.setCapability("fullReset", true);
 				cap1.setCapability("app", "https://github.com/Gowthami074/Namma_Yatri_Automation/releases/download/v1.0.0/app-nammaYatri-prod-debug.apk");
+				
 
 				driver1 = new AndroidDriver(url, cap1);
 				implicitWaitMethod(driver1,100);
