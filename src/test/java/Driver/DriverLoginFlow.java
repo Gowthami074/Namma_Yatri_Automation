@@ -58,6 +58,7 @@ public class DriverLoginFlow extends BaseClass{
 			case "SONJFMDUKV65OJV4":
 			case "M7JZ7T8P5TQSQ4KR":	
 			case "XWY9R8ZDDMSW7PDI":
+			case "192.168.10.172:5555":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='While using the app']")).click();
 				break;
 			case "1377682723004YR":
@@ -133,13 +134,13 @@ public class DriverLoginFlow extends BaseClass{
 			throw e;
 		}
 		implicitWaitMethod(driver,60);
+		popUpsHandling.customerReferralPopup();
 		popUpsHandling.locationPermissionPopUp();
 		popUpsHandling.upiOverlayPopUp();
 		popUpsHandling.yatriCoinsOverlayPopUp();
 		popUpsHandling.pointsOverLay();
 		popUpsHandling.AddUpI();
 		popUpsHandling.DueHandlingPopUp();
-		
 		popUpsHandling.driverModeValidation();		
 	}
 }
