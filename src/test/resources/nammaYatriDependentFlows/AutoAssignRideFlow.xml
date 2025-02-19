@@ -151,7 +151,16 @@
 			</class>
 		</classes>
 	</test>
-
+	<!-- Driver Giving Rating -->
+	<test name="Driver Giving Rating">
+		<classes>
+			<class name="Driver.DriverRatingScreen">
+				<methods>
+					<include name="ratingScreen"></include>
+				</methods>
+			</class>
+		</classes>
+	</test>
 	<!-- User Giving Rating -->
 	<test name="User Giving Rating">
 		<classes>
@@ -163,16 +172,6 @@
 		</classes>
 	</test>
 
-	<!-- Driver Giving Rating -->
-	<test name="Driver Giving Rating">
-		<classes>
-			<class name="Driver.DriverRatingScreen">
-				<methods>
-					<include name="ratingScreen"></include>
-				</methods>
-			</class>
-		</classes>
-	</test>
 	<!-- Reset driver location for next ride -->
 	<test name="Reset driver location for next ride">
 		<classes>
