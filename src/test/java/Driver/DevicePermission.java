@@ -120,6 +120,7 @@ public class DevicePermission extends BaseClass {
 		case "RFCT42T5N9D":
 		case "RZ8R72RE6AB":
 		case "8cb2f113":
+		case "192.168.10.172:5555":	
 
 			//		case "SONJFMDUKV65OJV4":
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Namma Yatri Partner']")).click();
@@ -188,6 +189,7 @@ public class DevicePermission extends BaseClass {
 		case"emulator-5554":
 		case"emulator-5556":
 		case"emulator-5558":
+		case "192.168.10.172:5555":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow']")).click();
 			break;
 		case "eb23ba":
@@ -214,6 +216,7 @@ public class DevicePermission extends BaseClass {
 		case "RFCT42T5N9D":
 		case "R9ZTB0KD0FA":
 		case "28301JEGR03129":
+		case "192.168.10.172:5555":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow']")).click();
 			break;
 		default:
@@ -251,9 +254,11 @@ public class DevicePermission extends BaseClass {
 	{
 		switch(driverUdid) {
 		case "RFCT42T5N9D":
+		case "192.168.10.172:5555":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow all the time']")).click();
 			driver.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Navigate up']")).click();
 			Thread.sleep(1000);
+			break;
 		}
 	}
 
