@@ -52,6 +52,7 @@ public class DriverLoginFlow extends BaseClass{
 			case "RZ8N91FWYXT": 
 			case "R9ZTB0KD0FA":
 			case "RFCT42T5N9D":
+			case "192.168.10.172:5555":
 			case "28301JEGR03129":
 			case "RZ8R72RE6AB":
 			case "8cb2f113":
@@ -131,6 +132,7 @@ public class DriverLoginFlow extends BaseClass{
 			throw e;
 		}
 		implicitWaitMethod(driver,60);
+		popUpsHandling.customerReferralPopup();
 		popUpsHandling.locationPermissionPopUp();
 		popUpsHandling.upiOverlayPopUp();
 		popUpsHandling.yatriCoinsOverlayPopUp();

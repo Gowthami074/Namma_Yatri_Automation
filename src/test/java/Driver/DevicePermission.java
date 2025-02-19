@@ -116,6 +116,7 @@ public class DevicePermission extends BaseClass {
 			break;
 		case "RZ8N91FWYXT": 
 		case "RFCT42T5N9D":
+		case "192.168.10.172:5555":	
 		case "RZ8R72RE6AB":
 		case "8cb2f113":
 
@@ -178,6 +179,7 @@ public class DevicePermission extends BaseClass {
 			break;
 		case "RZ8N91FWYXT":
 		case "RFCT42T5N9D":
+		case "192.168.10.172:5555":	
 		case "R9ZTB0KD0FA":
 		case "RZ8R72RE6AB":
 		case "28301JEGR03129":
@@ -206,6 +208,7 @@ public class DevicePermission extends BaseClass {
 			break;
 		case "RZ8N91FWYXT":
 		case "RFCT42T5N9D":
+		case "192.168.10.172:5555":	
 		case "R9ZTB0KD0FA":
 		case "28301JEGR03129":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow']")).click();
@@ -244,9 +247,11 @@ public class DevicePermission extends BaseClass {
 	{
 		switch(driverUdid) {
 		case "RFCT42T5N9D":
+		case "192.168.10.172:5555":	
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='Allow all the time']")).click();
 			driver.findElement(AppiumBy.xpath("//android.widget.ImageButton[@content-desc='Navigate up']")).click();
 			Thread.sleep(1000);
+			break;
 		}
 	}
 

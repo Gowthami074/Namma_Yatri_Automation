@@ -261,8 +261,21 @@ public class PopUpsHandling extends BaseClass{
 
 		    implicitWaitMethod(driver, 60);
 		
+	}	
+	public void customerReferralPopup() {
+		implicitWaitMethod(driver,5);
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		try {
+			WebElement enablePermission = wait.until(ExpectedConditions.presenceOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@content-desc=\"Close : Button\"]")));
+			enablePermission.click();
+			System.out.println("Tapping on close on the referral ");
+            
+		} catch(TimeoutException e) {
+			System.out.println("earn customer refferal popup is not displaying");
+		}
+		implicitWaitMethod(driver,60);
+		
+	}	            
 	}
-
-	}
-
+	    
 
