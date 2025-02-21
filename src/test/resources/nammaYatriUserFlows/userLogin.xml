@@ -5,6 +5,11 @@
 <parameter name="userApp" value="nammaYatriDebug"/>
 <parameter name="driverApp" value="nammaYatriPartnerDebug"/>
 
+	<listeners>
+		<listener class-name="TestReport.TestListener"/>
+		<listener class-name="TestReport.SuiteListener" />
+	</listeners>
+
   <test name="UserLogin">
      <classes>
       <class name="User.Android.UserLoginFlow">

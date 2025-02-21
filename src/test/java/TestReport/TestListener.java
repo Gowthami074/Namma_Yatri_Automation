@@ -17,6 +17,7 @@ public class TestListener extends BaseClass implements ITestListener {
     private static final String ALLURE_IMAGES_DIR = "allure-results/Images";
     private static final String CONSOLE_LOG_FILE = "allure-results/Logs/console_output.log";
     private static final SimpleDateFormat TIMESTAMP_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private ITestContext testContext;
     static {
         createDirectories();
         clearPreviousLogs();
@@ -26,29 +27,31 @@ public class TestListener extends BaseClass implements ITestListener {
         new File(ALLURE_LOGS_DIR).mkdirs();
         new File(ALLURE_IMAGES_DIR).mkdirs();
         new File("logs").mkdirs();
-        new File(CONSOLE_LOG_FILE).getParentFile().mkdirs();
+        File logFile = new File(CONSOLE_LOG_FILE);
+        logFile.getParentFile().mkdirs();
         System.out.println("📁 Directories Created Successfully!");
     }
     private static void clearPreviousLogs() {
         File logFile = new File(CONSOLE_LOG_FILE);
         if (logFile.exists()) {
-            logFile.delete();
+            logFile.delete();  // Remove previous logs before writing new ones
         }
     }
     private static void setupConsoleLogging() {
         File logsDir = new File(ALLURE_LOGS_DIR);
         if (!logsDir.exists()) {
-            logsDir.mkdirs();
+            logsDir.mkdirs();  // Ensure logs directory exists
         }
         try {
             FileOutputStream fos = new FileOutputStream(CONSOLE_LOG_FILE, true);
             PrintStream fileOut = new PrintStream(fos, true);
             TeeOutputStream teeStream = new TeeOutputStream(System.out, fileOut);
             PrintStream consoleOut = new PrintStream(teeStream, true);
+            PrintStream consoleErr = new PrintStream(teeStream, true);
             System.setOut(consoleOut);
-            System.setErr(consoleOut);
+            System.setErr(consoleErr);
         } catch (IOException e) {
-            System.err.println("❌ ERROR: Failed to setup console logging: " + e.getMessage());
+            System.err.println("[❌ ERROR] Failed to setup console logging: " + e.getMessage());
         }
     }
     private static String timestamp() {
@@ -56,20 +59,26 @@ public class TestListener extends BaseClass implements ITestListener {
     }
     @Override
     public void onStart(ITestContext context) {
+        this.testContext = context;
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println("🟢 [START] Test Suite: " + context.getName() + " at " + timestamp());
         System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-        attachTestLogs(null);
     }
     @Override
     public void onFinish(ITestContext context) {
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
         System.out.println("🔵 [END] Test Suite: " + context.getName() + " at " + timestamp());
-       
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
     }
     @Override
     public void onTestStart(ITestResult result) {
-        System.out.println("➡️ [RUNNING] Test: " + result.getName() + " at " + timestamp());
-        attachTestLogs(result.getName());
+        if ("true".equals(System.getProperty("test.failed")) &&
+                !result.getMethod().isAfterSuiteConfiguration() &&
+                !result.getMethod().isAfterClassConfiguration() &&
+                !result.getMethod().isAfterMethodConfiguration()) {
+            throw new org.testng.SkipException("Skipping test because a previous test failed");
+        }
+        System.out.println("▶️ [RUNNING] Test: " + result.getName() + " at " + timestamp());
     }
     @Override
     public void onTestSuccess(ITestResult result) {
@@ -80,11 +89,9 @@ public class TestListener extends BaseClass implements ITestListener {
     public void onTestFailure(ITestResult result) {
         System.out.println("❌ [FAIL] Test: " + result.getName() + " at " + timestamp());
         System.out.println("⚠️ [ERROR MESSAGE]: " + result.getThrowable().getMessage());
-        // Debugging logs for driver instances
-        System.out.println("📌 Checking driver instances...");
-        System.out.println("Driver: " + (driver == null ? "NULL" : "Available"));
-        System.out.println("Driver1: " + (driver1 == null ? "NULL" : "Available"));
-        // Capture screenshots
+
+        System.setProperty("test.failed", "true");
+
         if (driver != null) {
             captureScreenshot(result.getName() + "_driver", driver);
         }
@@ -96,6 +103,7 @@ public class TestListener extends BaseClass implements ITestListener {
     @Override
     public void onTestSkipped(ITestResult result) {
         System.out.println("⚠️ [SKIPPED] Test: " + result.getName() + " at " + timestamp());
+        attachTestLogs(result.getName());
     }
     public static void captureScreenshot(String testName, AppiumDriver driver) {
         if (driver == null) {
@@ -125,26 +133,9 @@ public class TestListener extends BaseClass implements ITestListener {
         File logFile = new File(CONSOLE_LOG_FILE);
         if (!logFile.exists() || logFile.length() == 0) return;
         try (FileInputStream fis = new FileInputStream(logFile)) {
-            if (Allure.getLifecycle().getCurrentTestCase().isPresent()) {
-                Allure.addAttachment(testName + " Logs", "text/plain", fis, ".txt");
-            } else {
-                System.err.println("❌ [ERROR] No test is running. Skipping log attachment: " + testName);
-            }
+            Allure.addAttachment(testName + " Logs", "text/plain", fis, ".txt");
         } catch (IOException e) {
             System.err.println("❌ [ERROR] Failed to attach logs for " + testName + ": " + e.getMessage());
-        }
-    }
-    public static void attachConsoleLogs() {
-        File logFile = new File(CONSOLE_LOG_FILE);
-        if (!logFile.exists() || logFile.length() == 0) return;
-        try (FileInputStream fis = new FileInputStream(logFile)) {
-            if (Allure.getLifecycle().getCurrentTestCase().isPresent()) {
-                Allure.addAttachment("Console Logs", "text/plain", fis, ".txt");
-            } else {
-                System.err.println("❌ [ERROR] No test is running. Skipping console log attachment.");
-            }
-        } catch (IOException e) {
-            System.err.println("❌ [ERROR] Failed to attach console logs: " + e.getMessage());
         }
     }
 }
