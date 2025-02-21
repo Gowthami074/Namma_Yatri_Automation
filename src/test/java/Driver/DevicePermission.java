@@ -29,6 +29,7 @@ public class DevicePermission extends BaseClass {
 		case "1377682723004YR":
 		case "RZ8R72RE6AB":
 		case "062c68090409":
+		case "192.168.10.213:5555":
 		case "eb23ba":
 		case "192.168.10.200:5555":
 		case "4e27c0e2":
@@ -81,6 +82,7 @@ public class DevicePermission extends BaseClass {
 		case "1371785921000CT":
 		case "1377682723004YR":
 		case "15913008960024W":
+		case "192.168.10.47:5555":
 		case "9618349153000CS":
 		case "192.168.10.199:5555":
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@content-desc='Search']")).click();
@@ -137,6 +139,7 @@ public class DevicePermission extends BaseClass {
 			Thread.sleep(1000);
 			break;
 		case "062c68090409":
+		case "192.168.10.213:5555":
 			driver.findElement(AppiumBy.xpath("//android.widget.CheckBox[@resource-id='android:id/checkbox']")).click();
 			Thread.sleep(2000);
 			driver.findElement(AppiumBy.xpath("//android.widget.ImageView[@content-desc='Back']")).click();
@@ -173,11 +176,13 @@ public class DevicePermission extends BaseClass {
 		case "1371785921000CT":
 		case "1377682723004YR":
 		case "15913008960024W": 
+		case "192.168.10.47:5555":
 		case "9618349153000CS":
 		case "192.168.10.199:5555":
 		case "8cb2f113":
 		case "SONJFMDUKV65OJV4":
 		case "062c68090409":
+		case "192.168.10.213:5555":
 		case "4e27c0e2":
 			driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW']")).click();
 			break;
@@ -207,6 +212,7 @@ public class DevicePermission extends BaseClass {
 		case "1371785921000CT":
 		case "1377682723004YR":
 		case "15913008960024W": 
+		case "192.168.10.47:5555":
 		case "9618349153000CS":
 		case "192.168.10.199:5555":
 		case "4e27c0e2":
@@ -228,6 +234,7 @@ public class DevicePermission extends BaseClass {
 
 		switch(driverUdid) {
 		case "062c68090409":
+		case "192.168.10.213:5555":
 			driver.findElement(new AppiumBy.ByAndroidUIAutomator("new UiScrollable(new UiSelector().scrollable(true).instance(0))"
 					+ ".scrollIntoView(new UiSelector()" + ".textMatches(\"" +driverApp+ "\").instance(0))"));
 			driver.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Namma Yatri Partner']/../../android.widget.CheckBox")).click();
