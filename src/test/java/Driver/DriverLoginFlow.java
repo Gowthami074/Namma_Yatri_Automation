@@ -64,6 +64,7 @@ public class DriverLoginFlow extends BaseClass{
 			case "1377682723004YR":
 			case "1371785921000CT":
 			case "15913008960024W":
+			case "192.168.10.47:5555":
 			case "9618349153000CS":
             case "192.168.10.199:5555":
             case "eb23ba":
@@ -71,6 +72,7 @@ public class DriverLoginFlow extends BaseClass{
 				driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='WHILE USING THE APP']")).click();
 				break;
 			case "062c68090409":
+			case "192.168.10.213:5555":
 				driver.findElement(AppiumBy.xpath("//android.widget.Button[@text='ALLOW ONLY WHILE USING THE APP']")).click();
 				break;
 			case "4e27c0e2":
