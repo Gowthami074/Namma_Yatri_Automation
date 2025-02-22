@@ -127,8 +127,6 @@ public class BaseClass {
 					String[] parts = line.split("\\s+");
 					if (parts.length > 0) {
 						udids.add(parts[0]);
-
-
 					}
 				} 
 			}
@@ -147,33 +145,6 @@ public class BaseClass {
 	@AfterSuite
 	public void tearDown() {
 		//  Quit the Appium drivers
-		if (driver != null) {
-			String driverScreenshotName = "driver_test_failed_" + System.currentTimeMillis();
-			TestListener.captureScreenshot(driverScreenshotName, driver); // Capture for driver
-		}
-		if (driver1 != null) {
-			String userScreenshotName = "user_test_failed_" + System.currentTimeMillis();
-			TestListener.captureScreenshot(userScreenshotName, driver1); // Capture for driver1
-		}
-		
-		
-		if (driver != null) {
-		    String driverLogName = "driver_test_logs_" + System.currentTimeMillis();
-		    // Write log content (you can modify this based on your logging)
-		    TestListener.attachTestLogs(driverLogName); 
-		    // Attach log to Allure
-		}
-
-		if (driver1 != null) {
-		    String userLogName = "user_test_logs_" + System.currentTimeMillis();
-		    // Write log content (you can modify this based on your logging)
-		    TestListener.attachTestLogs(userLogName); 
-		    // Attach log to Allure
-		}
-
-
-
-
 		if (driver != null) {
 			driver.quit();
 		}
