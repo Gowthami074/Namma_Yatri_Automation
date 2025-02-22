@@ -13,12 +13,30 @@ public class SuiteListener implements ISuiteListener {
 
     @Override
     public void onStart(ISuite suite) {
-        System.out.println("Suite execution started: " + suite.getName());
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("🚀 [START] Suite execution started: " + suite.getName());
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
+        // Reset the test failure flag at the start of each suite
+        TestListener.resetTestFailure();
     }
 
     @Override
     public void onFinish(ISuite suite) {
-        System.out.println("Suite execution finished: " + suite.getName());
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+        System.out.println("🏁 [FINISH] Suite execution finished: " + suite.getName());
+
+        // Report suite status based on test failure flag
+        if (TestListener.hasTestFailed()) {
+            System.out.println("⚠️ [SUITE STATUS] Suite completed with failures detected");
+        } else {
+            System.out.println("✅ [SUITE STATUS] Suite completed successfully");
+        }
+
+        System.out.println("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
+
+        // Attach the console logs to the report
+   //     attachConsoleLogs();
     }
 
     public static void attachConsoleLogs() {
@@ -28,9 +46,10 @@ public class SuiteListener implements ISuiteListener {
             return;
         }
         try (FileInputStream logStream = new FileInputStream(logFile)) {
-            Allure.addAttachment("Suite Console Logs",  logStream);
+            Allure.addAttachment("Suite Console Logs", "text/plain", logStream, ".txt");
             System.out.println("✅ [INFO] Attached console logs to the Allure report.");
         } catch (IOException e) {
             System.err.println("❌ [ERROR] Failed to attach console logs: " + e.getMessage());
         }
-}}
+    }
+}
