@@ -37,11 +37,10 @@ public class InterCity extends BaseClass{
 		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='Where are you going?']")).click();
 		System.out.println("Tapped on Where are you going?");
 		Thread.sleep(2000);
-		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='Where are you going?']")).sendKeys("Tumu");
+		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='Where are you going?']")).sendKeys("Tumukur");
 		Thread.sleep(2000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Tumukuru']")).click();
-
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']")).click();
 
 	}
