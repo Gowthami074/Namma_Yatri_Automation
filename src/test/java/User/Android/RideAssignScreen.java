@@ -16,10 +16,14 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 import com.google.common.collect.ImmutableMap;
+import org.testng.Assert;
+import org.openqa.selenium.TimeoutException;
 
+import Utils.AssertionBase;
 import base.BaseClass;
 
 public class RideAssignScreen extends BaseClass {
+	AssertionBase assertionBase = new AssertionBase();
 
 	PopUpsHandling popUpsHandling = new PopUpsHandling();
 	WebElement otpElement;
@@ -72,15 +76,25 @@ public class RideAssignScreen extends BaseClass {
 	@Test
 	public void readOTP() throws InterruptedException {
 		implicitWaitMethod(driver1, 60);
-		WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(30));
-		otpElement = wait.until(ExpectedConditions
-				.presenceOfElementLocated(AppiumBy.xpath("//android.view.ViewGroup[contains(@content-desc, 'OTP')]")));
+		
+	    // Use base class method to check if OTP element is visible within 30 seconds
+	    String otpXpath = "//android.view.ViewGroup[contains(@content-desc, 'OTP')]";
+	    assertionBase.assertElementVisible(otpXpath, "ERROR: OTP element not found within 30 seconds!", false, 30);
 
+	    // Extract the element after assertion
+	    WebElement otpElement = driver1.findElement(AppiumBy.xpath(otpXpath));
+		
+
+		
 		// Extract the 'content-desc' attribute
 		String contentDesc = otpElement.getAttribute("content-desc");
 
 		// Extract only the numeric OTP using regex
 		rideOTP = contentDesc.replaceAll("\\D", ""); // Removes all non-digit characters
+		
+	    // ** Hard assertion to ensure OTP is fetched and not empty **
+		assertionBase.assertCondition(rideOTP != null && !rideOTP.isEmpty(), "ERROR: OTP was not extracted correctly!", false);
+
 
 		System.out.println("Extracted OTP: " + rideOTP);
 

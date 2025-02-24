@@ -13,6 +13,7 @@ import java.io.IOException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.annotations.Test;
+import org.testng.Assert;
 
 import io.appium.java_client.android.AndroidDriver;
 
@@ -22,9 +23,11 @@ import Utils.ConfigLoader;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import io.appium.java_client.android.nativekey.PressesKey;
+import Utils.AssertionBase;
 import base.BaseClass;
 
 public class UserLoginFlow extends BaseClass {
+	AssertionBase assertionBase = new AssertionBase();
 
 	DevicePermission devicePermission = new DevicePermission();
 	PopUpsHandling popupshandling = new PopUpsHandling();
@@ -53,55 +56,65 @@ public class UserLoginFlow extends BaseClass {
 
 	}
 
+
 	@Test
-	public void successfulUserLogin() throws Exception {
-		implicitWaitMethod(driver1,10);
-		devicePermission.notification();
-		implicitWaitMethod(driver1,60);
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Get Started']")).click();
-		Thread.sleep(2000);
-		//    devicePermission.autoSuggestionDecline();
-		Thread.sleep(1000);
-		popupshandling.googleServicePhoneNumberAutofill();
-		// Get dynamically incremented mobile number
-		String mobileNumber = getNextMobileNumber();
+		public void successfulUserLogin() throws Exception {
+			implicitWaitMethod(driver1,10);
+			devicePermission.notification();
+			implicitWaitMethod(driver1,60);
+			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Get Started']")).click();
+			Thread.sleep(2000);
+			
+			// **Check if Mobile Number Field is Displayed for Assertion
+			String mobileFieldXpath = "//android.widget.EditText[@content-desc='10-digit mobile number']";
+			assertionBase.assertElementVisible(mobileFieldXpath, "❌ Navigation to Mobile Number screen failed!", false, 15);
 
-		//		String mobileNumber = ConfigLoader.getProperty("customer.mobile.number");
-
-		driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='10-digit mobile number']")).sendKeys(mobileNumber);
-		enteredMobileString = driver1.findElement(AppiumBy.xpath("//android.widget.EditText")).getText();
-		System.out.println(enteredMobileString +" : Mobile number");
-		Thread.sleep(2000);
-		driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']")).click();
-		Thread.sleep(2000);
-		List<KeyEvent> keyEvents = List.of(
-				new KeyEvent(AndroidKey.DIGIT_7),
-				new KeyEvent(AndroidKey.DIGIT_8),
-				new KeyEvent(AndroidKey.DIGIT_9),
-				new KeyEvent(AndroidKey.DIGIT_1)
-				);
-		for (KeyEvent event : keyEvents) {
-			((PressesKey) driver1).pressKey(event);
-		}
-
-		implicitWaitMethod(driver1,5);
-		try {
-			WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
-			WebElement registrationElement = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Full Name (Helps driver confirm it is you)']")));
-			if (registrationElement.isDisplayed()) {
-				System.out.println("New number, proceeding registration.");
-				registration();
+		    
+			// DevicePermission.autoSuggestionDecline();
+			Thread.sleep(1000);
+			popupshandling.googleServicePhoneNumberAutofill();
+			
+			// Get dynamically incremented mobile number
+			String mobileNumber = getNextMobileNumber();
+	
+			//		String mobileNumber = ConfigLoader.getProperty("customer.mobile.number");
+	
+			driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@content-desc='10-digit mobile number']")).sendKeys(mobileNumber);
+			enteredMobileString = driver1.findElement(AppiumBy.xpath("//android.widget.EditText")).getText();
+			System.out.println(enteredMobileString +" : Mobile number");
+			Thread.sleep(2000);
+			
+		    
+			driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Continue']")).click();
+			Thread.sleep(2000);
+			List<KeyEvent> keyEvents = List.of(
+					new KeyEvent(AndroidKey.DIGIT_7),
+					new KeyEvent(AndroidKey.DIGIT_8),
+					new KeyEvent(AndroidKey.DIGIT_9),
+					new KeyEvent(AndroidKey.DIGIT_1)
+					);
+			for (KeyEvent event : keyEvents) {
+				((PressesKey) driver1).pressKey(event);
 			}
-		} catch (NoSuchElementException | org.openqa.selenium.TimeoutException e) {
-			System.out.println("Registration screen not found, checking for 'Grant Permissions' screen.");
-			devicePermission.grantLocationAccess();
-			Thread.sleep(3000);
-			devicePermission.locationPermissionsConfirmation();
-
+	
+			implicitWaitMethod(driver1,5);
+			try {
+				WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(5));
+				WebElement registrationElement = wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.xpath("//android.widget.TextView[@text='Full Name (Helps driver confirm it is you)']")));
+				if (registrationElement.isDisplayed()) {
+					System.out.println("New number, proceeding registration.");
+					registration();
+				}
+			} catch (NoSuchElementException | org.openqa.selenium.TimeoutException e) {
+				System.out.println("Registration screen not found, checking for 'Grant Permissions' screen.");
+				devicePermission.grantLocationAccess();
+				Thread.sleep(3000);
+				devicePermission.locationPermissionsConfirmation();
+	
+			}
+			implicitWaitMethod(driver1,60);
 		}
-		implicitWaitMethod(driver1,60);
-	}
-
+	
 
 	public void registration() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver1 , Duration.ofSeconds(60));

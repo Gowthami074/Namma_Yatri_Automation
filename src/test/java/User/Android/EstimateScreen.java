@@ -18,7 +18,11 @@ import org.testng.Assert;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 import User.Android.EstimateScreen;
+import Utils.AssertionBase;
+
+import org.testng.Assert;
 public class EstimateScreen extends BaseClass {
+	AssertionBase assertionBase = new AssertionBase();
 	private int baseFare;
     private int selectedTip;
 	@Test
@@ -116,6 +120,11 @@ public class EstimateScreen extends BaseClass {
 		String rideDistance = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Rides for you']/../android.view.ViewGroup/android.widget.TextView[1]")).getText();
 		String rideDuration = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Rides for you']/../android.view.ViewGroup/android.widget.TextView[2]")).getText();
 		System.out.println("Ride Distance "+rideDistance+", Ride Duration "+rideDuration);
+		
+		// ** Set timeout for 15 seconds to get the Estimates if not then using Hard Assertion **
+		assertionBase.assertElementVisible("//android.widget.TextView[@text='Wish to add a tip?']", 
+                "ERROR: Didn't get the Estimates within 15 seconds!", false, 15);
+                 
 
 		if (!isBookAnyPresent()) {
 			System.out.println("'Book Any' option not found. Skipping to the final element.");

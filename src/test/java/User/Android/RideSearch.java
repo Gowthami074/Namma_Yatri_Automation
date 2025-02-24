@@ -10,10 +10,12 @@ import org.testng.annotations.IFactoryAnnotation;
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 import org.testng.xml.IFileParser;
+import org.testng.Assert;
 
 import com.google.common.collect.ImmutableMap;
 
 import Driver.DriverCancellation;
+import Utils.AssertionBase;
 import base.BaseClass;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.AndroidDriver;
@@ -21,21 +23,31 @@ import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 
 public class RideSearch extends BaseClass {
+	AssertionBase assertionBase = new AssertionBase();
 
     @Test    
     public void SearchForRideFromSuggestion() throws InterruptedException {
-        System.out.println("Ride Search about to start");
+        System.out.println("🚗 Ride Search about to start...");
         Thread.sleep(5000);
         
-        // Initialize WebElements after driver1 is initialized
         WebElement HomeWhereToButton = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Where are you going?']"));
+        
+        // Hard assertion to check if the element is present
+        assertionBase.assertNotNull(HomeWhereToButton, "ERROR: 'Where are you going?' field is not found on the Home screen!",false);
+        
         HomeWhereToButton.click();
         Thread.sleep(2000);
+        
         WebElement RideSearchScreenDestinationBox = driver1.findElement(AppiumBy.xpath("//android.widget.EditText[@text='Where are you going?']"));
         RideSearchScreenDestinationBox.sendKeys("Koram");
 		((AndroidDriver) driver1).hideKeyboard();
         Thread.sleep(2000);
-        driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Koramangala']")).click();
+        
+        WebElement suggestions = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Koramangala']"));
+        
+        // ** Hard Assertion - Fail immediately if 'Koramangala' is not in suggestions **
+        assertionBase.assertEqual(suggestions.getText(), "Koramangala", "ERROR: Expected suggestion 'Koramangala' not found!", false);
+        suggestions.click();
 
         
         WebElement ConfirmPickUpLocation = driver1.findElement(AppiumBy.xpath("//android.widget.TextView[@text='Confirm Location']"));
